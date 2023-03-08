@@ -1,11 +1,11 @@
 import axios, { AxiosError } from "axios"
-import { privateRequest } from "./axios-utils"
+import { privateRequest, URLnAME } from "./axios-utils"
 
 //LOGIN
 export const loginUser = async (user) => {
     try{
         const { shortName, ...payload } = user
-        const loginURL = `https://web-production-e5a7.up.railway.app/tenant/${shortName}/tenant/auth/login/`
+        const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
         const res = await axios.post(loginURL, payload)
         return res.data
     }catch(error){
