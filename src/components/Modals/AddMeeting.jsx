@@ -8,6 +8,7 @@ import { mobile } from "../../responsive";
 import {
   createMeeting,
   getAllChapters,
+  getAllCommittee,
   getListOfExcos,
 } from "../../utils/api-calls";
 import Loading from "../Loading/Loading";
@@ -104,7 +105,7 @@ const FormTextArea = styled.textarea`
 `;
 
 const AddMeeting = ({ close }) => {
-  const { register, handleSubmit } = useForm(),
+  const { register, handleSubmit ,setValue} = useForm(),
     queryClient = useQueryClient();
 
   const { isLoading, isFetching, isError, data } = useQuery(
@@ -122,6 +123,18 @@ const AddMeeting = ({ close }) => {
     isError: excoError,
     data: excoData,
   } = useQuery("all-excos", getListOfExcos, {
+    refetchOnWindowFocus: false,
+    select: (data) =>
+      data.data.map((item) => ({ id: item.id, name: item.name })),
+  });
+
+
+  const {
+    isLoading: commiteeLoading,
+    isFetching: commiteeFetching,
+    isError: commiteeError,
+    data: commiteeData,
+  } = useQuery("all-committee", getAllCommittee, {
     refetchOnWindowFocus: false,
     select: (data) =>
       data.data.map((item) => ({ id: item.id, name: item.name })),
@@ -153,6 +166,7 @@ const AddMeeting = ({ close }) => {
   });
 
   const onSubmit = (data) => {
+
     mutate(data);
   };
   return (
@@ -165,7 +179,7 @@ const AddMeeting = ({ close }) => {
             `}
       </style>
 
-      {isLoading || isFetching || excoLoading || excoFetching ? (
+      {isLoading||commiteeLoading || isFetching || excoLoading || excoFetching ? (
         <Loading
           loading={isLoading || isFetching || excoLoading || excoFetching}
         />
@@ -200,14 +214,41 @@ const AddMeeting = ({ close }) => {
               />
             </FormLabel>
 
+
+
+            <FormLabel>
+            Commitee:
+              <FormSelection
+                defaultValue={""}
+                {...register("commitee", { required: false })}
+              >
+                <FormOption disabled value="">
+                  select an option
+                </FormOption>
+                <FormOption value="">
+                  Unselect
+                </FormOption>
+                {commiteeData.map((item) => (
+                  <FormOption key={item.id} value={item.id}>
+                    {item.id} || {item.name}
+                  </FormOption>
+                ))}
+              </FormSelection>
+            </FormLabel>
+
+
+
             <FormLabel>
               Exco:
               <FormSelection
                 defaultValue={""}
-                {...register("exco", { required: true })}
+                {...register("exco", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option
+                </FormOption>
+                <FormOption value="">
+                  Unselect
                 </FormOption>
                 {excoData.map((item) => (
                   <FormOption key={item.id} value={item.id}>
@@ -221,10 +262,13 @@ const AddMeeting = ({ close }) => {
               Chapter:
               <FormSelection
                 defaultValue={""}
-                {...register("exco", { required: true })}
+                {...register("chapter", { required: false })}
               >
-                <FormOption disabled value="">
+               <FormOption disabled value="">
                   select an option
+                </FormOption>
+                <FormOption value="">
+                  Unselect
                 </FormOption>
                 {data.map((item) => (
                   <FormOption key={item.id} value={item.id}>
@@ -243,7 +287,7 @@ const AddMeeting = ({ close }) => {
             </FormLabel>
 
             <FormLabel>
-              Address:
+              Address/Link Url:
               <FormDataComp
                 type={"text"}
                 {...register("addresse", { required: true })}
@@ -255,6 +299,15 @@ const AddMeeting = ({ close }) => {
               <FormDataComp
                 type={"datetime-local"}
                 {...register("event_date", { required: true })}
+              />
+            </FormLabel>
+
+            <FormLabel>
+              Meeting Docs
+            
+              <FormDataComp
+                type={"file"}
+                {...register("meeting_docs", { required: true })}
               />
             </FormLabel>
 

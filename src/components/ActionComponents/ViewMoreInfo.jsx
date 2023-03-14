@@ -1881,7 +1881,7 @@ export const MeetingViewMore = ({ data, close }) => {
         {data ? (
           <>
             <SubConHeader2>
-              <TitleCon>Id: </TitleCon> {data.id}
+              {/* <TitleCon>Id: </TitleCon> {data.id} */}
             </SubConHeader2>
             <SubConHeader2>
               <TitleCon>Exco Id: </TitleCon> {data.exco}
@@ -1901,7 +1901,9 @@ export const MeetingViewMore = ({ data, close }) => {
               {new Date(data.event_date).toLocaleString()}
             </SubConHeader2>
             <SubConHeader2>
-              <TitleCon>Address: </TitleCon> {data.addresse}
+              <TitleCon>Address: </TitleCon> {data.addresse.includes('https'||'http')?
+            <a href={data.addresse} target='_blank' rel="noreferrer">View</a>:data.addresse  
+            }
             </SubConHeader2>
             <SubConHeader2>
               <TitleCon>Details: </TitleCon> {data.details}
@@ -1912,6 +1914,12 @@ export const MeetingViewMore = ({ data, close }) => {
             <SubConHeader2>
               <TitleCon>Organiser Details: </TitleCon> {data.organiserDetails}
             </SubConHeader2>
+          {
+            data.meeting_docs?
+            <SubConHeader2>
+              <TitleCon>Meeting Document Details: </TitleCon><a href={data.meeting_docs} target='_blank' rel="noreferrer">View</a>
+            </SubConHeader2>:''
+          }
           </>
         ) : (
           <small>Can't fetch additional Due Info.</small>

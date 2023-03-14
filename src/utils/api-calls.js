@@ -307,8 +307,26 @@ export const registerUserToChapter = async (data) => {
 
 //MEETINGS
 export const createMeeting = async (data) => {
+    const form = new FormData()
+    form.append('name',data.name)
+    form.append('details',data.details)
+    form.append('organiserName',data.organiserName)
+    form.append('organiserDetails',data.organiserDetails)
+    if(data.exo){
+        form.append('exco',data.exco)
+    }
+    if(data.chapter){
+        form.append('chapter',data.chapter)
+    }
+    if(data.commitee){
+        form.append('commitee',data.commitee)
+    }
+    form.append('date_for',data.date_for)
+    form.append('event_date',data.event_date)
+    form.append('addresse',data.addresse)
+    form.append('meeting_docs',data.meeting_docs[0])
     try{
-        const res = await privateRequest.post("/tenant/meeting/admin_manage_meeting/",data)
+        const res = await privateRequest.post("/tenant/meeting/admin_manage_meeting/",form)
         return res.data
     }catch(e){
         throw new AxiosError(e)
