@@ -192,12 +192,26 @@ const AddNews = ({ close }) => {
   const onSubmit = (data) => {
     const image = data.image[0];
     const { news_paragraph, image: img, ...newdata } = data;
-    const payload = { image, ...newdata };
-    console.log(news_paragraph);
+    const payload = { image,'is_member':false,'body':'.', ...newdata };
     const formData = new FormData();
-    Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
+    Object.keys(payload)?.forEach((key) => {
+      if(key=='is_exco'){
+        if(payload.is_exco){
+          formData.append(key, payload[key])
+        }
+
+      }
+      else if(key=='is_commitee'){
+        if(payload.is_commitee){
+          formData.append(key, payload[key])
+        }
+      }
+      else{
+        formData.append(key, payload[key])
+      }
+    });
     formData.append("news_paragraph", JSON.stringify(news_paragraph));
-    console.log([formData.get("news_paragraph")]);
+    // console.log(formData.entries());
     createMutate(formData);
   };
   return (
@@ -247,7 +261,7 @@ const AddNews = ({ close }) => {
               Is Exco:
               <FormSelection
                 defaultValue={""}
-                {...register("is_exco", { required: true })}
+                {...register("is_exco", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option
@@ -262,7 +276,7 @@ const AddNews = ({ close }) => {
                 Excos Id:
                 <FormSelection
                   defaultValue={""}
-                  {...register("exco_id", { required: true })}
+                  {...register("exco_id", { required: false })}
                 >
                   <FormOption disabled value="">
                     select an option
@@ -280,7 +294,7 @@ const AddNews = ({ close }) => {
               Is Committe:
               <FormSelection
                 defaultValue={""}
-                {...register("is_committe", { required: true })}
+                {...register("is_committe", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option
@@ -295,7 +309,7 @@ const AddNews = ({ close }) => {
                 Committe Name:
                 <FormSelection
                   defaultValue={""}
-                  {...register("commitee_name", { required: true })}
+                  {...register("commitee_name", { required: false })}
                 >
                   {committeeData.map((item) => (
                     <FormOption key={item.id} value={item.id}>
@@ -306,7 +320,7 @@ const AddNews = ({ close }) => {
               </FormLabel>
             )}
 
-            <FormLabel>
+            {/* <FormLabel>
               Is Member:
               <FormSelection
                 defaultValue={""}
@@ -318,12 +332,12 @@ const AddNews = ({ close }) => {
                 <FormOption value={true}>Yes</FormOption>
                 <FormOption value={false}>No</FormOption>
               </FormSelection>
-            </FormLabel>
+            </FormLabel> */}
 
-            <FormLabel>
+            {/* <FormLabel>
               Body:
               <FormTextArea {...register("body", { required: true })} />
-            </FormLabel>
+            </FormLabel> */}
 
             {fields.map((field, index) => {
               return (

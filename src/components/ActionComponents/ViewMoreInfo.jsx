@@ -914,30 +914,32 @@ export const NewsViewMore = ({ data, close }) => {
             </SubConHeader2>
             {data.is_committe && (
               <SubConHeader2>
-                <TitleCon>Committee id: </TitleCon> {data.commitee_name}
+                {/* <TitleCon>Committee id: </TitleCon> {data.commitee_name} */}
+                <TitleCon>Is For Commitee </TitleCon> 
               </SubConHeader2>
             )}
             {data.is_exco && (
               <SubConHeader2>
-                <TitleCon>Exco id: </TitleCon> {data.exco}
+                <TitleCon>Is For Exco: </TitleCon> {data.exco}
+                {/* <TitleCon>Exco id: </TitleCon> {data.exco} */}
               </SubConHeader2>
             )}
-            {data.is_member && (
+            {/* {data.is_member && (
               <SubConHeader2>
                 <TitleCon>For Members: </TitleCon>{" "}
                 {data.is_member ? "Yes" : "No"}
               </SubConHeader2>
-            )}
+            )} */}
 
             <SubConHeader2>
-              <TitleCon>Name: </TitleCon> {data.name}
+              <TitleCon>Titles: </TitleCon> {data.name}
             </SubConHeader2>
             <SubConHeader>
-              <TitleCon>Body</TitleCon>
+              <TitleCon>Content</TitleCon>
             </SubConHeader>
-            <SubConHeader2 style={{ wordWrap: "break-word" }}>
+            {/* <SubConHeader2 style={{ wordWrap: "break-word" }}>
               {data.body}
-            </SubConHeader2>
+            </SubConHeader2> */}
             <SubConHeader>
               <TitleCon>Paragraphs</TitleCon>
             </SubConHeader>
