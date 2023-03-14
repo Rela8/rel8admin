@@ -106,7 +106,7 @@ const SubConBtn = styled.input`
     background-color: "#d3d3d3";
   }
 `;
-const DeleteButton = styled.button`
+export const DeleteButton = styled.button`
   padding: 10px 20px;
   border: none;
   border-radius: 5px;

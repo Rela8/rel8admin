@@ -594,7 +594,38 @@ export const ChaptersTable = ({ data }) => {
     </>
   );
 };
+export const FundAProjectTable = ({data,show,deleteFn})=>{
+  const [selected, setSelected] = useState(null);
 
+  return(
+    <Table>
+        <TableBody>
+          <TableRow>
+            <TableHead>Id</TableHead>
+            <TableHead>Heading</TableHead>
+            <TableHead>About</TableHead>
+            <TableHead>What Project Needs</TableHead>
+            <TableHead>Delete</TableHead>
+          </TableRow>
+          {data.map((item) => (
+            <TableRow key={item.id}>
+              <TableData>{item.id}</TableData>
+              <TableData>{item.heading}</TableData>
+              <TableData>{item.about}</TableData>
+              <TableData>{item.what_project_needs.toString()}</TableData>
+              <TableData>
+                <EllipsesIcon
+                  svgClick={()=>deleteFn(item.id)}
+                  itemInfo={() => setSelected(item)}
+                  style={{ cursor: "pointer", width: "25px", height: "25px" }}
+                />
+              </TableData>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+  )
+}
 export const MeetingsTable = ({ show, data, deleteFn }) => {
   const [selected, setSelected] = useState(null);
 

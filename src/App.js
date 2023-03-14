@@ -11,6 +11,7 @@ import News from "./components/News/News";
 import Publications from "./components/Publications/Publications";
 import Settings from "./components/Settings/Settings";
 import SideBar from "./components/SideBar/SideBar";
+import FundAProject from './components/FundAProject/FundAProject';
 import NotFound from "./components/NotFound/NotFound";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,6 +38,7 @@ function App() {
                   <Route path="/committee" element={<Committee />}/>
                   <Route path="/meetings" element={<Meetings />}/>
                   <Route path="/chapters" element={<Chapters />} />
+                  <Route path="/fund_a_project" element={<FundAProject />} />
               </Route>
           <Route path="*" element={<NotFound />}/>
         </Routes>
