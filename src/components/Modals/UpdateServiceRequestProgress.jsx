@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { SubConBtnInput } from "../ActionComponents/ViewMoreInfo";
 import { useMutation, useQueryClient } from "react-query";
-import { updateActivationOfDeactivatedMembersStatusapi } from "../../utils/api-calls";
+import { updateActivationOfDeactivatedMembersStatusapi, UpdateDeactivationOfMembershipApi, updateLossOFCertApi, updateProductManufacturingUpdateStatusApi } from "../../utils/api-calls";
 import Loading from "../Loading/Loading";
 
 
@@ -36,14 +36,28 @@ const UpdateServiceRequestProgress = ({service_type,header,close,id,invalidate_q
   }
     const [selected_status,setSelectedStatus] = useState(null)
     const {isLoading,mutate:ActivationOfDeactivatedMemberSubmit} = useMutation(updateActivationOfDeactivatedMembersStatusapi,options)
+    const {isLoading:loading2,mutate:ProductManufacturingUpdateSubmit} = useMutation(updateProductManufacturingUpdateStatusApi,options)
+    const {isLoading:loading3,mutate:DeactivationOfMembershipSubmit} = useMutation(UpdateDeactivationOfMembershipApi,options)
+    const {isLoading:loading4,mutate:LossOFCertSubmit} = useMutation(updateLossOFCertApi,options)
     const onSubmit = ()=>{
         if(selected_status){
             
             if(service_type=='ActivationOfDeactivatedMember'){
-                console.log('d')
-                console.log({selected_status})
                 ActivationOfDeactivatedMemberSubmit({id,'status':selected_status})
-            }else{
+            }
+            else if(service_type=='ProductManufacturingUpdate'){
+              ProductManufacturingUpdateSubmit({id,'status':selected_status})
+            }
+            else if(service_type=='DeactivationOfMembership'){
+              DeactivationOfMembershipSubmit({id,'status':selected_status})
+
+            }
+            else if(service_type=='LossOFCert'){
+              LossOFCertSubmit({id,'status':selected_status})
+
+            }
+            // 
+            else{
                 toast.info('Please pick status', {
                     progressClassName: "toastProgress",
                     icon: false,
@@ -56,7 +70,7 @@ const UpdateServiceRequestProgress = ({service_type,header,close,id,invalidate_q
 
     return (
         <BackDrop>
-            <Loading loading={isLoading}/>
+            <Loading loading={isLoading||loading2||loading3}/>
             <SubCon style={{'height':'unset'}}>
                     <SubConHeader>{header}</SubConHeader>
 

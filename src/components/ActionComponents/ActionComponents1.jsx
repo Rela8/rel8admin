@@ -721,12 +721,23 @@ export const ChangeOfNameServiceTable = ({ show, data, deleteFn })=>{
 export const LossOFCertTable = ({data,close})=>{
   const [Modal, setModal] = useState(false);
   const [mdata, setMdata] = useState(null);
-
+  const [showModal,setShowModal] = useState(false)
+  const [currentData,setCurrentData] =useState(null)
   const displayAddMeeting = () => {
     setModal(!Modal);
   };
   return (
     <div>
+
+{
+        showModal&&<UpdateServiceRequestProgress
+        service_type={'LossOFCert'}
+        header={'Loss Of Certification Status'}
+        close={()=>setShowModal(false)}
+        invalidate_query_string={'LossOFCert'}
+        id={currentData.id}
+      />
+      }
       <ElectionThemeHeader>Loss Of Certificate</ElectionThemeHeader>
 
       <Table>
@@ -743,6 +754,7 @@ export const LossOFCertTable = ({data,close})=>{
               <TableHead>Year One Audited Finacial Statements</TableHead>
               <TableHead>Year Two Audited Finacial Statements</TableHead>
               <TableHead>Certificate Of Incorporation</TableHead>
+              <TableHead>Status</TableHead>
               <TableHead></TableHead>
             </TableRow>
           
@@ -761,14 +773,33 @@ export const LossOFCertTable = ({data,close})=>{
 
               <TableData><a href={item.certificate_of_incorporation} 
               target='_blank' rel="noreferrer" >view</a></TableData>
+              <TableData>{item.status}</TableData>
+
       <TableData>
-                <EllipsesIcon
+                {/* <EllipsesIcon
                   svgClick={()=>{
                     setMdata(item)
                     setModal(true)
                   }}
                   // itemInfo={() => setModal(true)}
                   style={{ cursor: "pointer", width: "25px", height: "25px" }}
+                /> */}
+
+                <MoreButton
+                list={[
+                  {'label':'update Status','click':()=>{
+                    setCurrentData(item)
+                    setShowModal(true)
+                  
+                  }},
+                  {
+                    'label':'view Reissuance Of Certificate',
+                    'click':()=>{
+                      setMdata(item)
+                      setModal(true)
+                    }
+                  }
+                ]}
                 />
               </TableData>
                 </TableRow>
@@ -783,9 +814,19 @@ export const LossOFCertTable = ({data,close})=>{
 }
 
 export const DeactivationOfMembershipTable = ({data,close})=>{
-
+  const [showModal,setShowModal] = useState(false)
+  const [currentData,setCurrentData] =useState(null)
   return  (
     <div>
+       {
+        showModal&&<UpdateServiceRequestProgress
+        service_type={'DeactivationOfMembership'}
+        header={'Deactivation Of Membership Status'}
+        close={()=>setShowModal(false)}
+        invalidate_query_string={'DeactivationOfMembership'}
+        id={currentData.id}
+      />
+      }
       <ElectionThemeHeader>Deactivation Of Membership</ElectionThemeHeader>
 
       <Table>
@@ -812,14 +853,21 @@ export const DeactivationOfMembershipTable = ({data,close})=>{
 
 
                   <TableData>
-                <EllipsesIcon
+                {/* <EllipsesIcon
                   svgClick={()=>{
                     // setMdata(item)
                     // setModal(true)
                   }}
                   // itemInfo={() => setModal(true)}
                   style={{ cursor: "pointer", width: "25px", height: "25px" }}
-                />
+                /> */}
+                <MoreButton
+                    list={[
+                      {'label':'update Status','click':()=>{
+                        setCurrentData(item)
+                        setShowModal(true)}}
+                    ]}
+                  />
               </TableData>
 
                 </TableRow>
@@ -833,9 +881,19 @@ export const DeactivationOfMembershipTable = ({data,close})=>{
 
 
 export const ProductManufacturingUpdateTable = ({data,close})=>{
-
+  const [showModal,setShowModal] = useState(false)
+  const [currentData,setCurrentData] =useState(null)
   return (
     <div>
+      {
+        showModal&&<UpdateServiceRequestProgress
+        service_type={'ProductManufacturingUpdate'}
+        header={'Product Manufacturing Update Status'}
+        close={()=>setShowModal(false)}
+        invalidate_query_string={'manufacturing_update'}
+        id={currentData.id}
+      />
+      }
       <ElectionThemeHeader>Product Manufacturing Update</ElectionThemeHeader>
       <Table>
           <TableBody>
@@ -861,14 +919,21 @@ export const ProductManufacturingUpdateTable = ({data,close})=>{
 
 
                   <TableData>
-                <EllipsesIcon
+                {/* <EllipsesIcon
                   svgClick={()=>{
                     // setMdata(item)
                     // setModal(true)
                   }}
                   // itemInfo={() => setModal(true)}
                   style={{ cursor: "pointer", width: "25px", height: "25px" }}
-                />
+                /> */}
+                <MoreButton
+                    list={[
+                      {'label':'update Status','click':()=>{
+                        setCurrentData(item)
+                        setShowModal(true)}}
+                    ]}
+                  />
               </TableData>
 
                 </TableRow>

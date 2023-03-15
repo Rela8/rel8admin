@@ -513,9 +513,38 @@ export const getActivationOfDeactivatedMember =async() =>{
 
 
 export const updateActivationOfDeactivatedMembersStatusapi =async ({id,status})=>{
-    console.log({id,status})
     try{
         const res = await privateRequest.post(`/tenant/services_request/admin_activation_of_deactivated_member/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+export const updateProductManufacturingUpdateStatusApi =async ({id,status})=>{
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_product_manufacturing_update/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+export const UpdateDeactivationOfMembershipApi =async ({id,status})=>{
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_deactivation_of_membership/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+export const  updateLossOFCertApi  =async ({id,status})=>{
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_loss_of_certificate_service/update_status/`,{id,status})
         return res.data
     }catch(e){
         throw new AxiosError(e)
