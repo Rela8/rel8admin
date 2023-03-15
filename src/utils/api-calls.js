@@ -459,3 +459,66 @@ export const getMemOfCouncil = async (id) => {
         throw new AxiosError(e)
     }   
 }
+
+
+
+export const getChangeOfName= async () => {
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_manage_change_of_name/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+}
+export const getLossOfCert = async () => {
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_loss_of_certificate_service/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+}
+
+export const getDeactivationOfMembership = async()=>{
+
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_deactivation_of_membership/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+
+}
+
+export const getProductManufacturingUpdate =async() =>{
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_product_manufacturing_update/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+export const getActivationOfDeactivatedMember =async() =>{
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_activation_of_deactivated_member/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+
+export const updateActivationOfDeactivatedMembersStatusapi =async ({id,status})=>{
+    console.log({id,status})
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_activation_of_deactivated_member/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
