@@ -197,7 +197,7 @@ const AddCommittee = ({ close }) => {
         <Loading loading={isLoading || isFetching} />
       ) : !isError ? (
         <SubCon>
-          <SubConHeader>Add Event</SubConHeader>
+          <SubConHeader>Add Committee</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormLabel>
               Name:

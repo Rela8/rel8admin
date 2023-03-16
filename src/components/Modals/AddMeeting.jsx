@@ -185,7 +185,7 @@ const AddMeeting = ({ close }) => {
         />
       ) : !isError || !excoError ? (
         <SubCon>
-          <SubConHeader>Add Event</SubConHeader>
+          <SubConHeader>Add Meeting</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormLabel>
               Name:
