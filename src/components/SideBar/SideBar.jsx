@@ -188,6 +188,16 @@ const SideBar = () => {
           </SideBarItem>
 
           <SideBarItem>
+            <CustNavLink where={"/service_request"}>
+              <UsersIcon
+                style={{ width: "25px", height: "25px", marginRight: "10px" }}
+              />
+              Service Request
+            </CustNavLink>
+          </SideBarItem>
+
+
+          <SideBarItem>
             <CustNavLink where={"/chapters"}>
               <EventsIcon
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}

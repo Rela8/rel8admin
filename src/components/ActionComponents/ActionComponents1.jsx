@@ -664,12 +664,24 @@ export const MeetingsTable = ({ show, data, deleteFn }) => {
 export const ChangeOfNameServiceTable = ({ show, data, deleteFn })=>{
   const [Modal, setModal] = useState(false);
   const [mdata, setMdata] = useState(null);
-
+  const [showModal,setShowModal] = useState(false)
+  const [currentData,setCurrentData] =useState(null)
   const displayAddMeeting = () => {
     setModal(!Modal);
   };
   return (
    <div>
+
+{
+        showModal&&<UpdateServiceRequestProgress
+        service_type={'ChangeOfNameService'}
+        header={'Change Of Name Service Status'}
+        close={()=>setShowModal(false)}
+        invalidate_query_string={'changeOfName'}
+        id={currentData.id}
+      />
+      }
+
     {
       Modal&&mdata?
       <ChangeOfNameMoreDetail data={mdata} close={displayAddMeeting} />
@@ -699,13 +711,30 @@ export const ChangeOfNameServiceTable = ({ show, data, deleteFn })=>{
             <TableData><a href={item.certificate_of_incorporation} target='_blank' rel="noreferrer" >view</a></TableData>
             <TableData>{item.status}</TableData>
             <TableData>
-              <EllipsesIcon
+              {/* <EllipsesIcon
                 svgClick={()=>{
                   setMdata(item)
                   setModal(true)}}
                 // itemInfo={() => setModal(true)}
                 style={{ cursor: "pointer", width: "25px", height: "25px" }}
-              />
+              /> */}
+
+              <MoreButton
+                list={[
+                  {'label':'update Status','click':()=>{
+                    setCurrentData(item)
+                    setShowModal(true)
+                  
+                  }},
+                  {
+                    'label':'view Reissuance Of Certificate',
+                    'click':()=>{
+                      setMdata(item)
+                      setModal(true)
+                    }
+                  }
+                ]}
+                />
             </TableData>
             
           </TableRow>

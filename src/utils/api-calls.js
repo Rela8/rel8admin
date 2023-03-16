@@ -551,3 +551,13 @@ export const  updateLossOFCertApi  =async ({id,status})=>{
     }   
 
 }
+export const updateChangeOfNameApi= async ({id,status})=>{
+
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_manage_change_of_name/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}

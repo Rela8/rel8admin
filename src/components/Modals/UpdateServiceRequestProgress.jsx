@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { SubConBtnInput } from "../ActionComponents/ViewMoreInfo";
 import { useMutation, useQueryClient } from "react-query";
-import { updateActivationOfDeactivatedMembersStatusapi, UpdateDeactivationOfMembershipApi, updateLossOFCertApi, updateProductManufacturingUpdateStatusApi } from "../../utils/api-calls";
+import { updateActivationOfDeactivatedMembersStatusapi, updateChangeOfNameApi, UpdateDeactivationOfMembershipApi, updateLossOFCertApi, updateProductManufacturingUpdateStatusApi } from "../../utils/api-calls";
 import Loading from "../Loading/Loading";
 
 
@@ -39,6 +39,7 @@ const UpdateServiceRequestProgress = ({service_type,header,close,id,invalidate_q
     const {isLoading:loading2,mutate:ProductManufacturingUpdateSubmit} = useMutation(updateProductManufacturingUpdateStatusApi,options)
     const {isLoading:loading3,mutate:DeactivationOfMembershipSubmit} = useMutation(UpdateDeactivationOfMembershipApi,options)
     const {isLoading:loading4,mutate:LossOFCertSubmit} = useMutation(updateLossOFCertApi,options)
+    const {isLoading:loading5,mutate:changeOfNameSubmit} = useMutation(updateChangeOfNameApi,options)
     const onSubmit = ()=>{
         if(selected_status){
             
@@ -56,6 +57,9 @@ const UpdateServiceRequestProgress = ({service_type,header,close,id,invalidate_q
               LossOFCertSubmit({id,'status':selected_status})
 
             }
+            else if(service_type =='ChangeOfNameService'){
+              changeOfNameSubmit({id,'status':selected_status})
+            }
             // 
             else{
                 toast.info('Please pick status', {
@@ -70,7 +74,7 @@ const UpdateServiceRequestProgress = ({service_type,header,close,id,invalidate_q
 
     return (
         <BackDrop>
-            <Loading loading={isLoading||loading2||loading3}/>
+            <Loading loading={isLoading||loading2||loading3||loading4||loading5}/>
             <SubCon style={{'height':'unset'}}>
                     <SubConHeader>{header}</SubConHeader>
 
