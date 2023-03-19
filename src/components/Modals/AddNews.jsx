@@ -346,7 +346,7 @@ const AddNews = ({ close }) => {
                     Heading:
                     <FormDataComp
                       type={"text"}
-                      {...register(`news_paragraph.${index}.heading`)}
+                      {...register(`news_paragraph.${index}.heading`, { required: false })}
                     />
                   </FormLabel>
 
