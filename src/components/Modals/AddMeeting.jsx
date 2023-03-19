@@ -8,11 +8,12 @@ import { mobile } from "../../responsive";
 import {
   createMeeting,
   getAllChapters,
+  getAllCommittee,
   getListOfExcos,
 } from "../../utils/api-calls";
 import Loading from "../Loading/Loading";
 
-const BackDrop = styled.div`
+export const BackDrop = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -24,12 +25,12 @@ const BackDrop = styled.div`
   align-items: center;
   z-index: 10;
 `;
-const Form = styled.form`
+export const Form = styled.form`
   margin: 20px 0px;
   display: flex;
   flex-direction: column;
 `;
-const FormDataComp = styled.input`
+export const FormDataComp = styled.input`
   padding: 5px 0px;
   background-color: transparent;
   border: none;
@@ -42,7 +43,7 @@ const FormDataComp = styled.input`
     color: ${rel8Purple};
   }
 `;
-const FormSelection = styled.select`
+export const FormSelection = styled.select`
   padding: 5px 0px;
   color: ${rel8Purple};
   outline: none;
@@ -51,14 +52,14 @@ const FormSelection = styled.select`
   margin: 10px 0px;
   overflow: auto;
 `;
-const FormOption = styled.option``;
-const FormLabel = styled.label`
+export const FormOption = styled.option``;
+export const FormLabel = styled.label`
   display: flex;
   flex-direction: column;
   font-size: 12px;
   margin: 10px 0px;
 `;
-const SubCon = styled.div`
+export const SubCon = styled.div`
   background-color: ${rel8White};
   width: 350px;
   height: 500px;
@@ -70,16 +71,16 @@ const SubCon = styled.div`
     width: "250px",
   })}
 `;
-const SubConHeader = styled.p`
+export const SubConHeader = styled.p`
   font-weight: 700;
   text-align: center;
 `;
-const SubConBtnHold = styled.div`
+export const SubConBtnHold = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-top: 20px;
 `;
-const SubConBtn = styled.input`
+export const SubConBtn = styled.input`
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -89,7 +90,7 @@ const SubConBtn = styled.input`
     props.typex === "filled" ? `${rel8White}` : `${rel8Purple}`};
   cursor: pointer;
 `;
-const FormTextArea = styled.textarea`
+export const FormTextArea = styled.textarea`
   padding: 5px 0px;
   background-color: transparent;
   border: none;
@@ -104,7 +105,7 @@ const FormTextArea = styled.textarea`
 `;
 
 const AddMeeting = ({ close }) => {
-  const { register, handleSubmit } = useForm(),
+  const { register, handleSubmit ,setValue} = useForm(),
     queryClient = useQueryClient();
 
   const { isLoading, isFetching, isError, data } = useQuery(
@@ -122,6 +123,18 @@ const AddMeeting = ({ close }) => {
     isError: excoError,
     data: excoData,
   } = useQuery("all-excos", getListOfExcos, {
+    refetchOnWindowFocus: false,
+    select: (data) =>
+      data.data.map((item) => ({ id: item.id, name: item.name })),
+  });
+
+
+  const {
+    isLoading: commiteeLoading,
+    isFetching: commiteeFetching,
+    isError: commiteeError,
+    data: commiteeData,
+  } = useQuery("all-committee", getAllCommittee, {
     refetchOnWindowFocus: false,
     select: (data) =>
       data.data.map((item) => ({ id: item.id, name: item.name })),
@@ -153,6 +166,7 @@ const AddMeeting = ({ close }) => {
   });
 
   const onSubmit = (data) => {
+
     mutate(data);
   };
   return (
@@ -165,13 +179,13 @@ const AddMeeting = ({ close }) => {
             `}
       </style>
 
-      {isLoading || isFetching || excoLoading || excoFetching ? (
+      {isLoading||commiteeLoading || isFetching || excoLoading || excoFetching ? (
         <Loading
           loading={isLoading || isFetching || excoLoading || excoFetching}
         />
       ) : !isError || !excoError ? (
         <SubCon>
-          <SubConHeader>Add Event</SubConHeader>
+          <SubConHeader>Add Meeting</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormLabel>
               Name:
@@ -200,14 +214,41 @@ const AddMeeting = ({ close }) => {
               />
             </FormLabel>
 
+
+
+            <FormLabel>
+            Commitee:
+              <FormSelection
+                defaultValue={""}
+                {...register("commitee", { required: false })}
+              >
+                <FormOption disabled value="">
+                  select an option
+                </FormOption>
+                <FormOption value="">
+                  Unselect
+                </FormOption>
+                {commiteeData.map((item) => (
+                  <FormOption key={item.id} value={item.id}>
+                    {item.id} || {item.name}
+                  </FormOption>
+                ))}
+              </FormSelection>
+            </FormLabel>
+
+
+
             <FormLabel>
               Exco:
               <FormSelection
                 defaultValue={""}
-                {...register("exco", { required: true })}
+                {...register("exco", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option
+                </FormOption>
+                <FormOption value="">
+                  Unselect
                 </FormOption>
                 {excoData.map((item) => (
                   <FormOption key={item.id} value={item.id}>
@@ -221,10 +262,13 @@ const AddMeeting = ({ close }) => {
               Chapter:
               <FormSelection
                 defaultValue={""}
-                {...register("exco", { required: true })}
+                {...register("chapter", { required: false })}
               >
-                <FormOption disabled value="">
+               <FormOption disabled value="">
                   select an option
+                </FormOption>
+                <FormOption value="">
+                  Unselect
                 </FormOption>
                 {data.map((item) => (
                   <FormOption key={item.id} value={item.id}>
@@ -243,7 +287,7 @@ const AddMeeting = ({ close }) => {
             </FormLabel>
 
             <FormLabel>
-              Address:
+              Address/Link Url:
               <FormDataComp
                 type={"text"}
                 {...register("addresse", { required: true })}
@@ -255,6 +299,15 @@ const AddMeeting = ({ close }) => {
               <FormDataComp
                 type={"datetime-local"}
                 {...register("event_date", { required: true })}
+              />
+            </FormLabel>
+
+            <FormLabel>
+              Meeting Docs
+            
+              <FormDataComp
+                type={"file"}
+                {...register("meeting_docs", { required: true })}
               />
             </FormLabel>
 

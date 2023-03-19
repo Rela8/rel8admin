@@ -6,6 +6,7 @@ const override = {
   display: "block",
   margin: "0 auto",
   borderColor: `${rel8Purple}`,
+  'zIndex':'1033000px'
 };
 
 const Loading = ({ loading }) => {

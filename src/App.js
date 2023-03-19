@@ -11,11 +11,13 @@ import News from "./components/News/News";
 import Publications from "./components/Publications/Publications";
 import Settings from "./components/Settings/Settings";
 import SideBar from "./components/SideBar/SideBar";
+import FundAProject from './components/FundAProject/FundAProject';
 import NotFound from "./components/NotFound/NotFound";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Meetings from "./components/Meetings/Meetings";
 import Chapters from "./components/Chapters/Chapters";
+import ServiceRequest from "./components/ServiceRequest/ServiceRequest";
 
 function App() {
   return (
@@ -37,6 +39,9 @@ function App() {
                   <Route path="/committee" element={<Committee />}/>
                   <Route path="/meetings" element={<Meetings />}/>
                   <Route path="/chapters" element={<Chapters />} />
+                  <Route path="/fund_a_project" element={<FundAProject />} />
+                  <Route path="/service_request" element={<ServiceRequest />} />
+
               </Route>
           <Route path="*" element={<NotFound />}/>
         </Routes>

@@ -241,7 +241,7 @@ const FormLabel = styled.label`
   font-size: 12px;
   margin: 10px 0px;
 `;
-const SubConBtnInput = styled.input`
+export const SubConBtnInput = styled.input`
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -914,30 +914,32 @@ export const NewsViewMore = ({ data, close }) => {
             </SubConHeader2>
             {data.is_committe && (
               <SubConHeader2>
-                <TitleCon>Committee id: </TitleCon> {data.commitee_name}
+                {/* <TitleCon>Committee id: </TitleCon> {data.commitee_name} */}
+                <TitleCon>Is For Commitee </TitleCon> 
               </SubConHeader2>
             )}
             {data.is_exco && (
               <SubConHeader2>
-                <TitleCon>Exco id: </TitleCon> {data.exco}
+                <TitleCon>Is For Exco: </TitleCon> {data.exco}
+                {/* <TitleCon>Exco id: </TitleCon> {data.exco} */}
               </SubConHeader2>
             )}
-            {data.is_member && (
+            {/* {data.is_member && (
               <SubConHeader2>
                 <TitleCon>For Members: </TitleCon>{" "}
                 {data.is_member ? "Yes" : "No"}
               </SubConHeader2>
-            )}
+            )} */}
 
             <SubConHeader2>
-              <TitleCon>Name: </TitleCon> {data.name}
+              <TitleCon>Titles: </TitleCon> {data.name}
             </SubConHeader2>
             <SubConHeader>
-              <TitleCon>Body</TitleCon>
+              <TitleCon>Content</TitleCon>
             </SubConHeader>
-            <SubConHeader2 style={{ wordWrap: "break-word" }}>
+            {/* <SubConHeader2 style={{ wordWrap: "break-word" }}>
               {data.body}
-            </SubConHeader2>
+            </SubConHeader2> */}
             <SubConHeader>
               <TitleCon>Paragraphs</TitleCon>
             </SubConHeader>
@@ -1881,7 +1883,7 @@ export const MeetingViewMore = ({ data, close }) => {
         {data ? (
           <>
             <SubConHeader2>
-              <TitleCon>Id: </TitleCon> {data.id}
+              {/* <TitleCon>Id: </TitleCon> {data.id} */}
             </SubConHeader2>
             <SubConHeader2>
               <TitleCon>Exco Id: </TitleCon> {data.exco}
@@ -1901,7 +1903,9 @@ export const MeetingViewMore = ({ data, close }) => {
               {new Date(data.event_date).toLocaleString()}
             </SubConHeader2>
             <SubConHeader2>
-              <TitleCon>Address: </TitleCon> {data.addresse}
+              <TitleCon>Address: </TitleCon> {data.addresse.includes('https'||'http')?
+            <a href={data.addresse} target='_blank' rel="noreferrer">View</a>:data.addresse  
+            }
             </SubConHeader2>
             <SubConHeader2>
               <TitleCon>Details: </TitleCon> {data.details}
@@ -1912,6 +1916,12 @@ export const MeetingViewMore = ({ data, close }) => {
             <SubConHeader2>
               <TitleCon>Organiser Details: </TitleCon> {data.organiserDetails}
             </SubConHeader2>
+          {
+            data.meeting_docs?
+            <SubConHeader2>
+              <TitleCon>Meeting Document Details: </TitleCon><a href={data.meeting_docs} target='_blank' rel="noreferrer">View</a>
+            </SubConHeader2>:''
+          }
           </>
         ) : (
           <small>Can't fetch additional Due Info.</small>
@@ -1985,3 +1995,108 @@ export const CouncilViewMore = ({ id, close }) => {
     </BackDrop>
   );
 };
+
+
+
+
+
+export const ChangeOfNameMoreDetail = ({ data, close }) => {
+  return (
+    <BackDrop>
+      <style>
+        {`
+                    body{
+                        overflow:hidden;
+                    }
+                `}
+      </style>
+      <LeftSubCon>
+        <SubConHeader>Reissuance Of Certificate</SubConHeader>
+        {data ? (
+          <>
+           
+            {/* <SubConHeader2>
+            </SubConHeader2> */}
+            {/* <SubConHeader2> */}
+            <div>
+            <TitleCon>Name Of Company: </TitleCon> {data.reissuance_of_cert_form.name_of_company}
+            <br />
+              
+              <TitleCon>Cac Reg Number: </TitleCon> {data.reissuance_of_cert_form.cac_reg_number}
+              <br />
+              <TitleCon>Tax Identification Number: </TitleCon> {data.reissuance_of_cert_form.tax_identification_number}
+              <br />
+
+              <TitleCon>Man Reg Number: </TitleCon> {data.reissuance_of_cert_form.man_reg_number}
+              <br />
+
+              <TitleCon>Company Official Email: </TitleCon> {data.reissuance_of_cert_form.company_official_email}
+              <br />
+
+              <TitleCon>Company Official Website: </TitleCon> {data.reissuance_of_cert_form.company_official_website}
+              <br />
+
+              <TitleCon>Corporate Addresse: </TitleCon> {data.reissuance_of_cert_form.corporate_addresse}
+              <br />
+
+              <TitleCon>Other Factory Location: </TitleCon> {JSON.parse(data.reissuance_of_cert_form.other_factory_location).join(',')}
+              <br />
+
+              <TitleCon>Products Manufactured: </TitleCon> {JSON.parse(data.reissuance_of_cert_form.products_manufactured).join()}
+              <br />
+
+              <TitleCon>List Of Imported Materials Used In Production: </TitleCon> {JSON.parse(data.reissuance_of_cert_form.list_of_imported_materials_used_in_production).join()}
+              <br />
+
+              <TitleCon>List Of Local Materials Used In Production: </TitleCon> {JSON.parse(data.reissuance_of_cert_form.list_of_local_materials_used_in_production).join()}
+              <br />
+
+           
+           
+              <TitleCon>Managing Director Email: </TitleCon> {data.reissuance_of_cert_form.managing_director_email}
+              <br />
+
+              <TitleCon>Managing Director Phone: </TitleCon> {data.reissuance_of_cert_form.managing_director_phone}
+              <br />
+
+              <TitleCon>Chief Finance Officer Phone: </TitleCon> {data.reissuance_of_cert_form.chief_finance_officer_phone}
+              <br />
+
+              <TitleCon>Chief Finance Officer Email: </TitleCon> {data.reissuance_of_cert_form.chief_finance_officer_email}
+              <br />
+
+              <TitleCon>Head Of Admin Phone: </TitleCon> {data.reissuance_of_cert_form.head_of_admin_phone}
+              <br />
+
+              <TitleCon>Head Of Admin Email: </TitleCon> {data.reissuance_of_cert_form.head_of_admin_email}
+              <br />
+
+              <TitleCon>Head Of Corporate Affair Phone: </TitleCon> {data.reissuance_of_cert_form.head_of_corporate_affair_phone}
+              <br />
+
+              <TitleCon>Head of Corporateaffair Email: </TitleCon> {data.reissuance_of_cert_form.head_of_corporate_affair_email}
+              <br />
+
+              <TitleCon>Officer Handling Man Issues In Your Company Phone: </TitleCon> {data.reissuance_of_cert_form.officer_handling_man_issues_in_your_company_phone}
+              <br />
+
+              <TitleCon>Officer Handling Man Issues In Your Company Email: </TitleCon> {data.reissuance_of_cert_form.officer_handling_man_issues_in_your_company_email}
+              <br />
+
+            </div>
+           
+            {/* </SubConHeader2> */}
+         
+          </>
+        ) : (
+          <small>Can't fetch additional Due Info.</small>
+        )}
+        <SubConBtnHold>
+          <SubConBtn onClick={close}>Close</SubConBtn>
+        </SubConBtnHold>
+      </LeftSubCon>
+    </BackDrop>
+  );
+};
+
+

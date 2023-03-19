@@ -307,14 +307,56 @@ export const registerUserToChapter = async (data) => {
 
 //MEETINGS
 export const createMeeting = async (data) => {
+    const form = new FormData()
+    form.append('name',data.name)
+    form.append('details',data.details)
+    form.append('organiserName',data.organiserName)
+    form.append('organiserDetails',data.organiserDetails)
+    if(data.exo){
+        form.append('exco',data.exco)
+    }
+    if(data.chapter){
+        form.append('chapter',data.chapter)
+    }
+    if(data.commitee){
+        form.append('commitee',data.commitee)
+    }
+    form.append('date_for',data.date_for)
+    form.append('event_date',data.event_date)
+    form.append('addresse',data.addresse)
+    form.append('meeting_docs',data.meeting_docs[0])
     try{
-        const res = await privateRequest.post("/tenant/meeting/admin_manage_meeting/",data)
+        const res = await privateRequest.post("/tenant/meeting/admin_manage_meeting/",form)
         return res.data
     }catch(e){
         throw new AxiosError(e)
     }
 }
 
+export const createFundProjectApi = async (data)=>{
+    try{
+        const res = await privateRequest.post("/tenant/extras/admin_manage_project/",data)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }
+}
+export const deleteFundProjectApi = async (id)=>{
+    try{
+        const res = await privateRequest.delete("/tenant/extras/admin_manage_project/"+id+'/',)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }
+}
+export const getFundAProjects = async ()=>{
+    try{
+        const res = await privateRequest.get('/tenant/extras/admin_manage_project/')
+        return res.data;
+    }catch(e){
+        throw new AxiosError(e)
+    }
+}
 export const getAllMeetings = async () => {
     try{
         const res = await privateRequest.get("/tenant/meeting/admin_manage_meeting/")
@@ -416,4 +458,106 @@ export const getMemOfCouncil = async (id) => {
     }catch(e){
         throw new AxiosError(e)
     }   
+}
+
+
+
+export const getChangeOfName= async () => {
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_manage_change_of_name/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+}
+export const getLossOfCert = async () => {
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_loss_of_certificate_service/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+}
+
+export const getDeactivationOfMembership = async()=>{
+
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_deactivation_of_membership/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+
+}
+
+export const getProductManufacturingUpdate =async() =>{
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_product_manufacturing_update/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+export const getActivationOfDeactivatedMember =async() =>{
+    try{
+        const res = await privateRequest.get(`/tenant/services_request/admin_activation_of_deactivated_member/`)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+
+export const updateActivationOfDeactivatedMembersStatusapi =async ({id,status})=>{
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_activation_of_deactivated_member/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+export const updateProductManufacturingUpdateStatusApi =async ({id,status})=>{
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_product_manufacturing_update/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+export const UpdateDeactivationOfMembershipApi =async ({id,status})=>{
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_deactivation_of_membership/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+
+export const  updateLossOFCertApi  =async ({id,status})=>{
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_loss_of_certificate_service/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
+}
+export const updateChangeOfNameApi= async ({id,status})=>{
+
+    try{
+        const res = await privateRequest.post(`/tenant/services_request/admin_manage_change_of_name/update_status/`,{id,status})
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }   
+
 }

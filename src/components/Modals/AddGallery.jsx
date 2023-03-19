@@ -126,7 +126,7 @@ const AddGallery = ({ close }) => {
       </style>
 
       <SubCon>
-        <SubConHeader>Add Event</SubConHeader>
+        <SubConHeader>Add Gallery</SubConHeader>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FormLabel>
             Name:
