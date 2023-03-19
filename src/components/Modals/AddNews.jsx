@@ -371,7 +371,7 @@ const AddNews = ({ close }) => {
               mt="filledup"
               onClick={() =>
                 append({
-                  heading: "New Heading",
+                  heading: " ",
                   paragragh: "New Paragraph",
                 })
               }
