@@ -207,6 +207,15 @@ const SideBar = () => {
           </SideBarItem>
 
           <SideBarItem>
+            <CustNavLink where={"/prospective-member"}>
+              <EventsIcon
+                style={{ width: "25px", height: "25px", marginRight: "10px" }}
+              />
+             Set Prospective Members Rules
+            </CustNavLink>
+          </SideBarItem>
+
+          <SideBarItem>
             <CustNavLink where={"/settings"}>
               <SettingsIcon
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}

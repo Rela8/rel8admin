@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Meetings from "./components/Meetings/Meetings";
 import Chapters from "./components/Chapters/Chapters";
 import ServiceRequest from "./components/ServiceRequest/ServiceRequest";
+import SetProspectiveMembersRules from "./components/SetProspectiveMembersRules/SetProspectiveMembersRules";
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
                   <Route path="/chapters" element={<Chapters />} />
                   <Route path="/fund_a_project" element={<FundAProject />} />
                   <Route path="/service_request" element={<ServiceRequest />} />
-
+                  <Route path="/prospective-member" element={<SetProspectiveMembersRules/>} />
               </Route>
           <Route path="*" element={<NotFound />}/>
         </Routes>

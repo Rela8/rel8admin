@@ -561,3 +561,16 @@ export const updateChangeOfNameApi= async ({id,status})=>{
     }   
 
 }
+
+
+
+export const getProspectivememberRuleApi = async()=>{
+    const resp = await privateRequest.get('/tenant/prospectivemember/adminManage_prospective_rule/')
+    return resp.data.data
+}
+
+export const setPropectiveMemberRuleApi = async (data)=>{
+    const resp = await privateRequest.post('/tenant/prospectivemember/adminManage_prospective_rule/',data)
+    return resp.data.data
+
+}
