@@ -19,6 +19,7 @@ import Meetings from "./components/Meetings/Meetings";
 import Chapters from "./components/Chapters/Chapters";
 import ServiceRequest from "./components/ServiceRequest/ServiceRequest";
 import SetProspectiveMembersRules from "./components/SetProspectiveMembersRules/SetProspectiveMembersRules";
+import AllProspectivemembers from "./components/AllProspectivemembers/AllProspectivemembers";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
                   <Route path="/fund_a_project" element={<FundAProject />} />
                   <Route path="/service_request" element={<ServiceRequest />} />
                   <Route path="/prospective-member" element={<SetProspectiveMembersRules/>} />
+                  <Route path="/all-prospectivemembers" element={<AllProspectivemembers/>} />
               </Route>
           <Route path="*" element={<NotFound />}/>
         </Routes>

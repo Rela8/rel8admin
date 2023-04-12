@@ -26,6 +26,8 @@ import {
 } from "./ViewMoreInfo";
 import MoreButton from '../MoreButton'
 import UpdateServiceRequestProgress from "../Modals/UpdateServiceRequestProgress";
+import { AddNewBtn } from "../Members/Members.styles";
+import ViewProspectivememberModal from "../Modals/ViewProspectivememberModal";
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -1037,4 +1039,62 @@ export const ActivationOfDeactivatedMemberTable = ({data,close})=>{
       </Table>
     </div>
   )
+}
+
+export const ViewAllProspectiveMembersTable = ({data,close})=>{
+  const [showModal,setShowModal] = useState(false)
+  const [currentData,setCurrentData] =useState(null)
+  console.log(currentData)
+  return (
+    <div>
+      {/* {
+        showModal?
+        <ViewProspectivememberModal
+        form_one={currentData?.form_one?.info}
+        close={showModal}
+        />
+        :''
+      } */}
+      <ElectionThemeHeader>All Prospective Members</ElectionThemeHeader>
+      <Table>
+        <TableBody>
+          <TableRow>
+          <TableHead>Full Name</TableHead>
+          <TableHead>Telephone</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Addresse</TableHead>
+          <TableHead>Pay Status</TableHead>
+          <TableHead>Amount Ppaid </TableHead>
+          <TableHead>Application Status</TableHead>
+          <TableHead>More</TableHead>
+          </TableRow>
+        </TableBody>
+
+       {
+        data?.map((d,index)=>(
+          <TableRow key={index}>
+            <TableData>{d?.full_name}</TableData>
+            <TableData>{d?.telephone_number}</TableData>
+            <TableData>{d?.email}</TableData>
+            <TableData>{d?.addresse}</TableData>
+            <TableData>{d?.has_paid?'Paid Received':'Not Received'}</TableData>
+            <TableData>{d?.amount_paid}</TableData>
+            <TableData>{d?.application_status}</TableData>
+            <TableData><AddNewBtn
+            
+              onClick={e=>{
+                setCurrentData(d)
+
+                setShowModal(true)
+              }}
+            >
+              view
+              </AddNewBtn></TableData>
+        </TableRow>
+        ))
+       }
+      </Table>
+    </div>
+  )
+
 }
