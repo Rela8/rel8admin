@@ -28,6 +28,7 @@ import MoreButton from '../MoreButton'
 import UpdateServiceRequestProgress from "../Modals/UpdateServiceRequestProgress";
 import { AddNewBtn } from "../Members/Members.styles";
 import ViewProspectivememberModal from "../Modals/ViewProspectivememberModal";
+import { toast, useToast } from "react-toastify";
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -1044,17 +1045,19 @@ export const ActivationOfDeactivatedMemberTable = ({data,close})=>{
 export const ViewAllProspectiveMembersTable = ({data,close})=>{
   const [showModal,setShowModal] = useState(false)
   const [currentData,setCurrentData] =useState(null)
-  console.log(currentData)
+  // const toast = useToast()
   return (
     <div>
-      {/* {
+      {
         showModal?
         <ViewProspectivememberModal
         form_one={currentData?.form_one?.info}
-        close={showModal}
+        form_two={currentData?.form_two}
+        setClose={setShowModal}
+        id={currentData.id}
         />
         :''
-      } */}
+      }
       <ElectionThemeHeader>All Prospective Members</ElectionThemeHeader>
       <Table>
         <TableBody>
@@ -1083,9 +1086,19 @@ export const ViewAllProspectiveMembersTable = ({data,close})=>{
             <TableData><AddNewBtn
             
               onClick={e=>{
-                setCurrentData(d)
-
-                setShowModal(true)
+                if(d.form_one.info instanceof Array){
+                  setCurrentData(d)
+                  console.log(d)
+                  setShowModal(true)
+                }
+                else{
+                  console.log(d)
+                  toast.success("This member has not submitted anything", {
+                    progressClassName: "toastProgress",
+                    icon: false,
+                  });
+                }
+                
               }}
             >
               view

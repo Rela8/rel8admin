@@ -578,3 +578,9 @@ export const getProspectiveMemberSubmmsionApi =async()=>{
     const resp= await privateRequest.get('/tenant/prospectivemember/adminManage_prospective_rule/get_submissions/')
     return resp.data.data
 }
+
+export const updateProspecticememberStatusApi=async(data)=>{
+    const resp= await privateRequest.post('/tenant/prospectivemember/adminManage_prospective_rule/update_prospective_member_status/',data)
+    return resp.data
+
+}
