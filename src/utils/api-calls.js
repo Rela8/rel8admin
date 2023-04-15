@@ -5,7 +5,8 @@ import { privateRequest, URLnAME } from "./axios-utils"
 export const loginUser = async (user) => {
     try{
         const { shortName, ...payload } = user
-        const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
+        // const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
+        const loginURL = `http://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
         const res = await axios.post(loginURL, payload)
         return res.data
     }catch(error){
@@ -583,4 +584,18 @@ export const updateProspecticememberStatusApi=async(data)=>{
     const resp= await privateRequest.post('/tenant/prospectivemember/adminManage_prospective_rule/update_prospective_member_status/',data)
     return resp.data
 
+}
+
+export const updateGalleryImageApi= async({id,image})=>{
+
+    const form = new FormData()
+    form.append('id',JSON.stringify(id)) 
+    form.append('image',image)
+    const  resp = await privateRequest.post('/tenant/extras/admin_gallery_version2/update_gallery_image/',form)
+    return  resp.data
+}
+
+export const updateGalleryTitleApi = async({id,name})=>{
+    const resp = await privateRequest.put(`/tenant/extras/admin_gallery_version2/${id}/`,{name})
+    return resp.data
 }

@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { deleteGallery, getSingleGallery } from '../../utils/api-calls'
+import { deleteGallery, getSingleGallery, updateGalleryImageApi, updateGalleryTitleApi } from '../../utils/api-calls'
 import styled from 'styled-components'
 import { rel8Pink, rel8Purple, rel8White } from '../../globals'
 import Loading from '../Loading/Loading'
 import { toast } from 'react-toastify'
 import { mobile, tablet } from '../../responsive'
-
 const BackDrop = styled.div`
     width: 100%;
     height: 100%;
@@ -72,12 +71,26 @@ const Image = styled.img`
 
 const SingleGallery = ({id, close}) => {
   const queryClient = useQueryClient()
-
+  const [name,setName] = useState('')
   const { isLoading, isFetching, isError, data } = useQuery(`gallery-${id}`, ()=>getSingleGallery(Number(id)), {
     refetchOnWindowFocus: false,
-    select: data => data.data
+    select: data => data.data,
+    'onSuccess':(data)=>{
+      setName(data.name)
+    }
+  },)
+  const  {isLoading:changingName,mutate:changeName} = useMutation(updateGalleryTitleApi,{
+    'onSuccess':(data)=>{
+      toast.info('name changed succesfully',{progressClassName:"toastProgress",icon:false})
+      queryClient.invalidateQueries(`gallery-${id}`)  
+    }
   })
-
+  const {isLoading:updatingImage,mutate:updateImage} = useMutation(updateGalleryImageApi,{
+    'onSuccess':()=>{
+      toast.info('Uploaded Succesfully',{progressClassName:"toastProgress",icon:false})
+      queryClient.invalidateQueries(`gallery-${id}`)  
+    }
+  })
   const { isLoading:deleteLoading, mutate } = useMutation((id)=>deleteGallery(id), {
     onMutate: () => {
       toast.info("Gallery Deletion in progress",{progressClassName:"toastProgress",icon:false})
@@ -108,17 +121,47 @@ const SingleGallery = ({id, close}) => {
               }
           `}
       </style>
+      <Loading loading={updatingImage ||changingName} />
       { (isLoading||isFetching) ? <Loading loading={isLoading || isFetching}/> : (!isError) ? 
       <SubCon>
-          <SubConHeader>{data.name}</SubConHeader>
+          <SubConHeader>Title:{' '}<input 
+          onChange={e=>setName(e.target.value)}
+          value={name}
+          type='text'/></SubConHeader>
           <SubConBtnHold>
               <SubConBtn typex="filled" disabled={deleteLoading} onClick={()=>deleteGalleryHandler(data.id)}>Delete Gallery</SubConBtn>
+              <SubConBtn typex="filled" disabled={deleteLoading} onClick={()=>{
+                if(window.confirm('Do you want to update name')){
+                  changeName({'id':data.id,'name':name})
+                }
+              }}>Update title Gallery</SubConBtn>
               <SubConBtn onClick={close} disabled={deleteLoading}>Close</SubConBtn>
           </SubConBtnHold>
             <ImageCon>
               {
                 data.images.map((item,index) => (
-                  <Image alt='' src={item.image} key={index}/>
+                  <div key={index} >
+                    <label htmlFor={data.id+'image'} 
+                     style={{'margin':'0 auto','display':'inline-block',
+                     'color':'purple',
+                     'textAlign':'center','border':'1px solid purple','padding':'.7rem','borderRadius':'10px'}}>
+                      update image
+                    </label>
+                    <input type="file" 
+                    onChange={e=>{
+                      if(window.confirm('Are sure you want to update')){
+                        updateImage({
+                          'id':item.id,
+                          'image':e.target.files[0]
+                        })
+                      }
+                    }}
+                    name={data.id+'image'}
+                    id={data.id+'image'}
+                    style={{'display':'none'}}
+                     />
+                      <Image alt='' src={item.image} />
+                  </div>
                 ))
               }
             </ImageCon>
