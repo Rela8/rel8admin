@@ -53,7 +53,27 @@ export const createDues = async (dueData) => {
         throw new AxiosError(e)
     }
 }
+export const createGeneralDueApi = async (dueData)=>{
+    const res = await privateRequest.post('/tenant/dues/AdminManageDue/create_general_due/', dueData)
+    return res.data
+}
 
+export const createExcoDueApi = async (dueData)=>{
+    const res = await privateRequest.post('/tenant/dues/AdminManageDue/create_exco_due/', dueData)
+    return res.data.data
+}
+
+
+export const createMembershipGradeDueApi = async (dueData)=>{
+    const res = await privateRequest.post('/tenant/dues/AdminManageDue/create_membership_grade_due/', dueData)
+    return res.data
+}
+
+export const get_membershipgrades =async()=>{
+    const res = await privateRequest.get('/tenant/user/get_membershipgrade/')
+    return res.data.data
+
+}
 export const dueSummary = async () => {
     try{
         const res = await privateRequest.get('/tenant/dues/memberdue/get_due_detail/')

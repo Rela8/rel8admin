@@ -22,6 +22,8 @@ import { useQuery } from "react-query";
 import { dueSummary, getAllDues, getMemberDues } from "../../utils/api-calls";
 import { toast } from "react-toastify";
 import Pagination from "../Pagination/Pagination";
+import CustomModal from "../Modals/CustomModal";
+import AddDue2 from "../Modals/AddDue2";
 
 const Dues = () => {
   useEffect(() => {
@@ -114,7 +116,13 @@ const Dues = () => {
   }
   return (
     <>
-      {addDueModal && <AddDue close={displayAddDueModal} />}
+      {/* {addDueModal && <AddDue close={displayAddDueModal} />} */}
+      {addDueModal && <CustomModal 
+      modalWith={'500px'}
+      title={'Wowo this is nice'}
+      close={displayAddDueModal} >
+        <AddDue2/>
+        </CustomModal>}
       <DuesContainer>
         {isLoading || isFetching ? (
           <Loading loading={isLoading || isFetching} />
