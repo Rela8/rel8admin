@@ -6,7 +6,7 @@ export const loginUser = async (user) => {
     try{
         const { shortName, ...payload } = user
         // const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
-        const loginURL = `http://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
+        const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
         const res = await axios.post(loginURL, payload)
         return res.data
     }catch(error){
