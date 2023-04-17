@@ -220,7 +220,7 @@ const CreateExcoDue = ()  => {
                 <FormOption value="">
                   Unselect
                 </FormOption>
-                {excoData.map((item) => (
+                {excoData?.map((item) => (
                   <FormOption key={item.id} value={item.id}>
                     {item.id} || {item.name}
                   </FormOption>
@@ -347,7 +347,7 @@ const CreateExcoDue = ()  => {
                 <FormOption value="">
                   Unselect
                 </FormOption>
-                {grades.map((item) => (
+                {grades?.map((item) => (
                   <FormOption key={item.id} value={item.id}>
                     {item.id} || {item.name}
                   </FormOption>
