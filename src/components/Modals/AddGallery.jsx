@@ -130,9 +130,12 @@ const AddGallery = ({ close }) => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FormLabel>
             Name:
+            
             <FormDataComp
               type={"text"}
-              {...register("name", { required: true })}
+              maxlength={'50'}
+              maxLength={'50'}
+              {...register("name", { required: true ,})}
             />
           </FormLabel>
           <FormLabel>

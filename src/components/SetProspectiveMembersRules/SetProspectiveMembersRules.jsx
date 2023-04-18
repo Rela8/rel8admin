@@ -67,7 +67,7 @@ const SetProspectiveMembersRules = ()=>{
 
     return (
         <GalleryContainer>
-        <GalleryHeader>Set Rules For Prospective Members</GalleryHeader>
+        <GalleryHeader>Form creation for prospective memeber</GalleryHeader>
         <Loading loading={isLoading||loading}/>
         
         <br />

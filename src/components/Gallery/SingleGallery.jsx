@@ -124,8 +124,13 @@ const SingleGallery = ({id, close}) => {
       <Loading loading={updatingImage ||changingName} />
       { (isLoading||isFetching) ? <Loading loading={isLoading || isFetching}/> : (!isError) ? 
       <SubCon>
-          <SubConHeader>Title:{' '}<input 
-          onChange={e=>setName(e.target.value)}
+          <SubConHeader>Title:{' '}
+          <input 
+          onChange={e=>{
+            if(name.length !==50){
+              setName(e.target.value)
+            }
+          }}
           value={name}
           type='text'/></SubConHeader>
           <SubConBtnHold>
