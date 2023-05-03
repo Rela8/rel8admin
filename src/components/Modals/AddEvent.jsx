@@ -133,9 +133,19 @@ const AddEvent = ({ close }) => {
 
   const onSubmit = (data) => {
     const image = data.image[0];
+    const event_docs = data.event_docs[0]
     const { image: img, is_for_excos, schedule, ...newdata } = data;
-    console.log(newdata);
-    const payload = { image, ...newdata };
+    let payload = { image, ...newdata,event_docs };
+   console.log({payload})
+    if(payload.re_occuring==='false'){
+      payload={...payload,'scheduletype':['0']}
+    }else{
+      toast.error("Schedule Type is required");
+      return
+    }
+    if(!payload.is_for_excos){
+      delete payload.exco_id
+    }
     const formData = new FormData();
     Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
     formData.append("schedule", JSON.stringify(schedule));
@@ -185,10 +195,13 @@ const AddEvent = ({ close }) => {
               Excos:
               <FormSelection
                 defaultValue={""}
-                {...register("exco_id", { required: true })}
+                {...register("exco_id", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option
+                </FormOption>
+                <FormOption  selected>
+                 unselect
                 </FormOption>
                 {excoListData.map((item) => (
                   <FormOption key={item.id} value={item.id}>
@@ -230,7 +243,6 @@ const AddEvent = ({ close }) => {
             <FormLabel>
               Is Reoccuring:
               <FormSelection
-                defaultValue={""}
                 {...register("re_occuring", { required: true })}
               >
                 <FormOption disabled value="">
@@ -303,12 +315,19 @@ const AddEvent = ({ close }) => {
                 {...register("image", { required: true })}
               />
             </FormLabel>
-
+            <FormLabel>
+              Event Document:
+              <FormDataComp
+                type={"file"}
+                accept="image/*"
+                {...register("event_docs", { required: true })}
+              />
+            </FormLabel>
             <FormLabel>
               Schedule Type:
               <FormSelection
                 defaultValue={""}
-                {...register("scheduletype", { required: true })}
+                {...register("scheduletype", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option
