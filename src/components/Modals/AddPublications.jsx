@@ -121,6 +121,7 @@ const AddPublications = ({ close }) => {
   const { register, handleSubmit, control, watch } = useForm({
     defaultValues: {
       publication_paragraph: [{ heading: "", paragragh: "" }],
+      amount:0.00
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -190,14 +191,19 @@ const AddPublications = ({ close }) => {
 
   const onSubmit = (data) => {
     const image = data.image[0];
+    const danload = data.danload[0]
     const { publication_paragraph, image: img, ...newdata } = data;
-    const payload = { image, ...newdata };
+    const payload = { image, ...newdata,danload };
     const formData = new FormData();
     Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
     formData.append(
       "publication_paragraph",
       JSON.stringify(publication_paragraph)
     );
+    if(data.amount!==0){
+      formData.append('is_paid',true)
+    }
+    // console.log({payload})
     createMutate(formData);
   };
   return (
@@ -233,12 +239,30 @@ const AddPublications = ({ close }) => {
                 {...register("name", { required: true })}
               />
             </FormLabel>
+
+            <FormLabel>
+              Amount:
+              <FormDataComp
+                type={"number"}
+                {...register("amount", { required: false, })}
+              />
+            </FormLabel>
+
             <FormLabel>
               Image:
               <FormDataComp
                 type={"file"}
                 accept={"image/*"}
                 {...register("image", { required: true })}
+              />
+            </FormLabel>
+            
+            <FormLabel>
+              Publication File:
+              <FormDataComp
+                type={"file"}
+                // accept={"pdf/*"}
+                {...register("danload", { required: true })}
               />
             </FormLabel>
             <FormLabel>
@@ -304,10 +328,10 @@ const AddPublications = ({ close }) => {
               </FormLabel>
             )}
 
-            <FormLabel>
+            {/* <FormLabel>
               Body:
               <FormTextArea {...register("body", { required: true })} />
-            </FormLabel>
+            </FormLabel> */}
 
             {fields.map((field, index) => {
               return (
@@ -316,14 +340,14 @@ const AddPublications = ({ close }) => {
                     Heading:
                     <FormDataComp
                       type={"text"}
-                      {...register(`publication_paragraph.${index}.heading`)}
+                      {...register(`publication_paragraph.${index}.heading`,{required:false})}
                     />
                   </FormLabel>
 
                   <FormLabel>
                     Paragraph:
                     <FormTextArea
-                      {...register(`publication_paragraph.${index}.paragragh`)}
+                      {...register(`publication_paragraph.${index}.paragragh`,{required:false})}
                     />
                   </FormLabel>
                   <DeleteButton
