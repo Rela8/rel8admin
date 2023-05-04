@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios"
-import { privateRequest, URLnAME } from "./axios-utils"
-import { UpdateMemberInfoSchema } from "../components/Modals/UpdateMember"
+import { privateRequest, URLnAME } from "../axios-utils"
+import { UpdateMemberInfoSchema } from "../../components/Modals/UpdateMember"
 
 
 // Admin Handles Member 

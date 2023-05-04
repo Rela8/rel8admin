@@ -6,6 +6,8 @@ import { rel8Pink, rel8Purple, rel8White } from '../../globals'
 import Loading from '../Loading/Loading'
 import { toast } from 'react-toastify'
 import { mobile, tablet } from '../../responsive'
+import { addMoreImages, deleteSingleGalleryImage } from '../../utils/api/gallery.api.ts'
+import { FormDataComp } from '../Modals/AddMeeting.jsx'
 const BackDrop = styled.div`
     width: 100%;
     height: 100%;
@@ -112,6 +114,23 @@ const SingleGallery = ({id, close}) => {
     mutate(id)
   }
 
+  const {mutate:deleteSingleImage,isLoading:deletingSingleImage} = useMutation(deleteSingleGalleryImage,{
+    'onSuccess':()=>{
+      queryClient.invalidateQueries(`gallery-${id}`)  
+      toast.success(`Deleted Successfully`, )
+
+
+    }
+  })
+
+
+  const { isLoading:uploading,mutate:addmoreImages} = useMutation(addMoreImages,{
+    'onSuccess':()=>{
+      queryClient.invalidateQueries(`gallery-${id}`)  
+      toast.success(`Upload Success`, )
+
+    }
+  })
   return (
     <BackDrop>
       <style>
@@ -121,8 +140,8 @@ const SingleGallery = ({id, close}) => {
               }
           `}
       </style>
-      <Loading loading={updatingImage ||changingName} />
-      { (isLoading||isFetching) ? <Loading loading={isLoading || isFetching}/> : (!isError) ? 
+      <Loading loading={updatingImage||uploading ||changingName} />
+      { (isLoading||isFetching||deletingSingleImage) ? <Loading loading={isLoading || isFetching}/> : (!isError) ? 
       <SubCon>
           <SubConHeader>Title:{' '}
           <input 
@@ -134,6 +153,26 @@ const SingleGallery = ({id, close}) => {
           value={name}
           type='text'/></SubConHeader>
           <SubConBtnHold>
+            
+          <FormDataComp
+              type={"file"}
+              accept="image/*"
+              multiple
+              
+              onChange={e=>{
+                let upload_images = e.target.files
+                const form = new FormData()
+                form.append('name','ll')
+                form.append('date_taken','2023-01-02')
+                for (const file of upload_images) {
+                  form.append("upload_images", file);
+                }
+                addmoreImages(form)
+              }}
+            />
+              <SubConBtn typex="filled" disabled={deleteLoading} 
+              // onClick={()=>deleteGalleryHandler(data.id)}
+              >Upload more Gallery</SubConBtn>
               <SubConBtn typex="filled" disabled={deleteLoading} onClick={()=>deleteGalleryHandler(data.id)}>Delete Gallery</SubConBtn>
               <SubConBtn typex="filled" disabled={deleteLoading} onClick={()=>{
                 if(window.confirm('Do you want to update name')){
@@ -145,13 +184,11 @@ const SingleGallery = ({id, close}) => {
             <ImageCon>
               {
                 data.images.map((item,index) => (
-                  <div key={index} >
-                    <label htmlFor={data.id+'image'} 
-                     style={{'margin':'0 auto','display':'inline-block',
-                     'color':'purple',
-                     'textAlign':'center','border':'1px solid purple','padding':'.7rem','borderRadius':'10px'}}>
-                      update image
-                    </label>
+                  <div key={index} 
+                  style={{'width':'250px','height':'auto'}}
+                  
+                  >
+                    
                     <input type="file" 
                     onChange={e=>{
                       if(window.confirm('Are sure you want to update')){
@@ -165,7 +202,28 @@ const SingleGallery = ({id, close}) => {
                     id={data.id+'image'}
                     style={{'display':'none'}}
                      />
-                      <Image alt='' src={item.image} />
+                      <Image alt='' src={item.image}
+                      style={{'width':'100%'}}
+                      />
+                     <div style={{'display':'flex','alignItems':'center'}}>
+                     <label htmlFor={data.id+'image'} 
+                     style={{'margin':'0 auto','display':'inline-block',
+                     'color':'purple',
+                     'textAlign':'center','border':'1px solid purple','padding':'.2rem','borderRadius':'10px'}}>
+                      update image
+                    </label>
+                    <label
+                    onClick={e=>{
+                        e.preventDefault()
+                        deleteSingleImage(item.id)
+                    }}
+                    htmlFor={data.id+'image'} 
+                     style={{'margin':'0 auto','display':'inline-block',
+                     'color':'red','cursor':'pointer',
+                     'textAlign':'center','border':'1px solid red','padding':'.2rem','borderRadius':'10px'}}>
+                      delete image
+                    </label>
+                     </div>
                   </div>
                 ))
               }

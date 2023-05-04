@@ -31,18 +31,19 @@ import ViewProspectivememberModal from "../Modals/ViewProspectivememberModal";
 import { toast, useToast } from "react-toastify";
 import CustomModal from "../Modals/CustomModal";
 import UpdateMemberModal from "../Modals/UpdateMember";
-const Table = styled.table`
+import { useNavigate } from "react-router-dom";
+export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
 `;
-const TableBody = styled.tbody``;
-const TableRow = styled.tr``;
-const TableHead = styled.th`
+export const TableBody = styled.tbody``;
+export const TableRow = styled.tr``;
+export const TableHead = styled.th`
   text-align: center;
   padding-bottom: 20px;
   border-right: 2px solid ${rel8LightPink};
 `;
-const TableData = styled.td`
+export const TableData = styled.td`
   padding: 10px;
   font-size: 14px;
   background-color: ${rel8White};
@@ -364,6 +365,7 @@ export const MemDuesTable = ({ deleteFn, data, show }) => {
 //EVENT
 export const EventsTable = ({ show, data, deleteFn }) => {
   const [selected, setSelected] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -376,6 +378,7 @@ export const EventsTable = ({ show, data, deleteFn }) => {
             <TableHead>Name</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>View</TableHead>
+            <TableHead>Attendies</TableHead>
           </TableRow>
           {data.map((item) => {
             return (
@@ -395,8 +398,22 @@ export const EventsTable = ({ show, data, deleteFn }) => {
                 )}
                 <TableData>
                   <a
-                    onClick={deleteFn}
-                    itemInfo={() => setSelected(item)}
+                    onClick={e=>{
+                      setSelected(item)  
+                      // deleteFn
+                    }}
+                    // itemInfo={() => }
+                    style={{ cursor: "pointer", 'color':rel8Purple}}
+                  >
+                    View
+                  </a>
+                </TableData>
+                <TableData>
+                  <a
+                    onClick={e=>{
+                      e.preventDefault() 
+                      navigate(`/events/event-attendies/${item.id}`)
+                    }}
                     style={{ cursor: "pointer", 'color':rel8Purple}}
                   >
                     View

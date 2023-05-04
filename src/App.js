@@ -20,7 +20,7 @@ import Chapters from "./components/Chapters/Chapters";
 import ServiceRequest from "./components/ServiceRequest/ServiceRequest";
 import SetProspectiveMembersRules from "./components/SetProspectiveMembersRules/SetProspectiveMembersRules";
 import AllProspectivemembers from "./components/AllProspectivemembers/AllProspectivemembers";
-import UpdateMemberModal from "./components/Modals/UpdateMember.tsx";
+import EventAttendies from "./components/Events/EventAttendies";
 
 function App() {
   return (
@@ -34,11 +34,12 @@ function App() {
                   <Route path="/members" element={<Members />} />
                   <Route path="/settings" element={<Settings />}/>
                   <Route path="/events" element={<Events />}/>
+                  <Route path="/events/event-attendies/:id" element={<EventAttendies />}/>
+                  {/*  */}
                   <Route path="/payments" element={<Dues />}/>
                   <Route path="/news" element={<News />}/>
                   <Route path="/publications" element={<Publications />}/>
                   <Route path="/gallery" element={<Gallery />}/>
-                  <Route path="/elections" element={<Election />}/>
                   <Route path="/committee" element={<Committee />}/>
                   <Route path="/meetings" element={<Meetings />}/>
                   <Route path="/chapters" element={<Chapters />} />

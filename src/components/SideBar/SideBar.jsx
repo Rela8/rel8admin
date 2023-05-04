@@ -153,14 +153,14 @@ const SideBar = () => {
               Gallery
             </CustNavLink>
           </SideBarItem>
-          <SideBarItem>
+          {/* <SideBarItem>
             <CustNavLink where={"/elections"}>
               <ElectionIcon
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}
               />
               Elections
             </CustNavLink>
-          </SideBarItem>
+          </SideBarItem> */}
           <SideBarItem>
             <CustNavLink where={"/committee"}>
               <CommitteeIcon

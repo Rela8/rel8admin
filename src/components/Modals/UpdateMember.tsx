@@ -5,7 +5,7 @@ import { useForm ,useFieldArray} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useMutation, useQuery } from "react-query";
-import { adminGetMemberInfo, updateMemberInfo } from "../../utils/member.api";
+import { adminGetMemberInfo, updateMemberInfo } from "../../utils/api/member.api";
 import Loading from "../Loading/Loading";
 import { toast } from "react-toastify";
 
