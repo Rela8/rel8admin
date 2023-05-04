@@ -503,7 +503,7 @@ export const PublicationTable = ({ show, data, deleteFn }) => {
 //COMMITTEE
 export const CommitteeTable = ({ show, data, deleteFn }) => {
   const [selected, setSelected] = useState(null);
-
+  const navigate = useNavigate()
   return (
     <>
       {show && <CommitteeViewMore data={selected} close={deleteFn} />}
@@ -512,7 +512,8 @@ export const CommitteeTable = ({ show, data, deleteFn }) => {
           <TableRow>
             <TableHead>Id</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>view</TableHead>
+            <TableHead>view member</TableHead>
           </TableRow>
           {data.map((item) => {
             return (
@@ -526,6 +527,14 @@ export const CommitteeTable = ({ show, data, deleteFn }) => {
                     style={{ cursor: "pointer", width: "25px", height: "25px" }}
                   />
                 </TableData>
+                <TableData>
+                  <a style={{'color':rel8Purple,'textDecoration':'underline','cursor':'pointer'}}
+                  onClick={e=>{
+                    navigate(`/committee/${item.id}`)
+                  }}
+                  >view</a>
+                </TableData>
+
               </TableRow>
             );
           })}

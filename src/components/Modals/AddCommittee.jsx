@@ -237,7 +237,7 @@ const AddCommittee = ({ close }) => {
               return (
                 <section key={field.id}>
                   <FormLabel>
-                    Committee Todo:
+                    Committee Ters:
                     <FormDataComp
                       type={"text"}
                       {...register(`commitee_todo.how.${index}`, {

@@ -21,6 +21,7 @@ import ServiceRequest from "./components/ServiceRequest/ServiceRequest";
 import SetProspectiveMembersRules from "./components/SetProspectiveMembersRules/SetProspectiveMembersRules";
 import AllProspectivemembers from "./components/AllProspectivemembers/AllProspectivemembers";
 import EventAttendies from "./components/Events/EventAttendies";
+import CommiteeMembers from "./components/Committee/CommiteeMembers";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
                   <Route path="/publications" element={<Publications />}/>
                   <Route path="/gallery" element={<Gallery />}/>
                   <Route path="/committee" element={<Committee />}/>
+                  <Route path="/committee/:id" element={<CommiteeMembers />}/>
                   <Route path="/meetings" element={<Meetings />}/>
                   <Route path="/chapters" element={<Chapters />} />
                   <Route path="/fund_a_project" element={<FundAProject />} />
