@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { SubConBtnInput } from "../ActionComponents/ViewMoreInfo";
 import { useMutation, useQueryClient } from "react-query";
-import { updateActivationOfDeactivatedMembersStatusapi, updateChangeOfNameApi, UpdateDeactivationOfMembershipApi, updateLossOFCertApi, updateProductManufacturingUpdateStatusApi } from "../../utils/api-calls";
+import { updateActivationOfDeactivatedMembersStatusapi, updateChangeOfNameApi, UpdateDeactivationOfMembershipApi, updateLossOFCertApi, updateProductManufacturingUpdateStatusApi } from "../../utils/api-calls.js";
 import Loading from "../Loading/Loading";
 
 

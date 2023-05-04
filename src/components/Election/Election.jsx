@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { SearchIcon } from "../../assets/SideBar/svgs";
-import { getAllElections } from "../../utils/api-calls";
+import { getAllElections } from "../../utils/api-calls.js";
 import {
   ElectionResultTable,
   ElectionTable,

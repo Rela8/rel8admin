@@ -1,5 +1,5 @@
 import { useQuery } from "react-query"
-import { getLossOfCert } from "../../utils/api-calls"
+import { getLossOfCert } from "../../utils/api-calls.js"
 import { LossOFCertTable } from "../ActionComponents/ActionComponents1"
 import Loading from "../Loading/Loading"
 

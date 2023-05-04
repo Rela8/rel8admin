@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { SearchIcon } from "../../assets/SideBar/svgs";
-import { getAllGalleries } from "../../utils/api-calls";
+import { getAllGalleries } from "../../utils/api-calls.js";
 import Loading from "../Loading/Loading";
 import {
   AddNewBtn,

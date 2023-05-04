@@ -1,6 +1,6 @@
 
 import { useQuery } from "react-query"
-import { getDeactivationOfMembership, getProductManufacturingUpdate,  } from "../../utils/api-calls"
+import { getDeactivationOfMembership, getProductManufacturingUpdate,  } from "../../utils/api-calls.js"
 import { ProductManufacturingUpdateTable } from "../ActionComponents/ActionComponents1"
 import Loading from "../Loading/Loading"
 

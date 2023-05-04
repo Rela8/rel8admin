@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import { FormLabel,FormDataComp, SubConBtn, FormSelection, FormOption } from './AddMeeting';
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient  } from 'react-query';
-import { createExcoDueApi, createGeneralDueApi, createMembershipGradeDueApi, getListOfExcos, get_membershipgrades } from '../../utils/api-calls';
+import { createExcoDueApi, createGeneralDueApi, createMembershipGradeDueApi, getListOfExcos, get_membershipgrades } from '../../utils/api-calls.js';
 import { toast, useToast } from "react-toastify";
 import Loading from '../Loading/Loading';
 

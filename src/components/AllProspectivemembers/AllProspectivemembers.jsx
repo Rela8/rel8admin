@@ -2,7 +2,7 @@ import React from "react"
 import { ViewAllProspectiveMembersTable } from "../ActionComponents/ActionComponents1"
 import { GalleryContainer } from "../Gallery/Gallery.styles"
 import { useQuery } from "react-query"
-import { getProspectiveMemberSubmmsionApi } from "../../utils/api-calls"
+import { getProspectiveMemberSubmmsionApi } from "../../utils/api-calls.js"
 
 
 const AllProspectivemembers = ()=>{

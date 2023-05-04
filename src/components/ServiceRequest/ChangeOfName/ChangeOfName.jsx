@@ -1,5 +1,5 @@
 import { useQuery } from "react-query"
-import { getChangeOfName } from "../../../utils/api-calls"
+import { getChangeOfName } from "../../../utils/api-calls.js"
 import { ChangeOfNameServiceTable } from "../../ActionComponents/ActionComponents1"
 import Loading from "../../Loading/Loading"
 

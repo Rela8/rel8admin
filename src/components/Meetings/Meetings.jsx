@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { SearchIcon } from "../../assets/SideBar/svgs";
-import { getAllMeetings } from "../../utils/api-calls";
+import { getAllMeetings } from "../../utils/api-calls.js";
 import { MeetingsTable } from "../ActionComponents/ActionComponents1";
 import { EventsHeader, EventsList } from "../Events/Events.styles";
 import Loading from "../Loading/Loading";

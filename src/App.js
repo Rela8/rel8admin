@@ -20,6 +20,7 @@ import Chapters from "./components/Chapters/Chapters";
 import ServiceRequest from "./components/ServiceRequest/ServiceRequest";
 import SetProspectiveMembersRules from "./components/SetProspectiveMembersRules/SetProspectiveMembersRules";
 import AllProspectivemembers from "./components/AllProspectivemembers/AllProspectivemembers";
+import UpdateMemberModal from "./components/Modals/UpdateMember.tsx";
 
 function App() {
   return (

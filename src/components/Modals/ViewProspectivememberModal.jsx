@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 import { rel8Pink, rel8Purple, rel8White } from "../../globals";
 import { mobile } from "../../responsive";
-import { createGallery, updateProspecticememberStatusApi } from "../../utils/api-calls";
+import { createGallery, updateProspecticememberStatusApi } from "../../utils/api-calls.js";
 import { BackDrop, FormLabel, FormOption, FormSelection, SubCon } from "./AddMeeting";
 import MoreButton from "../MoreButton";
 import { DeleteButton } from "./AddNews";

@@ -10,7 +10,7 @@ import {
   getAllChapters,
   getAllCommittee,
   getListOfExcos,
-} from "../../utils/api-calls";
+} from "../../utils/api-calls.js";
 import Loading from "../Loading/Loading";
 
 export const BackDrop = styled.div`

@@ -7,7 +7,7 @@ import { DashBoardRightDueButton } from "../DashBoard/DashBoard.styles"
 import { useForm, useFieldArray, useWatch, Control } from "react-hook-form";
 import { DeleteButton } from "../Modals/AddNews"
 import { useMutation, useQuery } from "react-query"
-import { getProspectivememberRuleApi, setPropectiveMemberRuleApi } from "../../utils/api-calls"
+import { getProspectivememberRuleApi, setPropectiveMemberRuleApi } from "../../utils/api-calls.js"
 import Loading from "../Loading/Loading"
 import { toast } from "react-toastify";
 import { useEffect } from "react"

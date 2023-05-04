@@ -1,7 +1,7 @@
 import { EventsHeader, EventsList } from "../Events/Events.styles"
 import { MeetingsContainer } from "../Meetings/Meetings.styles"
 import React, { useState } from "react"
-import { deleteFundProjectApi, getFundAProjects } from "../../utils/api-calls"
+import { deleteFundProjectApi, getFundAProjects } from "../../utils/api-calls.js"
 import { useQuery } from "react-query"
 import Loading from "../Loading/Loading"
 import { FundAProjectTable } from "../ActionComponents/ActionComponents1"

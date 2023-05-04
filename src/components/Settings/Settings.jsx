@@ -11,7 +11,7 @@ import {
 } from "./Settings.styles";
 import UploadImage from "../../assets/UploadImage.png";
 import { useMutation } from "react-query";
-import { UploadDataBase } from "../../utils/api-calls";
+import { UploadDataBase } from "../../utils/api-calls.js";
 import { toast } from "react-toastify";
 
 const Settings = () => {

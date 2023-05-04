@@ -1,6 +1,6 @@
 
 import { useQuery } from "react-query"
-import { getDeactivationOfMembership, getLossOfCert } from "../../utils/api-calls"
+import { getDeactivationOfMembership, getLossOfCert } from "../../utils/api-calls.js"
 import { DeactivationOfMembershipTable, LossOFCertTable } from "../ActionComponents/ActionComponents1"
 import Loading from "../Loading/Loading"
 

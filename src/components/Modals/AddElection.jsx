@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 import { rel8Pink, rel8Purple, rel8White } from "../../globals";
 import { mobile } from "../../responsive";
-import { createElection } from "../../utils/api-calls";
+import { createElection } from "../../utils/api-calls.js";
 
 const BackDrop = styled.div`
   width: 100%;

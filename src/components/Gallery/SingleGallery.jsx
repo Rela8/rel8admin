@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { deleteGallery, getSingleGallery, updateGalleryImageApi, updateGalleryTitleApi } from '../../utils/api-calls'
+import { deleteGallery, getSingleGallery, updateGalleryImageApi, updateGalleryTitleApi } from '../../utils/api-calls.js'
 import styled from 'styled-components'
 import { rel8Pink, rel8Purple, rel8White } from '../../globals'
 import Loading from '../Loading/Loading'

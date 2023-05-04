@@ -5,8 +5,8 @@ import { privateRequest, URLnAME } from "./axios-utils"
 export const loginUser = async (user) => {
     try{
         const { shortName, ...payload } = user
-        const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
-        // const loginURL = `http://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
+        // const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
+        const loginURL = `http://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
         const res = await axios.post(loginURL, payload)
         return res.data
     }catch(error){
@@ -74,6 +74,8 @@ export const get_membershipgrades =async()=>{
     return res.data.data
 
 }
+
+
 export const dueSummary = async () => {
     try{
         const res = await privateRequest.get('/tenant/dues/memberdue/get_due_detail/')

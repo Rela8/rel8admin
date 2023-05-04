@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { getAllChapters } from "../../utils/api-calls";
+import { getAllChapters } from "../../utils/api-calls.js";
 import { userStore } from "../../zustand/stores";
 import { ChaptersTable } from "../ActionComponents/ActionComponents1";
 import { EventsList } from "../Events/Events.styles";

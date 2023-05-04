@@ -7,7 +7,7 @@ import {
   createPublication,
   getAllCommittee,
   getListOfExcos,
-} from "../../utils/api-calls";
+} from "../../utils/api-calls.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import Loading from "../Loading/Loading";

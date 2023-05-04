@@ -19,7 +19,7 @@ import { DuesContainer, DuesHighlight } from "./Dues.styles";
 import AddDue from "../Modals/AddDue";
 import Loading from "../Loading/Loading";
 import { useQuery } from "react-query";
-import { dueSummary, getAllDues, getMemberDues } from "../../utils/api-calls";
+import { dueSummary, getAllDues, getMemberDues } from "../../utils/api-calls.js";
 import { toast } from "react-toastify";
 import Pagination from "../Pagination/Pagination";
 import CustomModal from "../Modals/CustomModal";

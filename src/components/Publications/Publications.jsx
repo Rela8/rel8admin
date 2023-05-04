@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { SearchIcon } from "../../assets/SideBar/svgs";
-import { getAllPublications } from "../../utils/api-calls";
+import { getAllPublications } from "../../utils/api-calls.js";
 import { PublicationTable } from "../ActionComponents/ActionComponents1";
 import {
   EventsContainer,

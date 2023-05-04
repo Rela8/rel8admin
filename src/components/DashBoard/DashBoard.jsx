@@ -26,7 +26,7 @@ import {
   getAdminDashBoardDetails,
   getAllCouncils,
   getAllMembers,
-} from "../../utils/api-calls";
+} from "../../utils/api-calls.js";
 import Loading from "../Loading/Loading";
 
 const DashBoard = () => {

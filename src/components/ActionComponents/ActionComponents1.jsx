@@ -29,6 +29,8 @@ import UpdateServiceRequestProgress from "../Modals/UpdateServiceRequestProgress
 import { AddNewBtn } from "../Members/Members.styles";
 import ViewProspectivememberModal from "../Modals/ViewProspectivememberModal";
 import { toast, useToast } from "react-toastify";
+import CustomModal from "../Modals/CustomModal";
+import UpdateMemberModal from "../Modals/UpdateMember";
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -44,7 +46,7 @@ const TableData = styled.td`
   padding: 10px;
   font-size: 14px;
   background-color: ${rel8White};
-  text-align: center;
+  text-align: left;
   border-bottom: 2px solid ${rel8LightPink};
   border-right: 2px solid ${rel8LightPink};
 
@@ -179,13 +181,26 @@ export const MemberDashTable = ({ deleteFn, data, show }) => {
   const [selected, setSelected] = useState(null);
   return (
     <>
-      {show && <MembersDashViewMore data={selected} close={deleteFn} />}
+  {
+    selected &&
+    <CustomModal 
+    modalWith={'700px'}
+    title={'Update Members'}
+    close={()=>setSelected(null)}
+    >
+        <UpdateMemberModal memberid={selected.id}/>
+    </CustomModal>
+  }
+      {/* {show && <MembersDashViewMore data={selected} close={deleteFn} />} */}
       <Table>
         <TableBody>
           <TableRow>
             <TableHead>Email</TableHead>
             <TableHead>Amount Owing</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>Membershipid</TableHead>
+            <TableHead>Sector</TableHead>
+            <TableHead>Sub Sector</TableHead>
+            <TableHead>View mores </TableHead>
           </TableRow>
           {data.map((item) => {
             return (
@@ -196,12 +211,27 @@ export const MemberDashTable = ({ deleteFn, data, show }) => {
                 <TableData>
                   {Number(item.amount_owing).toLocaleString("en-US")}
                 </TableData>
+                <TableData style={{ overflowWrap: "anywhere" }}>
+                  {item.member_info.find(b=>b.name==='MEMBERSHIP_NO')?.value}
+                </TableData>
+                <TableData style={{ overflowWrap: "anywhere" }}>
+                  {item.member_info.find(b=>b.name==='SECTOR')?.value}
+                </TableData>
+                <TableData style={{ overflowWrap: "anywhere" }}>
+                  {item.member_info.find(b=>b.name==='SUB-SECTOR')?.value}
+                </TableData>
                 <TableData>
-                  <EllipsesIcon
-                    svgClick={deleteFn}
-                    itemInfo={() => setSelected(item)}
-                    style={{ cursor: "pointer", width: "25px", height: "25px" }}
-                  />
+                  <a
+                  // style={{}}
+                    onClick={e=>{
+                      e.preventDefault()
+                      // deleteFn(e)
+                       setSelected(item)
+                    }}
+                    style={{ cursor: "pointer",'color':'#7f02a2' ,'textTransform':'underline'}}
+                  >
+                    views
+                  </a>
                 </TableData>
               </TableRow>
             );
@@ -345,7 +375,7 @@ export const EventsTable = ({ show, data, deleteFn }) => {
             <TableHead>Id</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Amount</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>View</TableHead>
           </TableRow>
           {data.map((item) => {
             return (
@@ -364,11 +394,13 @@ export const EventsTable = ({ show, data, deleteFn }) => {
                   </TableData>
                 )}
                 <TableData>
-                  <EllipsesIcon
-                    svgClick={deleteFn}
+                  <a
+                    onClick={deleteFn}
                     itemInfo={() => setSelected(item)}
-                    style={{ cursor: "pointer", width: "25px", height: "25px" }}
-                  />
+                    style={{ cursor: "pointer", 'color':rel8Purple}}
+                  >
+                    View
+                  </a>
                 </TableData>
               </TableRow>
             );
