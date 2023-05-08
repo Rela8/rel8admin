@@ -209,7 +209,7 @@ const CreateExcoDue = ()  => {
 
                   <br />
               <FormLabel>
-              Exco:
+              Sector and Sub Sector:
               <FormSelection
                 defaultValue={""}
                 {...register("exco_id", { required: false })}
@@ -231,7 +231,7 @@ const CreateExcoDue = ()  => {
   <br /><br />
                   <SubConBtn
                   type={"submit"}
-                  value="Create Exco Due"
+                  value="Create  Due"
                   typex="filled"
                 />
           </form>
@@ -336,7 +336,7 @@ const CreateExcoDue = ()  => {
 
                   <br />
               <FormLabel>
-              Member Ship Grade:
+              Turn overs:
               <FormSelection
                 defaultValue={""}
                 {...register("membership_due_id", { required: false })}
@@ -358,7 +358,7 @@ const CreateExcoDue = ()  => {
   <br /><br />
                   <SubConBtn
                   type={"submit"}
-                  value="Create Membership Grade Due"
+                  value="Create Turn over  Due"
                   typex="filled"
                 />
           </form>
@@ -374,13 +374,13 @@ const AddDue2 = ()=>{
             <Tabs>
         <TabList>
           <Tab>General Dues</Tab>
-          <Tab>Exco Due</Tab>
-          <Tab>Membership Grade Due</Tab>
+          {/* <Tab>Exco Due</Tab> */}
+          <Tab>Turn over Due</Tab>
         </TabList>
     
-        <TabPanel>
+        {/* <TabPanel>
             <CreateGeneralDue/>
-        </TabPanel>
+        </TabPanel> */}
         <TabPanel>
             <CreateExcoDue/>
         </TabPanel>

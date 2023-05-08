@@ -224,6 +224,27 @@ const SingleGallery = ({id, close}) => {
                       delete image
                     </label>
                      </div>
+                     <form
+                     onSubmit={(e)=>{
+                      e.preventDefault()
+                      console.log({'value':e.target.firstChild.name,'id':item.id})
+                      updateImage({
+                        'id':item.id,
+                        'caption':e.target.firstChild.name
+                        // 'image':e.target.files[0]
+                      })
+                     }}
+                     >
+                      <textarea 
+                      onChange={e=>{
+                        e.target.name =e.target.value
+                        console.log(e.target.value)
+                      }}
+                      defaultValue={item.caption}
+                      id="" cols="13" rows="2"></textarea>
+                     <button type='submit'>change caption</button>
+                     </form>
+                     {/* <p style={{'padding':'.4rem'}}>{}</p> */}
                   </div>
                 ))
               }

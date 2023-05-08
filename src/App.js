@@ -22,6 +22,7 @@ import SetProspectiveMembersRules from "./components/SetProspectiveMembersRules/
 import AllProspectivemembers from "./components/AllProspectivemembers/AllProspectivemembers";
 import EventAttendies from "./components/Events/EventAttendies";
 import CommiteeMembers from "./components/Committee/CommiteeMembers";
+import MeetingsAttendies from "./components/Meetings/MeetingsAttendies";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
                   <Route path="/committee" element={<Committee />}/>
                   <Route path="/committee/:id" element={<CommiteeMembers />}/>
                   <Route path="/meetings" element={<Meetings />}/>
+                  <Route path="/meetings/:id" element={<MeetingsAttendies />}/>
                   <Route path="/chapters" element={<Chapters />} />
                   <Route path="/fund_a_project" element={<FundAProject />} />
                   <Route path="/service_request" element={<ServiceRequest />} />

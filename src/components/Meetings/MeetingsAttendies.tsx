@@ -1,13 +1,19 @@
 import { useQuery } from "react-query"
-import { getCommiteeMembers } from "../../utils/api/commitee.api"
-import Table from "../ReuseAbleTable/ReuseAbleTable"
-import { CommitteeContainer, CommitteeHeader } from "./Committee.styles"
 import { useParams } from "react-router-dom"
+import { get_meeting_attendiesapi } from "../../utils/api/meeting.api"
+import { CommitteeContainer, CommitteeHeader } from "../Committee/Committee.styles"
+import Table from "../ReuseAbleTable/ReuseAbleTable"
 
 
+const MeetingsAttendies = ()=>{
 
+    const {id } = useParams()
 
-const CommiteeMembers =()=>{
+    const {isLoading,data} = useQuery('meeting-member',()=>get_meeting_attendiesapi({'meeting_id':id?id:'-1'}),{
+        enabled:id?true:false
+    })
+    console.log({isLoading,data})
+    
     const props_data =[
         {
             Header:'SN',
@@ -22,6 +28,7 @@ const CommiteeMembers =()=>{
         {
             Header:'Company Name',
             accessor:'full_name',
+            id:12
         },
         {
             Header:'Email',
@@ -74,21 +81,18 @@ const CommiteeMembers =()=>{
         // }}>{tableProps.row.original.status}</p>
         // }   
     ]
-    const {id } = useParams()
-
-    const {isLoading,data} = useQuery('commitee-member',()=>getCommiteeMembers(id?id:-1),{
-        enabled:id?true:false
-    })
     return (
+        <div>
         <CommitteeContainer>
-        <CommitteeHeader>Committee Member</CommitteeHeader>
+        <CommitteeHeader>Meetings Member</CommitteeHeader>
         <br />
         <Table 
             prop_columns={props_data}
-            custom_data={data}
+            custom_data={data?.memebers?data.memebers:[]}
         />
         </CommitteeContainer>
+        </div>
     )
 }
 
-export default CommiteeMembers
+export default MeetingsAttendies

@@ -287,13 +287,20 @@ const AddMeeting = ({ close }) => {
             </FormLabel>
 
             <FormLabel>
-              Address/Link Url:
+              Address:
               <FormDataComp
                 type={"text"}
                 {...register("addresse", { required: true })}
               />
             </FormLabel>
-
+            <FormLabel>
+              Address:
+              <FormDataComp
+                type={"text"}
+                {...register("meeting_link", { required: true })}
+              />
+            </FormLabel>
+            
             <FormLabel>
               Event Date:
               <FormDataComp

@@ -608,11 +608,16 @@ export const updateProspecticememberStatusApi=async(data)=>{
 
 }
 
-export const updateGalleryImageApi= async({id,image})=>{
+export const updateGalleryImageApi= async({id,image=null,caption=null})=>{
 
     const form = new FormData()
-    form.append('id',JSON.stringify(id)) 
-    form.append('image',image)
+    form.append('id',JSON.stringify(id))
+    if(image){
+        form.append('image',image)
+    } 
+    if(caption){
+        form.append('caption',caption )
+    }
     const  resp = await privateRequest.post('/tenant/extras/admin_gallery_version2/update_gallery_image/',form)
     return  resp.data
 }

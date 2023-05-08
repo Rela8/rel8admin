@@ -196,30 +196,35 @@ export const MemberDashTable = ({ deleteFn, data, show }) => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableHead>Email</TableHead>
+            <TableHead>S/N</TableHead>
+            <TableHead>Company Name</TableHead>
             <TableHead>Amount Owing</TableHead>
-            <TableHead>Membershipid</TableHead>
             <TableHead>Sector</TableHead>
             <TableHead>Sub Sector</TableHead>
-            <TableHead>View mores </TableHead>
+            <TableHead>MembershipID</TableHead>
+            <TableHead>View more</TableHead>
           </TableRow>
-          {data.map((item) => {
+          {data.map((item,index) => {
             return (
               <TableRow key={item.id}>
+                                <TableData style={{ overflowWrap: "anywhere" }}>
+                  {index+1}
+                </TableData>
                 <TableData style={{ overflowWrap: "anywhere" }}>
-                  {item.email}
+                  {item.full_name}
                 </TableData>
                 <TableData>
                   {Number(item.amount_owing).toLocaleString("en-US")}
                 </TableData>
-                <TableData style={{ overflowWrap: "anywhere" }}>
-                  {item.member_info.find(b=>b.name==='MEMBERSHIP_NO')?.value}
-                </TableData>
+
                 <TableData style={{ overflowWrap: "anywhere" }}>
                   {item.member_info.find(b=>b.name==='SECTOR')?.value}
                 </TableData>
                 <TableData style={{ overflowWrap: "anywhere" }}>
                   {item.member_info.find(b=>b.name==='SUB-SECTOR')?.value}
+                </TableData>
+                <TableData style={{ overflowWrap: "anywhere" }}>
+                  {item.member_info.find(b=>b.name==='MEMBERSHIP_NO')?.value}
                 </TableData>
                 <TableData>
                   <a
@@ -296,7 +301,7 @@ export const AllDuesTable = ({ deleteFn, data, show }) => {
             <TableHead>id</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Amount</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>View</TableHead>
           </TableRow>
           {data.map((item) => {
             return (
@@ -331,15 +336,19 @@ export const MemDuesTable = ({ deleteFn, data, show }) => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableHead>Id</TableHead>
+            <TableHead>S/N</TableHead>
+            <TableHead>Company Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Amount Owing</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
-          {data.map((item) => {
+          {data.map((item,index) => {
             return (
               <TableRow key={item.id}>
-                <TableData>{item.id}</TableData>
+                <TableData>{index+1}</TableData>
+                <TableData style={{ overflowWrap: "anywhere" }}>
+                  {item.full_name}
+                </TableData>
                 <TableData style={{ overflowWrap: "anywhere" }}>
                   {item.email.toString()}
                 </TableData>
@@ -439,21 +448,28 @@ export const NewsTable = ({ show, data, deleteFn }) => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableHead>Id</TableHead>
+            <TableHead>S/N</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>View</TableHead>
           </TableRow>
-          {data.map((item) => {
+          {data.map((item,index) => {
             return (
               <TableRow key={item.id}>
-                <TableData>{item.id}</TableData>
+                <TableData>{index+1}</TableData>
                 <TableData>{item.name}</TableData>
                 <TableData>
-                  <EllipsesIcon
+                 <a
+                 style={{cursor: "pointer",'color':rel8Purple,'textDecoration':'underline'}}
+                 onClick={e=>{
+                  e.preventDefault()
+                  deleteFn(e)
+                  setSelected(item)
+                 }}>view</a>
+                  {/* <EllipsesIcon
                     svgClick={deleteFn}
                     itemInfo={() => setSelected(item)}
                     style={{ cursor: "pointer", width: "25px", height: "25px" }}
-                  />
+                  /> */}
                 </TableData>
               </TableRow>
             );
@@ -475,21 +491,28 @@ export const PublicationTable = ({ show, data, deleteFn }) => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableHead>Id</TableHead>
+            <TableHead>S/N</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>View</TableHead>
           </TableRow>
-          {data.map((item) => {
+          {data.map((item,index) => {
             return (
               <TableRow key={item.id}>
-                <TableData>{item.id}</TableData>
+                <TableData>{index+1}</TableData>
                 <TableData>{item.name}</TableData>
                 <TableData>
-                  <EllipsesIcon
+                  {/* <EllipsesIcon
                     svgClick={deleteFn}
                     itemInfo={() => setSelected(item)}
                     style={{ cursor: "pointer", width: "25px", height: "25px" }}
-                  />
+                  /> */}
+                                   <a
+                 style={{cursor: "pointer",'color':rel8Purple,'textDecoration':'underline'}}
+                 onClick={e=>{
+                  e.preventDefault()
+                  deleteFn(e)
+                  setSelected(item)
+                 }}>view</a>
                 </TableData>
               </TableRow>
             );
@@ -510,15 +533,15 @@ export const CommitteeTable = ({ show, data, deleteFn }) => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableHead>Id</TableHead>
+            <TableHead>S/N</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>view</TableHead>
             <TableHead>view member</TableHead>
           </TableRow>
-          {data.map((item) => {
+          {data.map((item,index) => {
             return (
               <TableRow key={item.id}>
-                <TableData>{item.id}</TableData>
+                <TableData>{index+1}</TableData>
                 <TableData>{item.name}</TableData>
                 <TableData>
                   <EllipsesIcon
@@ -691,6 +714,7 @@ export const FundAProjectTable = ({data,show,deleteFn})=>{
 }
 export const MeetingsTable = ({ show, data, deleteFn }) => {
   const [selected, setSelected] = useState(null);
+  const navigate = useNavigate()
 
   return (
     <>
@@ -700,7 +724,8 @@ export const MeetingsTable = ({ show, data, deleteFn }) => {
           <TableRow>
             <TableHead>Id</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>View</TableHead>
+            <TableHead>View Attendies</TableHead>
           </TableRow>
           {data.map((item) => (
             <TableRow key={item.id}>
@@ -713,6 +738,14 @@ export const MeetingsTable = ({ show, data, deleteFn }) => {
                   style={{ cursor: "pointer", width: "25px", height: "25px" }}
                 />
               </TableData>
+              <TableData>
+                <a
+                style={{'color':rel8Purple,'textDecoration':'underline','cursor':'pointer'}}
+                onClick={e=>{
+                  navigate(`/meetings/${item.id}/`)
+                }}>view</a>
+              </TableData>
+
             </TableRow>
           ))}
         </TableBody>

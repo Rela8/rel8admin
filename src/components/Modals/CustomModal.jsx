@@ -96,7 +96,17 @@ const CustomModal = ({children,title,close,modalWith='350px'})=>{
             `}
             </style>
             <SubCon style={{'width':modalWith}}>
-          <SubConHeader>{title}</SubConHeader>
+          <SubConHeader
+          style={{'position':'relative'}}
+          >{title}
+          
+              <SubConBtn 
+              style={{'position':'absolute','right':'0'}}
+                type={"submit"}
+                value="Cancel"
+                onClick={close}
+              />
+          </SubConHeader>
 
             <br />
             {children}

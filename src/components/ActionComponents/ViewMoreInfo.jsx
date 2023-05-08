@@ -381,17 +381,17 @@ export const AllDuesViewMore = ({ data, close }) => {
             </SubConHeader2>
             <SubConHeader2>
               {" "}
-              <TitleCon>Chapter: </TitleCon> {data.chapter}
+              <TitleCon>Branch: </TitleCon> {data.chapter}
             </SubConHeader2>
             <SubConHeader2>
               {" "}
               <TitleCon>End Date: </TitleCon> {data.endDate}
             </SubConHeader2>
-            <SubConHeader2>
+            {/* <SubConHeader2>
               {" "}
               <TitleCon>Is for Exco: </TitleCon>{" "}
               {data.is_for_excos ? "yes" : "no"}
-            </SubConHeader2>
+            </SubConHeader2> */}
             <SubConHeader2>
               {" "}
               <TitleCon>Start Date: </TitleCon> {data.startDate}
@@ -527,8 +527,12 @@ export const MembersDuesViewMore = ({ data, close }) => {
               {" "}
               <PhotoHolder alt="" src={data.photo} />{" "}
             </PhotoHolderCon>
-            <SubConHeader2>
+            {/* <SubConHeader2>
               <TitleCon>Id: </TitleCon> {data.id}
+            </SubConHeader2> */}
+            <SubConHeader2>
+              {" "}
+              <TitleCon>Company Name: </TitleCon> {data.full_name}
             </SubConHeader2>
             <SubConHeader2>
               {" "}
@@ -539,23 +543,23 @@ export const MembersDuesViewMore = ({ data, close }) => {
               <TitleCon>Amount Owing: </TitleCon>{" "}
               {Number(data.amount_owing).toLocaleString("en-US")}
             </SubConHeader2>
-            <SubConHeader2>
+            {/* <SubConHeader2>
               {" "}
               <TitleCon>Is Exco: </TitleCon> {data.is_exco ? "yes" : "no"}
-            </SubConHeader2>
+            </SubConHeader2> */}
             <SubConHeader2>
               {" "}
               <TitleCon>Is Financial: </TitleCon>{" "}
               {data.is_financial ? "yes" : "no"}
             </SubConHeader2>
-            <SubConHeader2>
+            {/* <SubConHeader2>
               {" "}
               <TitleCon>Alumni Year: </TitleCon> {data.alumni_year}
-            </SubConHeader2>
-            <SubConHeader2>
+            </SubConHeader2> */}
+            {/* <SubConHeader2>
               {" "}
               <TitleCon>User: </TitleCon> {data.user}
-            </SubConHeader2>
+            </SubConHeader2> */}
           </>
         ) : (
           <small>Can't fetch additional Due Info.</small>
@@ -607,10 +611,10 @@ export const MembersDashViewMore = ({ data, close }) => {
               <TitleCon>Is Financial: </TitleCon>{" "}
               {data.is_financial ? "yes" : "no"}
             </SubConHeader2>
-            <SubConHeader2>
+            {/* <SubConHeader2>
               {" "}
               <TitleCon>Alumni Year: </TitleCon> {data.alumni_year}
-            </SubConHeader2>
+            </SubConHeader2> */}
             <SubConHeader2>
               {" "}
               <TitleCon>User: </TitleCon> {data.user}
@@ -1885,11 +1889,11 @@ export const MeetingViewMore = ({ data, close }) => {
             <SubConHeader2>
               {/* <TitleCon>Id: </TitleCon> {data.id} */}
             </SubConHeader2>
-            <SubConHeader2>
+            {/* <SubConHeader2>
               <TitleCon>Exco Id: </TitleCon> {data.exco}
-            </SubConHeader2>
+            </SubConHeader2> */}
             <SubConHeader2>
-              <TitleCon>Chapters: </TitleCon> {data.chapters}
+              <TitleCon>Branch: </TitleCon> {data.chapters}
             </SubConHeader2>
             <SubConHeader2>
               <TitleCon>Name: </TitleCon> {data.name}
