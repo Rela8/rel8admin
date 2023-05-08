@@ -356,6 +356,43 @@ export const createMeeting = async (data) => {
     }
 }
 
+export const updateMeetingApi = async (data)=>{
+    const form = new FormData()
+    if(data?.name){
+        form.append('name',data.name)
+    }
+    form.append('details',data.details)
+    form.append('organiserName',data.organiserName)
+    form.append('organiserDetails',data.organiserDetails)
+    if(data?.exco){
+        form.append('exco',data.exco)
+    }
+    if(data?.chapter){
+        form.append('chapter',data.chapter)
+    }
+    if(data?.commitee){
+        form.append('commitee',data.commitee)
+    }
+    if(data?.date_for){
+        form.append('date_for',data.date_for)
+    }
+    if(data?.event_date){
+        form.append('event_date',data.event_date)
+    }
+    if(data?.addresse){
+        form.append('addresse',data.addresse)
+    }
+    if(data?.meeting_docs){
+        form.append('meeting_docs',data.meeting_docs[0])
+    }
+    try{
+        const res = await privateRequest.patch("/tenant/meeting/admin_manage_meeting/"+data.id+'/',form)
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }
+}
+
 export const createFundProjectApi = async (data)=>{
     try{
         const res = await privateRequest.post("/tenant/extras/admin_manage_project/",data)

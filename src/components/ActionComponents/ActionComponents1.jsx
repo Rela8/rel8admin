@@ -32,6 +32,8 @@ import { toast, useToast } from "react-toastify";
 import CustomModal from "../Modals/CustomModal";
 import UpdateMemberModal from "../Modals/UpdateMember";
 import { useNavigate } from "react-router-dom";
+import AddMeeting from "../Modals/AddMeeting";
+import EditMeeting from "../Modals/UpdateMeeting";
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -714,11 +716,31 @@ export const FundAProjectTable = ({data,show,deleteFn})=>{
 }
 export const MeetingsTable = ({ show, data, deleteFn }) => {
   const [selected, setSelected] = useState(null);
+  const [updateMeeting, setUpdateMeeting] = useState(null);
+
   const navigate = useNavigate()
 
   return (
     <>
       {show && <MeetingViewMore data={selected} close={deleteFn} />}
+
+      
+      {updateMeeting && 
+      
+      <CustomModal 
+      modalWith="700px"
+      title={'Edit Meeting'}
+      close={()=>{
+        setUpdateMeeting(false)
+      }}
+      >
+      <EditMeeting 
+        meeting={selected}
+      />
+      </CustomModal>
+      
+      }
+     
       <Table>
         <TableBody>
           <TableRow>
@@ -726,6 +748,8 @@ export const MeetingsTable = ({ show, data, deleteFn }) => {
             <TableHead>Name</TableHead>
             <TableHead>View</TableHead>
             <TableHead>View Attendies</TableHead>
+            <TableHead>Edit</TableHead>
+            
           </TableRow>
           {data.map((item) => (
             <TableRow key={item.id}>
@@ -744,8 +768,14 @@ export const MeetingsTable = ({ show, data, deleteFn }) => {
                 onClick={e=>{
                   navigate(`/meetings/${item.id}/`)
                 }}>view</a>
+             
               </TableData>
-
+              <TableData
+              onClick={e=>{
+                setSelected(item)
+                setUpdateMeeting(true)
+              }}
+              >edit</TableData>
             </TableRow>
           ))}
         </TableBody>

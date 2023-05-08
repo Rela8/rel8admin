@@ -294,7 +294,7 @@ const AddMeeting = ({ close }) => {
               />
             </FormLabel>
             <FormLabel>
-              Address:
+              Meeting Link:
               <FormDataComp
                 type={"text"}
                 {...register("meeting_link", { required: true })}
