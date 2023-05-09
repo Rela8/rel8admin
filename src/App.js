@@ -23,6 +23,7 @@ import AllProspectivemembers from "./components/AllProspectivemembers/AllProspec
 import EventAttendies from "./components/Events/EventAttendies";
 import CommiteeMembers from "./components/Committee/CommiteeMembers";
 import MeetingsAttendies from "./components/Meetings/MeetingsAttendies";
+import FundAProjectInterestedMember from "./components/FundAProject/FundAProjectInterestedMember";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
                   <Route path="/meetings/:id" element={<MeetingsAttendies />}/>
                   <Route path="/chapters" element={<Chapters />} />
                   <Route path="/fund_a_project" element={<FundAProject />} />
+                  <Route path="/fund_a_project/:id" element={<FundAProjectInterestedMember/>} />
                   <Route path="/service_request" element={<ServiceRequest />} />
                   <Route path="/prospective-member" element={<SetProspectiveMembersRules/>} />
                   <Route path="/all-prospectivemembers" element={<AllProspectivemembers/>} />

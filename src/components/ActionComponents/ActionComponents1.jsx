@@ -684,7 +684,7 @@ export const ChaptersTable = ({ data }) => {
 };
 export const FundAProjectTable = ({data,show,deleteFn})=>{
   const [selected, setSelected] = useState(null);
-
+  const navigate = useNavigate()
   return(
     <Table>
         <TableBody>
@@ -694,6 +694,7 @@ export const FundAProjectTable = ({data,show,deleteFn})=>{
             <TableHead>About</TableHead>
             <TableHead>What Project Needs</TableHead>
             <TableHead>Delete</TableHead>
+            <TableHead>View Intrested Members</TableHead>
           </TableRow>
           {data.map((item) => (
             <TableRow key={item.id}>
@@ -708,6 +709,12 @@ export const FundAProjectTable = ({data,show,deleteFn})=>{
                   style={{ cursor: "pointer", width: "25px", height: "25px" }}
                 />
               </TableData>
+              <TableData><a href="" style={{'color':rel8Purple}}
+              onClick={e=>{
+                e.preventDefault()
+                navigate('/fund_a_project/'+item.id)
+              }}
+              >view</a></TableData>
             </TableRow>
           ))}
         </TableBody>
