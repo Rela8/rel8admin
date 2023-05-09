@@ -16,7 +16,11 @@ import {
   MembersSearchCompCon,
   MembersSearchInput,
 } from "./Members.styles";
-
+import { exportExcelFile } from "../../utils/extrafunction";
+import { DeleteButton } from "../Modals/AddNews";
+import { SubConBtn } from "../Buton";
+import {HiDocumentDownload} from 'react-icons/hi'
+// HiDocumentDownload
 const Members = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,6 +59,24 @@ const Members = () => {
 
   const paginatedData = searchResult?.slice(firstPostIndex, lastPostIndex);
 
+  const generateExcel = ()=>{
+    let clean_data =data?.map((d,index)=>{
+      let newdata= []
+      newdata.push({title:'S/N',value:index+1,})
+      newdata.push({title:'Company Name',value:d.full_name,})
+      newdata.push({title: 'Amount Owing',value:d.amount_owing,})
+      newdata.push({ title:'Sector',value:d.member_info.find(b=>b.name==='SECTOR')?.value,})
+      newdata.push({title: 'Sub Sector',value:d.member_info.find(b=>b.name==='SUB-SECTOR')?.value,})
+      newdata.push({title:'MembershipID',value:d.member_info.find(b=>b.name==='MEMBERSHIP_NO')?.value,})
+      return newdata
+  })
+  exportExcelFile({
+    'headers':['S/N	','Company Name',
+    'Amount Owing','Sector','Sub Sector',
+    'MembershipID'],
+    'rows':clean_data
+    })
+  }
   return (
     <>
       {showModal && <DeleteMember close={displayModal} />}
@@ -81,7 +103,20 @@ const Members = () => {
             </MembersSearchBtn>
           </MembersSearchCompCon>
         </MembersSearch>
-
+        {
+          isLoading===false?
+        <SubConBtn
+            style={{
+              // 'width':'80%','margin':'10px auto','display':'block'
+            }}
+            typex='filled'
+            onClick={e=>{
+              generateExcel()
+            }}
+            >Download Data
+            <HiDocumentDownload style={{'color':'white','margin':'2px 0'}}/>
+            </SubConBtn>:''
+        }
         <MembersPersonList>
           {searchResult?.length <= 0 ? (
             isLoading || isFetching ? (

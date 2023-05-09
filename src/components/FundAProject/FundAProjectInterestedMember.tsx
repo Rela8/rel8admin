@@ -3,10 +3,11 @@ import { CommitteeContainer, CommitteeHeader } from "../Committee/Committee.styl
 import { useQuery } from "react-query"
 import { getInKindcApi, getIncashApi } from "../../utils/api/fundproject.api"
 import  Table  from '../ReuseAbleTable/ReuseAbleTable'
-
+import ExcelJS from 'exceljs'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-
+import { read, utils ,writeFileXLSX } from 'xlsx';
+import { exportExcelFile } from "../../utils/extrafunction"
 const FundAProjectInterestedMember = ()=>{
     const {id } = useParams()
 
@@ -169,7 +170,6 @@ const FundAProjectInterestedMember = ()=>{
         <CommitteeContainer>
         <CommitteeHeader>Interested Member For Project</CommitteeHeader>
         <br />
-       
            <Tabs>
         <TabList>
           <Tab>Supporters in kind</Tab>
