@@ -8,6 +8,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { read, utils ,writeFileXLSX } from 'xlsx';
 import { exportExcelFile } from "../../utils/extrafunction"
+import { SubConBtn } from "../Buton"
+import { HiDocumentDownload } from "react-icons/hi"
 const FundAProjectInterestedMember = ()=>{
     const {id } = useParams()
 
@@ -166,6 +168,26 @@ const FundAProjectInterestedMember = ()=>{
             accessor:'is_paid'
         }
     ]
+    const generateExcel =(data:any)=>{
+        
+        let clean_data =data?.map((d:any,index:number)=>{
+            let newdata= []
+            newdata.push({title:'S/N',value:index+1,})
+            newdata.push({title:'Company Name',value:d.member.full_name,})
+            newdata.push({title: 'Amount',value:d.amount,})
+            newdata.push({ title:'Sector',value:d.member.member_info.find((b:any)=>b.name==='SECTOR')?.value,})
+            newdata.push({title: 'Sub Sector',value:d.member.member_info.find((b:any)=>b.name==='SUB-SECTOR')?.value,})
+            newdata.push({title:'MembershipID',value:d.member.member_info.find((b:any)=>b.name==='MEMBERSHIP_NO')?.value,})
+            return newdata
+        })
+        exportExcelFile({
+          'headers':['S/N	','Company Name',
+          'Sector','Sub Sector',
+          'MembershipID','Amount'],
+          'rows':clean_data
+          })
+
+    }
     return (
         <CommitteeContainer>
         <CommitteeHeader>Interested Member For Project</CommitteeHeader>
@@ -185,6 +207,18 @@ const FundAProjectInterestedMember = ()=>{
             prop_columns={inKindprops_data}
             custom_data={data?data:[]}
         />
+        <br />
+        <SubConBtn
+            style={{
+              // 'width':'80%','margin':'10px auto','display':'block'
+            }}
+            typex='filled'
+            onClick={(e:any)=>{
+              generateExcel(data)
+            }}
+            >Download Data
+            <HiDocumentDownload style={{'color':'white','margin':'2px 0'}}/>
+            </SubConBtn>
         </TabPanel>
 
         <TabPanel>
@@ -192,6 +226,18 @@ const FundAProjectInterestedMember = ()=>{
             prop_columns={inCashprops_data}
             custom_data={incashData?incashData:[]}
         />
+                <br />
+        <SubConBtn
+            style={{
+              // 'width':'80%','margin':'10px auto','display':'block'
+            }}
+            typex='filled'
+            onClick={(e:any)=>{
+              generateExcel(incashData)
+            }}
+            >Download Data
+            <HiDocumentDownload style={{'color':'white','margin':'2px 0'}}/>
+            </SubConBtn>
         </TabPanel>
       </Tabs>
         </CommitteeContainer>

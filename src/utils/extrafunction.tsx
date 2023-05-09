@@ -5,12 +5,12 @@ import ExcelJS from 'exceljs'
 type exportExcelFileProp ={
     headers:string[];
     rows:{value:string,title:string}[][],
-    fileName:string;
+    fileName?:string;
 }
 export const exportExcelFile  =  ({rows=[],headers=[],fileName='generated file'}:exportExcelFileProp)=>{
     const workbook = new ExcelJS.Workbook();
            const sheet = workbook.addWorksheet("My Sheet");
-           sheet.properties.defaultRowHeight = 80;
+        //    sheet.properties.defaultRowHeight = 80;
         //    sheet.columns = [
         //      {
         //        header: "Id",
