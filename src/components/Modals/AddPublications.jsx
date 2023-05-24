@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { rel8Pink, rel8Purple, rel8White } from "../../globals";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -11,6 +11,13 @@ import {
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import Loading from "../Loading/Loading";
+import { PostToCMS } from "./ModalStyles";
+import CmsLogin from "./CmsLogin";
+import { useCmsAuthStore } from "../../zustand/cms-store";
+import {
+  cmsGetPublicationTypes,
+  cmsPublicationPost,
+} from "../../utils/api/cms-endpoints";
 
 const BackDrop = styled.div`
   width: 100%;
@@ -120,8 +127,9 @@ const DeleteButton = styled.button`
 const AddPublications = ({ close }) => {
   const { register, handleSubmit, control, watch } = useForm({
     defaultValues: {
+      to_rel8: "",
       publication_paragraph: [{ heading: "", paragragh: "" }],
-      amount:0.00
+      amount: 0.0,
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -160,8 +168,10 @@ const AddPublications = ({ close }) => {
   });
 
   const queryClient = useQueryClient();
+  const [loginModal, setLoginModal] = useState(false);
+  const rel8UserData = useCmsAuthStore.getState().user;
 
-  const { isLoading: createLoading, mutate: createMutate } = useMutation(
+  const { isLoading: createLoading, mutateAsync: createMutate } = useMutation(
     (pubData) => createPublication(pubData),
     {
       onMutate: () => {
@@ -189,19 +199,66 @@ const AddPublications = ({ close }) => {
     }
   );
 
-  const onSubmit = (data) => {
+  const cmsPubMutResult = useMutation(cmsPublicationPost, {
+    onMutate: () => {
+      toast.info("posting publication to CMS");
+    },
+    onError: () => {
+      toast.error("failed to post publication to CMS");
+    },
+    onSuccess: () => {
+      toast.success("publication posted on CMS");
+    },
+  });
+
+  const getPublicationType = useQuery(
+    "all-cms-publication-types",
+    cmsGetPublicationTypes,
+    {
+      select: (data) => data.data,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const onSubmit = (dataInput) => {
+    let { to_rel8, publication_type, ...data } = dataInput;
+    if (to_rel8 === "yes") {
+      if (!rel8UserData?.token) {
+        setLoginModal(true);
+        return null;
+      } else {
+        const rel8FormData = new FormData();
+        rel8FormData.append("name", data.name);
+        rel8FormData.append("title", data.name);
+        const detailsItems = data.publication_paragraph.map((item) => ({
+          header: item.heading,
+          value: item.paragragh,
+        }));
+        rel8FormData.append("details", JSON.stringify(detailsItems));
+        rel8FormData.append("link", data.danload[0]);
+        rel8FormData.append("image", data.image[0]);
+        rel8FormData.append("type", publication_type);
+        rel8FormData.append("is_paid", data.amount === "0" ? "false" : "true");
+        if (data.amount !== "0") {
+          rel8FormData.append("price", data.amount);
+        }
+
+        cmsPubMutResult.mutateAsync(rel8FormData);
+      }
+    }
+
     const image = data.image[0];
-    const danload = data.danload[0]
+    const danload = data.danload[0];
     const { publication_paragraph, image: img, ...newdata } = data;
-    const payload = { image, ...newdata,danload };
+    const payload = { image, ...newdata, danload };
     const formData = new FormData();
     Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
     formData.append(
       "publication_paragraph",
       JSON.stringify(publication_paragraph)
     );
-    if(data.amount!==0){
-      formData.append('is_paid',true)
+    if (data.amount !== 0) {
+      formData.append("is_paid", true);
     }
     // console.log({payload})
     createMutate(formData);
@@ -216,19 +273,27 @@ const AddPublications = ({ close }) => {
         `}
       </style>
 
+      {loginModal && <CmsLogin closefn={() => setLoginModal(false)} />}
+
       {excoListLoading ||
       excoListFetching ||
+      getPublicationType.isLoading ||
+      getPublicationType.isFetching ||
       committeeLoading ||
+      cmsPubMutResult.isLoading ||
       committeeFetching ? (
         <Loading
           loading={
             excoListLoading ||
             excoListFetching ||
             committeeLoading ||
+            cmsPubMutResult.isLoading ||
+            getPublicationType.isLoading ||
+            getPublicationType.isFetching ||
             committeeFetching
           }
         />
-      ) : !excoListIsError || !committeeError ? (
+      ) : !excoListIsError || !committeeError || !getPublicationType.isError ? (
         <SubCon>
           <SubConHeader>Add Publications</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
@@ -244,7 +309,7 @@ const AddPublications = ({ close }) => {
               Amount:
               <FormDataComp
                 type={"number"}
-                {...register("amount", { required: false, })}
+                {...register("amount", { required: false })}
               />
             </FormLabel>
 
@@ -256,7 +321,7 @@ const AddPublications = ({ close }) => {
                 {...register("image", { required: true })}
               />
             </FormLabel>
-            
+
             <FormLabel>
               Publication File:
               <FormDataComp
@@ -340,14 +405,18 @@ const AddPublications = ({ close }) => {
                     Heading:
                     <FormDataComp
                       type={"text"}
-                      {...register(`publication_paragraph.${index}.heading`,{required:false})}
+                      {...register(`publication_paragraph.${index}.heading`, {
+                        required: false,
+                      })}
                     />
                   </FormLabel>
 
                   <FormLabel>
                     Paragraph:
                     <FormTextArea
-                      {...register(`publication_paragraph.${index}.paragragh`,{required:false})}
+                      {...register(`publication_paragraph.${index}.paragragh`, {
+                        required: false,
+                      })}
                     />
                   </FormLabel>
                   <DeleteButton
@@ -372,6 +441,48 @@ const AddPublications = ({ close }) => {
             >
               Add New Paragraph Section
             </DeleteButton>
+
+            {watch("to_rel8") === "yes" && (
+              <FormLabel>
+                Publication Type
+                <small>(optional, to be selected when creating on cms):</small>
+                <FormSelection
+                  defaultValue={""}
+                  {...register("publication_type", { required: true })}
+                >
+                  <FormOption disabled value="">
+                    select an option
+                  </FormOption>
+                  {getPublicationType.data.map((item) => (
+                    <FormOption key={item.id} value={item.id}>
+                      {item.id} || {item.name}
+                    </FormOption>
+                  ))}
+                </FormSelection>
+              </FormLabel>
+            )}
+
+            <PostToCMS>
+              <h4>Also create this publication on CMS?</h4>
+              <div className="radio-labels">
+                <label>
+                  Yes
+                  <input
+                    type="radio"
+                    value={"yes"}
+                    {...register("to_rel8", { required: true })}
+                  />
+                </label>
+                <label>
+                  No
+                  <input
+                    type="radio"
+                    value={"no"}
+                    {...register("to_rel8", { required: true })}
+                  />
+                </label>
+              </div>
+            </PostToCMS>
 
             <SubConBtnHold>
               <SubConBtn

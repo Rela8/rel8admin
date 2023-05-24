@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -7,6 +7,10 @@ import { rel8Pink, rel8Purple, rel8White } from "../../globals";
 import { mobile } from "../../responsive";
 import { createEvents, getListOfExcos } from "../../utils/api-calls.js";
 import Loading from "../Loading/Loading";
+import { cmsEventsPost } from "../../utils/api/cms-endpoints";
+import { useCmsAuthStore } from "../../zustand/cms-store";
+import { PostToCMS } from "./ModalStyles";
+import CmsLogin from "./CmsLogin";
 
 const BackDrop = styled.div`
   width: 100%;
@@ -131,20 +135,61 @@ const AddEvent = ({ close }) => {
     },
   });
 
-  const onSubmit = (data) => {
-    const image = data.image[0];
-    const event_docs = data.event_docs[0]
-    const { image: img, is_for_excos, schedule, ...newdata } = data;
-    let payload = { image, ...newdata,event_docs };
-   console.log({payload})
-    if(payload.re_occuring==='false'){
-      payload={...payload,'scheduletype':['0']}
-    }else{
-      toast.error("Schedule Type is required");
-      return
+  const [loginModal, setLoginModal] = useState(false);
+  const rel8UserData = useCmsAuthStore.getState().user;
+
+  const cmsPubMutResult = useMutation(cmsEventsPost, {
+    onMutate: () => {
+      toast.info("posting event to CMS");
+    },
+    onError: () => {
+      toast.error("failed to post event to CMS");
+    },
+    onSuccess: () => {
+      toast.success("event posted on CMS");
+    },
+  });
+
+  const onSubmit = (dataInput) => {
+    let { to_rel8, ...data } = dataInput;
+    if (to_rel8 === "yes") {
+      if (!rel8UserData?.token) {
+        setLoginModal(true);
+        return null;
+      } else {
+        const rel8FormData = new FormData();
+        rel8FormData.append("name", data.name);
+        rel8FormData.append("group_type", "all groups");
+        rel8FormData.append("location", data.address);
+        rel8FormData.append("start_date", data.startDate);
+        rel8FormData.append("end_date", data.startDate);
+        rel8FormData.append("is_paid", data.is_paid_event);
+        rel8FormData.append("image", data.image[0]);
+        rel8FormData.append("is_agm", "false");
+        if (data.is_paid_event === "true") {
+          rel8FormData.append(
+            "price",
+            data.amount === "0" ? "10000" : data.amount
+          );
+        }
+
+        cmsPubMutResult.mutateAsync(rel8FormData);
+      }
     }
-    if(!payload.is_for_excos){
-      delete payload.exco_id
+
+    const image = data.image[0];
+    const event_docs = data.event_docs[0];
+    const { image: img, is_for_excos, schedule, ...newdata } = data;
+    let payload = { image, ...newdata, event_docs };
+    console.log({ payload });
+    if (payload.re_occuring === "false") {
+      payload = { ...payload, scheduletype: ["0"] };
+    } else {
+      toast.error("Schedule Type is required");
+      return;
+    }
+    if (!payload.is_for_excos) {
+      delete payload.exco_id;
     }
     const formData = new FormData();
     Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
@@ -161,6 +206,8 @@ const AddEvent = ({ close }) => {
                 }
             `}
       </style>
+
+      {loginModal && <CmsLogin closefn={() => setLoginModal(false)} />}
 
       {excoListLoading || excoListFetching ? (
         <Loading loading={excoListLoading || excoListFetching} />
@@ -200,9 +247,7 @@ const AddEvent = ({ close }) => {
                 <FormOption disabled value="">
                   select an option
                 </FormOption>
-                <FormOption  selected>
-                 unselect
-                </FormOption>
+                <FormOption selected>unselect</FormOption>
                 {excoListData.map((item) => (
                   <FormOption key={item.id} value={item.id}>
                     {item.id} || {item.name}
@@ -242,9 +287,7 @@ const AddEvent = ({ close }) => {
 
             <FormLabel>
               Is Reoccuring:
-              <FormSelection
-                {...register("re_occuring", { required: true })}
-              >
+              <FormSelection {...register("re_occuring", { required: true })}>
                 <FormOption disabled value="">
                   select an option
                 </FormOption>
@@ -393,6 +436,28 @@ const AddEvent = ({ close }) => {
                 </FormSelection>
               </>
             )}
+
+            <PostToCMS>
+              <h4>Also create this event on CMS?</h4>
+              <div className="radio-labels">
+                <label>
+                  Yes
+                  <input
+                    type="radio"
+                    value={"yes"}
+                    {...register("to_rel8", { required: true })}
+                  />
+                </label>
+                <label>
+                  No
+                  <input
+                    type="radio"
+                    value={"no"}
+                    {...register("to_rel8", { required: true })}
+                  />
+                </label>
+              </div>
+            </PostToCMS>
 
             <SubConBtnHold>
               <SubConBtn

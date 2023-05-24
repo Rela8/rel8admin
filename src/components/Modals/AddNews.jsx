@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -11,6 +11,10 @@ import {
   getListOfExcos,
 } from "../../utils/api-calls.js";
 import Loading from "../Loading/Loading";
+import { cmsNewsPost } from "../../utils/api/cms-endpoints";
+import { useCmsAuthStore } from "../../zustand/cms-store";
+import CmsLogin from "./CmsLogin";
+import { PostToCMS } from "./ModalStyles";
 
 const BackDrop = styled.div`
   width: 100%;
@@ -189,25 +193,57 @@ const AddNews = ({ close }) => {
     }
   );
 
-  const onSubmit = (data) => {
+  const [loginModal, setLoginModal] = useState(false);
+  const rel8UserData = useCmsAuthStore.getState().user;
+
+  const cmsPubMutResult = useMutation(cmsNewsPost, {
+    onMutate: () => {
+      toast.info("posting news to CMS");
+    },
+    onError: () => {
+      toast.error("failed to post news to CMS");
+    },
+    onSuccess: () => {
+      toast.success("news posted on CMS");
+    },
+  });
+
+  const onSubmit = (dataInput) => {
+    let { to_rel8, ...data } = dataInput;
+    if (to_rel8 === "yes") {
+      if (!rel8UserData?.token) {
+        setLoginModal(true);
+        return null;
+      } else {
+        const rel8FormData = new FormData();
+        rel8FormData.append("name", data.name);
+        rel8FormData.append("title", data.name);
+        const detailsItems = data.news_paragraph.map((item) => ({
+          header: item.heading,
+          value: item.paragragh,
+        }));
+        rel8FormData.append("details", JSON.stringify(detailsItems));
+        rel8FormData.append("image", data.image[0]);
+
+        cmsPubMutResult.mutateAsync(rel8FormData);
+      }
+    }
+
     const image = data.image[0];
     const { news_paragraph, image: img, ...newdata } = data;
-    const payload = { image,'is_member':false,'body':'.', ...newdata };
+    const payload = { image, is_member: false, body: ".", ...newdata };
     const formData = new FormData();
     Object.keys(payload)?.forEach((key) => {
-      if(key=='is_exco'){
-        if(payload.is_exco){
-          formData.append(key, payload[key])
+      if (key == "is_exco") {
+        if (payload.is_exco) {
+          formData.append(key, payload[key]);
         }
-
-      }
-      else if(key=='is_commitee'){
-        if(payload.is_commitee){
-          formData.append(key, payload[key])
+      } else if (key == "is_commitee") {
+        if (payload.is_commitee) {
+          formData.append(key, payload[key]);
         }
-      }
-      else{
-        formData.append(key, payload[key])
+      } else {
+        formData.append(key, payload[key]);
       }
     });
     formData.append("news_paragraph", JSON.stringify(news_paragraph));
@@ -224,15 +260,19 @@ const AddNews = ({ close }) => {
         `}
       </style>
 
+      {loginModal && <CmsLogin closefn={() => setLoginModal(false)} />}
+
       {excoListLoading ||
       excoListFetching ||
       committeeLoading ||
+      cmsPubMutResult.isLoading ||
       committeeFetching ? (
         <Loading
           loading={
             excoListLoading ||
             excoListFetching ||
             committeeLoading ||
+            cmsPubMutResult.isLoading ||
             committeeFetching
           }
         />
@@ -346,7 +386,9 @@ const AddNews = ({ close }) => {
                     Heading:
                     <FormDataComp
                       type={"text"}
-                      {...register(`news_paragraph.${index}.heading`, { required: false })}
+                      {...register(`news_paragraph.${index}.heading`, {
+                        required: false,
+                      })}
                     />
                   </FormLabel>
 
@@ -378,6 +420,28 @@ const AddNews = ({ close }) => {
             >
               Add New Paragraph Section
             </DeleteButton>
+
+            <PostToCMS>
+              <h4>Also create this news on CMS?</h4>
+              <div className="radio-labels">
+                <label>
+                  Yes
+                  <input
+                    type="radio"
+                    value={"yes"}
+                    {...register("to_rel8", { required: true })}
+                  />
+                </label>
+                <label>
+                  No
+                  <input
+                    type="radio"
+                    value={"no"}
+                    {...register("to_rel8", { required: true })}
+                  />
+                </label>
+              </div>
+            </PostToCMS>
 
             <SubConBtnHold>
               <SubConBtn
