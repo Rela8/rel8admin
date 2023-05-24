@@ -669,7 +669,7 @@ export const ElectionResultTable = ({ data }) => {
 export const ChaptersTable = ({ data }) => {
   return (
     <>
-      <ElectionThemeHeader>CHAPTERS</ElectionThemeHeader>
+      <ElectionThemeHeader>Branch</ElectionThemeHeader>
       <Table>
         <TableBody>
           {data.map((item) => (

@@ -82,13 +82,13 @@ const AddChapter = ({ close }) => {
 
   const { isLoading, mutate } = useMutation((data) => createChapter(data), {
     onMutate: () => {
-      toast.info("Chapter Creation in progress", {
+      toast.info("Branch Creation in progress", {
         progressClassName: "toastProgress",
         icon: false,
       });
     },
     onSuccess: () => {
-      toast.success("Chapter Created", {
+      toast.success("Branch Created", {
         progressClassName: "toastProgress",
         icon: false,
       });
@@ -96,7 +96,7 @@ const AddChapter = ({ close }) => {
       close();
     },
     onError: (error) => {
-      toast.error("Could not create chapter");
+      toast.error("Could not create Branch");
       if (error?.message?.response?.data?.message?.error) {
         toast.error(`Message: ${error.message.response.data.message.error}`, {
           autoClose: 9000,

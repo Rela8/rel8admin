@@ -163,7 +163,7 @@ const EditMeeting = ({meeting}:any) => {
           </FormLabel>
 
           <FormLabel>
-            Chapter:
+          Branch:
             <FormSelection
               defaultValue={""}
               {...register("chapter", { required: false })}

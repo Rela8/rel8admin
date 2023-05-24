@@ -375,7 +375,7 @@ const AddDue2 = ()=>{
         <TabList>
           <Tab>General Dues</Tab>
           {/* <Tab>Exco Due</Tab> */}
-          <Tab>Turn over Due</Tab>
+          <Tab>Other Dues</Tab>
         </TabList>
     
         {/* <TabPanel>

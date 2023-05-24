@@ -119,7 +119,7 @@ const Dues = () => {
       {/* {addDueModal && <AddDue close={displayAddDueModal} />} */}
       {addDueModal && <CustomModal 
       modalWith={'500px'}
-      title={'Wowo this is nice'}
+      title={'Payment'}
       close={displayAddDueModal} >
         <AddDue2/>
         </CustomModal>}

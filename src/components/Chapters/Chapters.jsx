@@ -56,17 +56,17 @@ const Chapters = () => {
       {registerModal && <RegisterUserToChapter close={displayRegister} />}
 
       <ChaptersContainer>
-        <ChaptersHeader>Chapters</ChaptersHeader>
+        <ChaptersHeader>Branch</ChaptersHeader>
 
         <ChaptersButtonCon>
           <ChaptersButton onClick={displayCreate}>
-            Create New Chapter
+            Create New Branch
           </ChaptersButton>
           <ChaptersButton
             isUsable={isLoading ? "no" : "yes"}
             onClick={displayRegister}
           >
-            Register User to Chapter
+            Register User to Branch
           </ChaptersButton>
         </ChaptersButtonCon>
 
@@ -76,7 +76,7 @@ const Chapters = () => {
           ) : !isError ? (
             <ChaptersTable data={data} />
           ) : (
-            <small>can't fetch chapters</small>
+            <small>can't fetch branch</small>
           )}
         </EventsList>
       </ChaptersContainer>

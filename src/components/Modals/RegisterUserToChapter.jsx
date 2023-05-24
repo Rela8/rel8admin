@@ -137,7 +137,7 @@ const RegisterUserToChapter = ({ close }) => {
         <Loading loading={userLoading || userFetching} />
       ) : !userError ? (
         <SubCon>
-          <SubConHeader>Register User To Chapter</SubConHeader>
+          <SubConHeader>Register User To Branch</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormLabel>
               User:
@@ -157,7 +157,7 @@ const RegisterUserToChapter = ({ close }) => {
             </FormLabel>
 
             <FormLabel>
-              Chapter:
+            Branch:
               <FormSelection
                 defaultValue={""}
                 {...register("chapter_id", { required: true })}

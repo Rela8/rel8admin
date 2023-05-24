@@ -259,7 +259,7 @@ const AddMeeting = ({ close }) => {
             </FormLabel>
 
             <FormLabel>
-              Chapter:
+            Branch:
               <FormSelection
                 defaultValue={""}
                 {...register("chapter", { required: false })}

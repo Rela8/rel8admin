@@ -197,7 +197,7 @@ const SideBar = () => {
           </SideBarItem> */}
 
 
-          <SideBarItem>
+  {/* <SideBarItem>
             <CustNavLink where={"/chapters"}>
               <EventsIcon
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}
@@ -205,7 +205,6 @@ const SideBar = () => {
               Branch
             </CustNavLink>
           </SideBarItem>
-
           {/* <SideBarItem>
             <CustNavLink where={"/all-prospectivemembers"}>
               <EventsIcon
@@ -334,7 +333,7 @@ const SideBar = () => {
               <EventsIcon
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}
               />
-              Chapters
+              Branch
             </CustNavLink>
           </SideBarItem>
 

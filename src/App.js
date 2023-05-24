@@ -47,7 +47,7 @@ function App() {
                   <Route path="/committee/:id" element={<CommiteeMembers />}/>
                   <Route path="/meetings" element={<Meetings />}/>
                   <Route path="/meetings/:id" element={<MeetingsAttendies />}/>
-                  <Route path="/chapters" element={<Chapters />} />
+                  {/* <Route path="/chapters" element={<Chapters />} /> */}
                   <Route path="/fund_a_project" element={<FundAProject />} />
                   <Route path="/fund_a_project/:id" element={<FundAProjectInterestedMember/>} />
                   <Route path="/service_request" element={<ServiceRequest />} />
