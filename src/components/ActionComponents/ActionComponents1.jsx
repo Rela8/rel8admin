@@ -264,7 +264,7 @@ export const ExcoDashTable = ({ data }) => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableHead>Council</TableHead>
+            <TableHead>Sector / Sub Sector</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
           {data.map((item) => {

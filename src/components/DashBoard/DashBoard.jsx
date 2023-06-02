@@ -112,7 +112,7 @@ const DashBoard = () => {
                 onClick={() => setOptions("exco")}
                 filled={options === "exco" ? "show" : ""}
               >
-                Council
+                Sector / Sub Sector
               </DashBoardHeadersItem>
               <DashBoardHeadersItem
                 onClick={() => setOptions("mem")}

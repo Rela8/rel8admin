@@ -223,14 +223,14 @@ const SideBar = () => {
             </CustNavLink>
           </SideBarItem> */}
 
-          <SideBarItem>
+          {/* <SideBarItem>
             <CustNavLink where={"/settings"}>
               <SettingsIcon
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}
               />
               Settings
             </CustNavLink>
-          </SideBarItem>
+          </SideBarItem> */}
           <LogOutBtn onClick={logoutHandler}>
             <LogoOutIcon
               style={{ width: "25px", height: "25px", marginRight: "10px" }}
