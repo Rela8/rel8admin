@@ -152,7 +152,14 @@ export const getAllMembers = async () => {
     throw new AxiosError(e);
   }
 };
-
+export const uploadAndCreateMembers = async (file)=>{
+  const form = new FormData()
+  form.append('file',file)
+  const res = await privateRequest.patch(
+    "/tenant/auth/upload_database/",form
+  );
+  return res.data;
+}
 //SETTINGS
 export const UploadDataBase = async (file) => {
   try {

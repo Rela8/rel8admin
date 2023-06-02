@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { QueryClient, useMutation, useQuery, useQueryClient } from "react-query";
 import { SearchIcon } from "../../assets/SideBar/svgs";
-import { getAllMembers } from "../../utils/api-calls.js";
+import { getAllMembers, uploadAndCreateMembers } from "../../utils/api-calls.js";
 import { MemberDashTable } from "../ActionComponents/ActionComponents1";
 import DeleteMember from "../DashBoard/DeleteMember";
 import Loading from "../Loading/Loading";
@@ -18,10 +18,12 @@ import {
 } from "./Members.styles";
 import { exportExcelFile } from "../../utils/extrafunction";
 import { DeleteButton } from "../Modals/AddNews";
-import { SubConBtn } from "../Buton";
+import { StyledLabel, SubConBtn } from "../Buton";
 import {HiDocumentDownload} from 'react-icons/hi'
+import { toast } from "react-toastify";
 // HiDocumentDownload
 const Members = () => {
+  const client = useQueryClient()
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -44,6 +46,33 @@ const Members = () => {
     }
   );
 
+  const {mutate,isLoading:uploaidng} = useMutation(uploadAndCreateMembers,{
+    'onSuccess':()=>{
+      client.invalidateQueries('all-members')
+      toast.success("Member Created!", {
+        progressClassName: "toastProgress",
+        icon: false,
+      });
+      
+    },
+    'onError':(err)=>{
+      // if(err)
+      console.log(err)
+      try{
+        
+        toast.error(err.response.data.message.error, {
+          progressClassName: "toastProgress",
+          icon: false,
+        });
+      }
+      catch(err){
+        toast.success("Please check your network", {
+          progressClassName: "toastProgress",
+          icon: false,
+        });
+      }
+    }
+  })
   const searchHandler = () => {
     const searchPattern = new RegExp(searchValue, "i");
     const result = data?.filter(
@@ -80,6 +109,7 @@ const Members = () => {
   return (
     <>
       {showModal && <DeleteMember close={displayModal} />}
+    <Loading loading={uploaidng} />
       <MembersContainer>
         <MembersPersonTab typex="dues">
           <MembersPersons
@@ -117,6 +147,22 @@ const Members = () => {
             <HiDocumentDownload style={{'color':'white','margin':'2px 0'}}/>
             </SubConBtn>:''
         }
+        
+        <input type="file" id="upload-new-users"
+        onChange={e=>{
+          console.log(e.target.files[0])
+          mutate(e.target.files[0])
+        }} 
+        style={{'display':'none'}}
+        />
+        <StyledLabel
+        htmlFor='upload-new-users'
+        style={{'display':'inline-block','margin':'0 30px'}}          
+            onClick={e=>{
+            }}
+            >Create Member
+            {/* <HiDocumentDownload style={{'color':'white','margin':'2px 0'}}/> */}
+            </StyledLabel>
         <MembersPersonList>
           {searchResult?.length <= 0 ? (
             isLoading || isFetching ? (
@@ -130,8 +176,8 @@ const Members = () => {
             ) : (
               <small>can't fetch members</small>
             )
-          ) : isLoading || isFetching ? (
-            <Loading loading={isLoading || isFetching} />
+          ) : isLoading ||uploaidng|| isFetching ? (
+            <Loading loading={isLoading || uploaidng||isFetching} />
           ) : !isError ? (
             <MemberDashTable
               show={showModal}

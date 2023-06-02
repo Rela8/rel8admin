@@ -700,7 +700,7 @@ export const FundAProjectTable = ({data,show,deleteFn})=>{
             <TableRow key={item.id}>
               <TableData>{item.id}</TableData>
               <TableData>{item.heading}</TableData>
-              <TableData>{item.about}</TableData>
+              <TableData>{item.about.slice(1,10)}...</TableData>
               <TableData>{item.what_project_needs.toString()}</TableData>
               <TableData>
                 <EllipsesIcon

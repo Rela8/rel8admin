@@ -15,3 +15,14 @@ color: ${(props) =>
   props.typex === "filled" ? `${rel8White}` : `${rel8Purple}`};
 cursor: pointer;
 `;
+// @ts-ignore
+export const StyledLabel = styled.label<any>`
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+background-color: ${(props) =>
+  props.typex === "filled" ? `${rel8Purple}` : `${rel8Pink}`};
+color: ${(props) =>
+  props.typex === "filled" ? `${rel8White}` : `${rel8Purple}`};
+cursor: pointer;
+`;

@@ -56,7 +56,6 @@ const UpdateMemberModal = ({memberid}:{memberid:string|number}):React.ReactEleme
     return (
         <form
         onSubmit={handleSubmit(onSubmit)}
-
         >
             <Loading  loading={isLoading ||updating}/>
             <div 
@@ -78,7 +77,7 @@ const UpdateMemberModal = ({memberid}:{memberid:string|number}):React.ReactEleme
             <SubConBtn
             style={{'width':'80%','margin':'10px auto','display':'block'}}
             typex='filled'
-            >Submit Me</SubConBtn>
+            >Update</SubConBtn>
         </form>
     )
 }
