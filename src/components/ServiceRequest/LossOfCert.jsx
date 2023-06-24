@@ -13,7 +13,7 @@ const LossOFCert = ()=>{
             <Loading loading={isLoading}/>
             {
                 data?
-                <LossOFCertTable data={data.results} />
+                <LossOFCertTable data={data?data:[ ]} />
                 :''
             }
         </div>

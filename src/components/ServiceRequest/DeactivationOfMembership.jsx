@@ -17,7 +17,7 @@ const DeactivationOfMembership = ()=>{
 
             {
                 data?
-                <DeactivationOfMembershipTable data={data.results}/>
+                <DeactivationOfMembershipTable data={data?data:[]}/>
                 :''
             }   
         </div>

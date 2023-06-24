@@ -16,7 +16,7 @@ const ChangeOfName = ()=>{
             <Loading loading={isLoading}/>
             {
                 data?
-             <ChangeOfNameServiceTable data={data.results}/> :''
+             <ChangeOfNameServiceTable data={data?data:[]}/> :''
             }
         </div>
     )

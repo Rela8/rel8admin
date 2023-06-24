@@ -809,7 +809,7 @@ export const ChangeOfNameServiceTable = ({ show, data, deleteFn })=>{
         header={'Change Of Name Service Status'}
         close={()=>setShowModal(false)}
         invalidate_query_string={'changeOfName'}
-        id={currentData.id}
+        id={currentData.member.member_id}
       />
       }
 
@@ -824,31 +824,42 @@ export const ChangeOfNameServiceTable = ({ show, data, deleteFn })=>{
       <TableBody> 
           <TableRow>
             <TableHead>Full Name</TableHead>
-            <TableHead>Original Membership Certificate</TableHead>
-            <TableHead>Year One Audited Finacial Statements</TableHead>
-            <TableHead>Year Two Audited Finacial Statements</TableHead>
-            <TableHead>Certificate Of Incorporation</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead>
+            Change of name Certificate 
+            </TableHead>
+            <TableHead>
+            Bank Payment Teller 
+            </TableHead>
+            <TableHead>
+            Return of MAN Membership Certificate
+            </TableHead>
+            <TableHead>
+            Certificate Incoporation
+            </TableHead>
+            <TableHead>
+            Audited Finicial Statement (One)
+            </TableHead>
+
+            <TableHead>
+            Audited Finicial Statement (Two)
+            </TableHead>
+          
             <TableHead>View more</TableHead>
           </TableRow>
         
          {
           data.map(((item,index)=>(
             <TableRow key={item.id}>
-            <TableData>{item.member.full_name}</TableData>
-            <TableData><a href={item.original_membership_certificate} target='_blank' rel="noreferrer" >view</a></TableData>
-            <TableData><a href={item.year_one_audited_finacial_statements} target='_blank' rel="noreferrer" >view</a></TableData>
-            <TableData><a href={item.year_two_audited_finacial_statements} target='_blank' rel="noreferrer" >view</a></TableData>
-            <TableData><a href={item.certificate_of_incorporation} target='_blank' rel="noreferrer" >view</a></TableData>
+            <TableData>{item.member.name}</TableData>
+            <TableData><a href={item.submit_change_of_name_cert}>view</a></TableData>
+            <TableData><a href={item.bank_teller_of_payment}>view</a></TableData>
+            <TableData><a href={item.certificate_which_expired_on_thirtyone}>view</a></TableData>
+            <TableData><a href={item.copy_of_certificate_incoporation}>view</a></TableData>
+            <TableData><a href={item.audited_finicial_statement_one}>view</a></TableData>
+            <TableData><a href={item.audited_finicial_statement_two}>view</a></TableData>
             <TableData>{item.status}</TableData>
             <TableData>
-              {/* <EllipsesIcon
-                svgClick={()=>{
-                  setMdata(item)
-                  setModal(true)}}
-                // itemInfo={() => setModal(true)}
-                style={{ cursor: "pointer", width: "25px", height: "25px" }}
-              /> */}
+            
 
               <MoreButton
                 list={[
@@ -857,13 +868,13 @@ export const ChangeOfNameServiceTable = ({ show, data, deleteFn })=>{
                     setShowModal(true)
                   
                   }},
-                  {
-                    'label':'view Reissuance Of Certificate',
-                    'click':()=>{
-                      setMdata(item)
-                      setModal(true)
-                    }
-                  }
+                  // {
+                  //   'label':'view Reissuance Of Certificate',
+                  //   'click':()=>{
+                  //     setMdata(item)
+                  //     setModal(true)
+                  //   }
+                  // }
                 ]}
                 />
             </TableData>
@@ -895,7 +906,8 @@ export const LossOFCertTable = ({data,close})=>{
         header={'Loss Of Certification Status'}
         close={()=>setShowModal(false)}
         invalidate_query_string={'LossOFCert'}
-        id={currentData.id}
+        id={currentData.member.member_id}
+
       />
       }
       <ElectionThemeHeader>Loss Of Certificate</ElectionThemeHeader>
@@ -914,6 +926,8 @@ export const LossOFCertTable = ({data,close})=>{
               <TableHead>Year One Audited Finacial Statements</TableHead>
               <TableHead>Year Two Audited Finacial Statements</TableHead>
               <TableHead>Certificate Of Incorporation</TableHead>
+              <TableHead>" Return of MAN Membership Certificate which expired on the 31st December</TableHead>
+              <TableHead>Bank Teller Of payement</TableHead>
               <TableHead>Status</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -921,17 +935,26 @@ export const LossOFCertTable = ({data,close})=>{
             {
               data.map((item,index)=>(
                 <TableRow key={item.id}>
-                  <TableData>{item.member.full_name}</TableData>
-                  <TableData><a href={item.affidavit_from_court_of_loss_of_cert} 
+                  <TableData>{item.member.name}</TableData>
+                  <TableData><a href={item.affidavit_from_court} 
                   target='_blank' rel="noreferrer" >view</a></TableData>
 
-                <TableData><a href={item.year_one_audited_finacial_statements} 
+                <TableData><a href={item.audited_finicial_statement_one} 
                 target='_blank' rel="noreferrer" >view</a></TableData>
 
               <TableData><a href={item.year_two_audited_finacial_statements} 
               target='_blank' rel="noreferrer" >view</a></TableData>
 
-              <TableData><a href={item.certificate_of_incorporation} 
+              <TableData><a href={item.copy_of_certificate_incoporation} 
+              target='_blank' rel="noreferrer" >view</a></TableData>
+
+<TableData><a href={item.audited_finicial_statement_two} 
+              target='_blank' rel="noreferrer" >view</a></TableData>
+
+<TableData><a href={item.certificate_which_expired_on_thirtyone} 
+              target='_blank' rel="noreferrer" >view</a></TableData>
+
+<TableData><a href={item.bank_teller_of_payment} 
               target='_blank' rel="noreferrer" >view</a></TableData>
               <TableData>{item.status}</TableData>
 
@@ -952,13 +975,13 @@ export const LossOFCertTable = ({data,close})=>{
                     setShowModal(true)
                   
                   }},
-                  {
-                    'label':'view Reissuance Of Certificate',
-                    'click':()=>{
-                      setMdata(item)
-                      setModal(true)
-                    }
-                  }
+                  // {
+                  //   'label':'view Reissuance Of Certificate',
+                  //   'click':()=>{
+                  //     setMdata(item)
+                  //     setModal(true)
+                  //   }
+                  // }
                 ]}
                 />
               </TableData>
@@ -993,8 +1016,8 @@ export const DeactivationOfMembershipTable = ({data,close})=>{
           <TableBody>
             <TableRow>
               <TableHead>Full Name</TableHead>
-              <TableHead>Letter Requesting Deactivation</TableHead>
-              <TableHead>Original Membership Certificate</TableHead>
+              <TableHead>Letter Requesting For Deactivation/Suspension Of Membership</TableHead>
+              <TableHead>Submission Of Original Membership Certificate.</TableHead>
               <TableHead>Status</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -1002,12 +1025,12 @@ export const DeactivationOfMembershipTable = ({data,close})=>{
             {
               data.map((item,index)=>(
                 <TableRow key={index}>
-                  <TableData>{item.member.full_name}</TableData>
-                  <TableData><a href={item.letter_requesting_deactivation} 
+                  <TableData>{item.member.name}</TableData>
+                  <TableData><a href={item.letter_request_for_activation_or_deactivation} 
                   target='_blank' rel="noreferrer" >view</a></TableData>
 
 
-                  <TableData><a href={item.original_membership_certificate} 
+                  <TableData><a href={item.submit_original_membership_cert} 
                   target='_blank' rel="noreferrer" >view</a></TableData>
                   <TableData>{item.status}</TableData>
 
@@ -1059,7 +1082,7 @@ export const ProductManufacturingUpdateTable = ({data,close})=>{
           <TableBody>
             <TableRow>
               <TableHead>Full Name</TableHead>
-              <TableHead>Most Recent Financial Statement</TableHead>
+              <TableHead> Recent Audited Financial Statements</TableHead>
               <TableHead>Product Update Inspection Report</TableHead>
               <TableHead>Status</TableHead>
               <TableHead></TableHead>
@@ -1068,12 +1091,12 @@ export const ProductManufacturingUpdateTable = ({data,close})=>{
             {
               data.map((item,index)=>(
                 <TableRow key={index}>
-                  <TableData>{item.member.full_name}</TableData>
-                  <TableData><a href={item.most_recent_financial_statement} 
+                  <TableData>{item.member.name}</TableData>
+                  <TableData><a href={item.most_recent_finicial_statement} 
                   target='_blank' rel="noreferrer" >view</a></TableData>
 
 
-                  <TableData><a href={item.product_update_inspection_report} 
+                  <TableData><a href={item.product_report_for_branch_inspection} 
                   target='_blank' rel="noreferrer" >view</a></TableData>
                   <TableData>{item.status}</TableData>
 
@@ -1104,6 +1127,139 @@ export const ProductManufacturingUpdateTable = ({data,close})=>{
     </div>
   )
 }
+
+export const FactoryLocationTable = ({data,close})=>{
+  const [showModal,setShowModal] = useState(false)
+  const [currentData,setCurrentData] =useState(null)
+  return (
+    <div>
+      {
+        showModal&&<UpdateServiceRequestProgress
+        service_type={'FactoryLocationUpdate'}
+        header={'Factory Location Update Status'}
+        close={()=>setShowModal(false)}
+        invalidate_query_string={'factorylocation_update'}
+        id={currentData.id}
+      />
+      }
+      <ElectionThemeHeader>Factory Location</ElectionThemeHeader>
+      <Table>
+          <TableBody>
+            <TableRow>
+              <TableHead>Full Name</TableHead>
+              <TableHead> Recent Audited Financial Statements</TableHead>
+              <TableHead>Product Update Inspection Report</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+
+            {
+              data.map((item,index)=>(
+                <TableRow key={index}>
+                  <TableData>{item.member.name}</TableData>
+                  <TableData><a href={item.most_recent_finicial_statement} 
+                  target='_blank' rel="noreferrer" >view</a></TableData>
+
+
+                  <TableData><a href={item.product_report_for_branch_inspection} 
+                  target='_blank' rel="noreferrer" >view</a></TableData>
+                  <TableData>{item.status}</TableData>
+
+
+                  <TableData>
+                {/* <EllipsesIcon
+                  svgClick={()=>{
+                    // setMdata(item)
+                    // setModal(true)
+                  }}
+                  // itemInfo={() => setModal(true)}
+                  style={{ cursor: "pointer", width: "25px", height: "25px" }}
+                /> */}
+                <MoreButton
+                    list={[
+                      {'label':'update Status','click':()=>{
+                        setCurrentData(item)
+                        setShowModal(true)}}
+                    ]}
+                  />
+              </TableData>
+
+                </TableRow>
+              ))
+            }
+          </TableBody>
+      </Table>
+    </div>
+  )
+}
+
+
+export const MergerOfCompaniesTable = ({data,close})=>{
+  const [showModal,setShowModal] = useState(false)
+  const [currentData,setCurrentData] =useState(null)
+  return (
+    <div>
+      {
+        showModal&&<UpdateServiceRequestProgress
+        service_type={'mergerofcompany'}
+        header={'Merger Of Company'}
+        close={()=>setShowModal(false)}
+        invalidate_query_string={'mergercompaines_update'}
+        id={currentData.id}
+      />
+      }
+      <ElectionThemeHeader>Merger Of Companies</ElectionThemeHeader>
+      <Table>
+          <TableBody>
+            <TableRow>
+              <TableHead>Full Name</TableHead>
+              <TableHead> Recent Audited Financial Statements</TableHead>
+              <TableHead>Product Update Inspection Report</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+
+            {
+              data.map((item,index)=>(
+                <TableRow key={index}>
+                  <TableData>{item.member.name}</TableData>
+                  <TableData><a href={item.most_recent_finicial_statement} 
+                  target='_blank' rel="noreferrer" >view</a></TableData>
+
+
+                  <TableData><a href={item.product_report_for_branch_inspection} 
+                  target='_blank' rel="noreferrer" >view</a></TableData>
+                  <TableData>{item.status}</TableData>
+
+
+                  <TableData>
+                {/* <EllipsesIcon
+                  svgClick={()=>{
+                    // setMdata(item)
+                    // setModal(true)
+                  }}
+                  // itemInfo={() => setModal(true)}
+                  style={{ cursor: "pointer", width: "25px", height: "25px" }}
+                /> */}
+                <MoreButton
+                    list={[
+                      {'label':'update Status','click':()=>{
+                        setCurrentData(item)
+                        setShowModal(true)}}
+                    ]}
+                  />
+              </TableData>
+
+                </TableRow>
+              ))
+            }
+          </TableBody>
+      </Table>
+    </div>
+  )
+}
+
+
 
 
 export const ActivationOfDeactivatedMemberTable = ({data,close})=>{

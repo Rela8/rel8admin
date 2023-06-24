@@ -5,8 +5,8 @@ import { privateRequest, URLnAME } from "./axios-utils";
 export const loginUser = async (user) => {
   try {
     const { shortName, ...payload } = user;
-    const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`;
-    // const loginURL = `http://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
+    // const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`;
+    const loginURL = `http://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
     const res = await axios.post(loginURL, payload);
     return res.data;
   } catch (error) {
@@ -620,9 +620,9 @@ export const getMemOfCouncil = async (id) => {
 export const getChangeOfName = async () => {
   try {
     const res = await privateRequest.get(
-      `/tenant/services_request/admin_manage_change_of_name/`
+      `/tenant/membershipservice/change-of-name/1/admin_get/`
     );
-    return res.data;
+    return res.data.data;
   } catch (e) {
     throw new AxiosError(e);
   }
@@ -630,9 +630,9 @@ export const getChangeOfName = async () => {
 export const getLossOfCert = async () => {
   try {
     const res = await privateRequest.get(
-      `/tenant/services_request/admin_loss_of_certificate_service/`
+      `/tenant/membershipservice/loss-of-cert/1/admin_get/`
     );
-    return res.data;
+    return res.data.data;
   } catch (e) {
     throw new AxiosError(e);
   }
@@ -641,9 +641,9 @@ export const getLossOfCert = async () => {
 export const getDeactivationOfMembership = async () => {
   try {
     const res = await privateRequest.get(
-      `/tenant/services_request/admin_deactivation_of_membership/`
+      `/tenant/membershipservice/deactivation-activation-service/1/admin_get/`
     );
-    return res.data;
+    return res.data.data;
   } catch (e) {
     throw new AxiosError(e);
   }
@@ -652,13 +652,34 @@ export const getDeactivationOfMembership = async () => {
 export const getProductManufacturingUpdate = async () => {
   try {
     const res = await privateRequest.get(
-      `/tenant/services_request/admin_product_manufacturing_update/`
+      `/tenant/membershipservice/update-product-manufactured/1/admin_get/`
     );
-    return res.data;
+    return res.data.data;
   } catch (e) {
     throw new AxiosError(e);
   }
 };
+export const getFactoryLocationUpdateAPi = async ()=>{
+  try {
+    const res = await privateRequest.get(
+      `/tenant/membershipservice/update-factory-location/1/admin_get/`
+    );
+    return res.data.data;
+  } catch (e) {
+    throw new AxiosError(e);
+  }
+}
+
+export const getMergerOfCompaniesUpdateAPi = async ()=>{
+  try {
+    const res = await privateRequest.get(
+      `/tenant/membershipservice/merger-of-company/1/admin_get/`
+    );
+    return res.data.data;
+  } catch (e) {
+    throw new AxiosError(e);
+  }
+}
 
 export const getActivationOfDeactivatedMember = async () => {
   try {
@@ -687,13 +708,17 @@ export const updateActivationOfDeactivatedMembersStatusapi = async ({
 };
 
 export const updateProductManufacturingUpdateStatusApi = async ({
-  id,
+  note,
   status,
+  member_id
 }) => {
   try {
+    const form = new FormData()
+    form.append('status',status)
+    form.append('note',note)
     const res = await privateRequest.post(
-      `/tenant/services_request/admin_product_manufacturing_update/update_status/`,
-      { id, status }
+      `/tenant/membershipservice/update-product-manufactured/${member_id}/admin_update/`,
+      form
     );
     return res.data;
   } catch (e) {
@@ -701,11 +726,14 @@ export const updateProductManufacturingUpdateStatusApi = async ({
   }
 };
 
-export const UpdateDeactivationOfMembershipApi = async ({ id, status }) => {
+export const UpdateDeactivationOfMembershipApi = async ({note, status,member_id }) => {
   try {
+    const form = new FormData()
+    form.append('status',status)
+    form.append('note',note)
     const res = await privateRequest.post(
-      `/tenant/services_request/admin_deactivation_of_membership/update_status/`,
-      { id, status }
+      `/tenant/membershipservice/deactivation-activation-service/${member_id}/admin_update/`,
+      form
     );
     return res.data;
   } catch (e) {
@@ -713,28 +741,63 @@ export const UpdateDeactivationOfMembershipApi = async ({ id, status }) => {
   }
 };
 
-export const updateLossOFCertApi = async ({ id, status }) => {
+export const updateLossOFCertApi = async ({ member_id, status,note='' }) => {
   try {
+    const form = new FormData()
+    form.append('status',status)
+    form.append('note',note)
     const res = await privateRequest.post(
-      `/tenant/services_request/admin_loss_of_certificate_service/update_status/`,
-      { id, status }
+      `tenant/membershipservice/loss-of-cert/${member_id}/admin_update/`,
+    form
+    );
+    return res.data.data 
+  } catch (e) {
+    throw new AxiosError(e);
+  }
+};
+export const updateChangeOfNameApi = async ({ member_id, status ,note='a note to member'}) => {
+  try {
+    const form = new FormData()
+    form.append('status',status)
+    form.append('note',note)
+    const res = await privateRequest.post(
+      `/tenant/membershipservice/change-of-name/${member_id}/admin_update/`,
+      form
     );
     return res.data;
   } catch (e) {
     throw new AxiosError(e);
   }
 };
-export const updateChangeOfNameApi = async ({ id, status }) => {
+
+export const updateFactoryLocationApi = async ({ member_id, status ,note='a note to member'}) => {
   try {
+    const form = new FormData()
+    form.append('status',status)
+    form.append('note',note)
     const res = await privateRequest.post(
-      `/tenant/services_request/admin_manage_change_of_name/update_status/`,
-      { id, status }
+      `/tenant/membershipservice/update-factory-location/${member_id}/admin_update/`,
+      form
     );
     return res.data;
   } catch (e) {
     throw new AxiosError(e);
   }
 };
+export const updateMergerOfCompaniesUpdateAPi = async ({ member_id, status ,note='a note to member'})=>{
+  try {
+    const form = new FormData()
+    form.append('status',status)
+    form.append('note',note)
+    const res = await privateRequest.post(
+      `/tenant/membershipservice/merger-of-company/${member_id}/admin_update/`,form
+    );
+    return res.data.data;
+  } catch (e) {
+    throw new AxiosError(e);
+  }
+}
+
 
 export const getProspectivememberRuleApi = async () => {
   const resp = await privateRequest.get(
