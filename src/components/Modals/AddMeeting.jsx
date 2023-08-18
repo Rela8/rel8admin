@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm ,useFieldArray } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import styled from "styled-components";
@@ -9,9 +9,11 @@ import {
   createMeeting,
   getAllChapters,
   getAllCommittee,
+  getAllCompanysNames,
   getListOfExcos,
 } from "../../utils/api-calls.js";
 import Loading from "../Loading/Loading";
+import MultiSelectComp from "../MultiSelect";
 
 export const BackDrop = styled.div`
   width: 100%;
@@ -105,8 +107,11 @@ export const FormTextArea = styled.textarea`
 `;
 
 const AddMeeting = ({ close }) => {
-  const { register, handleSubmit ,setValue} = useForm(),
+  const { register, handleSubmit ,setValue,control} = useForm(),
     queryClient = useQueryClient();
+
+
+    const {isLoading:companiesLoading,data:companiesName} = useQuery('getAllCompanysNames',getAllCompanysNames)
 
   const { isLoading, isFetching, isError, data } = useQuery(
     "all-chapters",
@@ -166,7 +171,6 @@ const AddMeeting = ({ close }) => {
   });
 
   const onSubmit = (data) => {
-
     mutate(data);
   };
   return (
@@ -179,14 +183,14 @@ const AddMeeting = ({ close }) => {
             `}
       </style>
 
-      {isLoading||commiteeLoading || isFetching || excoLoading || excoFetching ? (
+      {isLoading||commiteeLoading||companiesLoading || isFetching || excoLoading || excoFetching ? (
         <Loading
           loading={isLoading || isFetching || excoLoading || excoFetching}
         />
       ) : !isError || !excoError ? (
         <SubCon>
           <SubConHeader>Add Meeting</SubConHeader>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmit)} >
             <FormLabel>
               Name:
               <FormDataComp
@@ -216,7 +220,7 @@ const AddMeeting = ({ close }) => {
 
 
 
-            <FormLabel>
+            {/* <FormLabel>
             Commitee:
               <FormSelection
                 defaultValue={""}
@@ -234,11 +238,11 @@ const AddMeeting = ({ close }) => {
                   </FormOption>
                 ))}
               </FormSelection>
-            </FormLabel>
+            </FormLabel> */}
 
 
 
-            <FormLabel>
+            {/* <FormLabel>
               Exco:
               <FormSelection
                 defaultValue={""}
@@ -256,9 +260,9 @@ const AddMeeting = ({ close }) => {
                   </FormOption>
                 ))}
               </FormSelection>
-            </FormLabel>
+            </FormLabel> */}
 
-            <FormLabel>
+            {/* <FormLabel>
             Branch:
               <FormSelection
                 defaultValue={""}
@@ -276,7 +280,7 @@ const AddMeeting = ({ close }) => {
                   </FormOption>
                 ))}
               </FormSelection>
-            </FormLabel>
+            </FormLabel> */}
 
             <FormLabel>
               Date For:
@@ -308,7 +312,14 @@ const AddMeeting = ({ close }) => {
                 {...register("event_date", { required: true })}
               />
             </FormLabel>
-
+            {/* invitees */}
+            <MultiSelectComp 
+            options={companiesName?companiesName.map((d,index)=>({
+              'label':d,'value':d})):[]}
+            label="Members"
+            onChange={(value)=>{
+              setValue('invitees',value.map(d=>d.value))
+            }} />
             <FormLabel>
               Meeting Docs
             

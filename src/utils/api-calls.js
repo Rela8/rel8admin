@@ -34,6 +34,10 @@ export const getAdminDashBoardDetails = async () => {
   }
 };
 
+export const getAllCompanysNames = async ()=>{
+  const resp = await privateRequest.get('/tenant/auth/ManageMemberValidation/get_companys_name/')
+  return resp.data.data
+}
 //DUES
 export const getAllDues = async () => {
   try {
@@ -407,6 +411,9 @@ export const createMeeting = async (data) => {
   form.append("event_date", data.event_date);
   form.append("addresse", data.addresse);
   form.append("meeting_docs", data.meeting_docs[0]);
+  if(data?.invitees){
+    form.append('invitees',JSON.stringify(data.invitees))
+  }
   try {
     const res = await privateRequest.post(
       "/tenant/meeting/admin_manage_meeting/",
