@@ -80,7 +80,9 @@ const DashBoard = () => {
       dashboardSummary.push(info);
     }
   }
-
+console.log(
+  {dashboardSummary}
+)
   return (
     <>
       {addDueModal && <AddDue close={displayAddDueModal} />}

@@ -24,6 +24,7 @@ import EventAttendies from "./components/Events/EventAttendies";
 import CommiteeMembers from "./components/Committee/CommiteeMembers";
 import MeetingsAttendies from "./components/Meetings/MeetingsAttendies";
 import FundAProjectInterestedMember from "./components/FundAProject/FundAProjectInterestedMember";
+import NotificationPage from "./components/NotificationPage";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
                   <Route path="/service_request" element={<ServiceRequest />} />
                   <Route path="/prospective-member" element={<SetProspectiveMembersRules/>} />
                   <Route path="/all-prospectivemembers" element={<AllProspectivemembers/>} />
+                  <Route path="/notification" element={<NotificationPage/>} />
               </Route>
           <Route path="*" element={<NotFound />}/>
         </Routes>

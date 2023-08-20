@@ -862,3 +862,25 @@ export const updateGalleryTitleApi = async ({ id, name }) => {
   );
   return resp.data;
 };
+
+
+
+// Notification
+export const sendPushIndividualNoficationApi = async (data)=>{
+  const resp = await privateRequest.post('/tenant/latestupdate/admin_lastest_updates/send_push_individual_nofication/',data)
+  return resp.data
+}
+
+
+export const sendPushSectorNoficationApi = async (data)=>{
+  const resp = await privateRequest.post('/tenant/latestupdate/admin_lastest_updates/send_notification_by_topic/',{...data,'type':'exco'})
+  return resp.data
+}
+
+
+
+export const sendPushCommiteeNoficationApi = async (data)=>{
+  const resp = await privateRequest.post('/tenant/latestupdate/admin_lastest_updates/send_notification_by_topic/',{...data,'type':'commitee'})
+  return resp.data
+}
+
