@@ -16,6 +16,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Meetings from "./components/Meetings/Meetings";
 import Chapters from "./components/Chapters/Chapters";
+import NotificationPage from "./components/NotificationPage";
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
                   <Route path="/committee" element={<Committee />}/>
                   <Route path="/meetings" element={<Meetings />}/>
                   <Route path="/chapters" element={<Chapters />} />
+                  <Route path="/notification" element={<NotificationPage/>} />
+
               </Route>
           <Route path="*" element={<NotFound />}/>
         </Routes>

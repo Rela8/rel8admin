@@ -1,11 +1,11 @@
 import axios, { AxiosError } from "axios"
-import { privateRequest, URLnAME } from "./axios-utils"
+import { BASE_URL, privateRequest, URLnAME } from "./axios-utils"
 
 //LOGIN
 export const loginUser = async (user) => {
     try{
         const { shortName, ...payload } = user
-        const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
+        const loginURL = `${BASE_URL}/tenant/auth/login/`
         const res = await axios.post(loginURL, payload)
         return res.data
     }catch(error){
@@ -417,3 +417,26 @@ export const getMemOfCouncil = async (id) => {
         throw new AxiosError(e)
     }   
 }
+
+
+
+
+// Notification
+export const sendPushIndividualNoficationApi = async (data)=>{
+    const resp = await privateRequest.post('/tenant/latestupdate/admin_lastest_updates/send_push_individual_nofication/',data)
+    return resp.data
+  }
+  
+  
+  export const sendPushSectorNoficationApi = async (data)=>{
+    const resp = await privateRequest.post('/tenant/latestupdate/admin_lastest_updates/send_notification_by_topic/',{...data,'type':'exco'})
+    return resp.data
+  }
+  
+  
+  
+  export const sendPushCommiteeNoficationApi = async (data)=>{
+    const resp = await privateRequest.post('/tenant/latestupdate/admin_lastest_updates/send_notification_by_topic/',{...data,'type':'commitee'})
+    return resp.data
+  }
+  

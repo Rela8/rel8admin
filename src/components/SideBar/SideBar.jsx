@@ -186,7 +186,14 @@ const SideBar = () => {
               Chapters
             </CustNavLink>
           </SideBarItem>
-
+          <SideBarItem>
+            <CustNavLink where={"/notification"}>
+              <SettingsIcon
+                style={{ width: "25px", height: "25px", marginRight: "10px" }}
+              />
+              Notifcations
+            </CustNavLink>
+          </SideBarItem>
           <SideBarItem>
             <CustNavLink where={"/settings"}>
               <SettingsIcon

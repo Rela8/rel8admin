@@ -29,7 +29,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
-const FormDataComp = styled.input`
+export const FormDataComp = styled.input`
   padding: 5px 0px;
   background-color: transparent;
   border: none;
@@ -52,7 +52,7 @@ const FormSelection = styled.select`
   overflow: auto;
 `;
 const FormOption = styled.option``;
-const FormLabel = styled.label`
+export const FormLabel = styled.label`
   display: flex;
   flex-direction: column;
   font-size: 12px;
