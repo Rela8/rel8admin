@@ -1,6 +1,6 @@
 import React from "react"
 import { useMutation, useQuery } from "react-query"
-import { getAllCommittee, getAllMembers, getListOfExcos, sendPushCommiteeNoficationApi, sendPushIndividualNoficationApi, sendPushSectorNoficationApi } from "../utils/api-calls"
+import { getAllChapters, getAllCommittee, getAllMembers, getListOfExcos, sendPushChapterNoficationApi, sendPushCommiteeNoficationApi, sendPushSectorNoficationApi } from "../utils/api-calls"
 import { SubConBtn } from "./Button"
 import { DashBoardMemberCon } from "./DashBoard/DashBoard.styles"
 import MemberDetBox from "./DashBoard/MemberDetBox"
@@ -31,7 +31,7 @@ const NotificationPage = ()=>{
     const [commiteeModal,setCommitteeModal] = useState(false)
     const dashboardData =[
         {
-            header:'Individual',
+            header:'Chapter',
             subheader:<SubConBtn
             onClick={()=>{
                 setIndiviModal(true)
@@ -87,7 +87,7 @@ const NotificationPage = ()=>{
             {
                 indiviModal?
             <CustomModal
-            title={'Individual Notification'}
+            title={'Chapters Notification'}
             close={()=>setIndiviModal(false)}
             >
                 <SendIndividualNotifcationForm/>
@@ -126,8 +126,8 @@ export default NotificationPage
 
 const SendIndividualNotifcationForm =()=>{
     const [selectedCompany,setSelectedCompany] = useState<string[]>([]);
-    const {isLoading:companiesLoading,data} = useQuery('getAllCompanysNames',getAllMembers)
-    const  { isLoading,mutate} = useMutation(sendPushIndividualNoficationApi,{
+    const {isLoading:companiesLoading,data} = useQuery('getAllChapters',getAllChapters)
+    const  { isLoading,mutate} = useMutation(sendPushChapterNoficationApi,{
         'onSuccess':(data)=>{
             toast.success("Notification Sent!!", {
                 progressClassName: "toastProgress",
@@ -142,7 +142,6 @@ const SendIndividualNotifcationForm =()=>{
 
 
     const { register, handleSubmit,setValue } = useForm({});
-    // console.log({users})
     return(
         <form onSubmit={handleSubmit(onSubmit)}>
              <Loading
@@ -162,20 +161,26 @@ const SendIndividualNotifcationForm =()=>{
               <FormLabel>
                 Message:
                 <textarea
-                  {...register("message", { required: true })}
+                  {...register("content", { required: true })}
                 />
               </FormLabel>
             <br />
-            <MultiSelectComp
-            options={data?data.data.map((d:any,index:number)=>({
-              'label':d.full_name,'value': `${d.id}`})):[]}
-            label="Members"
-            onChange={(value)=>{
-                console.log(value)
-                setValue('user_ids',
-                    value.map(d=>d.value)
-                )
-            }} />
+            <select
+            onChange={e=>{
+                // console.log()
+                setValue('id',e.target.value)
+            }}
+            >
+                <option  selected>Pick Chapter</option>
+                {
+                    data?.results?.map((d:any,index:number)=>(
+
+                        <option value={d.id} key={index} >
+                            {d.name}
+                        </option>
+                    ))
+                }
+            </select>
             <br />
             <AddNewBtn
             type="submit"
@@ -237,6 +242,22 @@ const SendSectorNotifcationForm =()=>{
                 />
               </FormLabel>
             <br />
+            <select
+            onChange={e=>{
+                // console.log()
+                setValue('id',e.target.value)
+            }}
+            >
+                <option  selected>Pick Chapter</option>
+                {
+                    excoData?.map((d:any,index:number)=>(
+
+                        <option value={d.id} key={index} >
+                            {d.name}
+                        </option>
+                    ))
+                }
+            </select>
             {/* <MultiSelectComp
             options={excoData?excoData.map((d:any,index:number)=>({
               'label':d.name,'value':d.id})):[]}

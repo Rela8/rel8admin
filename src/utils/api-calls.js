@@ -422,10 +422,11 @@ export const getMemOfCouncil = async (id) => {
 
 
 // Notification
-export const sendPushIndividualNoficationApi = async (data)=>{
-    const resp = await privateRequest.post('/tenant/latestupdate/admin_lastest_updates/send_push_individual_nofication/',data)
+export const sendPushChapterNoficationApi = async (data)=>{
+    const resp = await privateRequest.post('/tenant/latestupdate/admin_lastest_updates/send_notification_by_topic/',{...data,'type':'chapters'})
     return resp.data
   }
+  
   
   
   export const sendPushSectorNoficationApi = async (data)=>{
