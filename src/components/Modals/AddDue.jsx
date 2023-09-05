@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styled from "styled-components";
 import { rel8Pink, rel8Purple, rel8White } from "../../globals";
 import { useForm } from "react-hook-form";
@@ -89,7 +89,7 @@ const SubConBtn = styled.input`
 `;
 
 const AddDue = ({ close }) => {
-  const { register, watch, handleSubmit } = useForm({
+  const { register, watch, handleSubmit ,setValue} = useForm({
     defaultValues: {
       scheduletype: "",
       schedule: [],
@@ -138,7 +138,13 @@ const AddDue = ({ close }) => {
 
   const onSubmit = (duesData) => {
     mutate(duesData);
+    // console.log(duesData)
+
   };
+
+  useEffect(()=>{
+    setValue('re_occuring',false)
+  },[])
   return (
     <BackDrop>
       <style>
@@ -162,11 +168,49 @@ const AddDue = ({ close }) => {
               />
             </FormLabel>
 
+
+            {/* <FormLabel>
+              Alumni Year:
+              <FormData
+                type={"date"}
+                {...register("alumni_year", { required: true })}
+              />
+            </FormLabel> */}
+
             <FormLabel>
-              Is Reoccuring:
+              Amount:
+              <FormData
+                min={0}
+                type={"number"}
+                {...register("amount", {
+                  required: true,
+                  min: {
+                    value: 0,
+                    message: "invalid amount",
+                  },
+                })}
+              />
+            </FormLabel>
+            <FormLabel>
+              Start Date:
+              <FormData
+                type={"date"}
+                {...register("startDate", { required: true })}
+              />
+            </FormLabel>
+            <FormLabel>
+              Start Time:
+              <FormData
+                type={"time"}
+                {...register("startTime", { required: true })}
+              />
+            </FormLabel>
+
+            <FormLabel>
+              Do you want owing members to be deactivated:
               <FormSelection
                 defaultValue={""}
-                {...register("re_occuring", { required: true })}
+                {...register("is_deactivate_users", { required: true })}
               >
                 <FormOption disabled value="">
                   select an option
@@ -176,6 +220,27 @@ const AddDue = ({ close }) => {
               </FormSelection>
             </FormLabel>
 
+            {
+              watch('is_deactivate_users') ==='true'?(
+                <>
+                            <FormLabel>
+              End Date:
+              <FormData
+                type={"date"}
+                {...register("endDate", { required: true })}
+              />
+            </FormLabel>
+            <FormLabel>
+              End Time:
+              <FormData
+                type={"time"}
+                {...register("endTime", { required: true })}
+              />
+            </FormLabel>
+
+                </>
+              ):""
+            }
             <FormLabel>
               For Excos:
               <FormSelection
@@ -209,44 +274,7 @@ const AddDue = ({ close }) => {
               </FormLabel>
             ) : null}
 
-            <FormLabel>
-              Alumni Year:
-              <FormData
-                type={"date"}
-                {...register("alumni_year", { required: true })}
-              />
-            </FormLabel>
-
-            <FormLabel>
-              Amount:
-              <FormData
-                min={0}
-                type={"number"}
-                {...register("amount", {
-                  required: true,
-                  min: {
-                    value: 0,
-                    message: "invalid amount",
-                  },
-                })}
-              />
-            </FormLabel>
-            <FormLabel>
-              Start Date:
-              <FormData
-                type={"date"}
-                {...register("startDate", { required: true })}
-              />
-            </FormLabel>
-            <FormLabel>
-              Start Time:
-              <FormData
-                type={"time"}
-                {...register("startTime", { required: true })}
-              />
-            </FormLabel>
-
-            <FormLabel>
+            {/* <FormLabel>
               Schedule Type:
               <FormSelection
                 defaultValue={""}
@@ -315,7 +343,7 @@ const AddDue = ({ close }) => {
                   <FormOption value="6">Saturday</FormOption>
                 </FormSelection>
               </>
-            )}
+            )} */}
 
             <SubConBtnHold>
               <SubConBtn

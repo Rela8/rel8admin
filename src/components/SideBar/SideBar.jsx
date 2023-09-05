@@ -153,14 +153,14 @@ const SideBar = () => {
               Gallery
             </CustNavLink>
           </SideBarItem>
-          <SideBarItem>
+          {/* <SideBarItem>
             <CustNavLink where={"/elections"}>
               <ElectionIcon
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}
               />
               Elections
             </CustNavLink>
-          </SideBarItem>
+          </SideBarItem> */}
           <SideBarItem>
             <CustNavLink where={"/committee"}>
               <CommitteeIcon
@@ -194,6 +194,15 @@ const SideBar = () => {
               Notifcations
             </CustNavLink>
           </SideBarItem>
+          <SideBarItem>
+            <CustNavLink where={"/service-request"}>
+              <PublicIcon
+                style={{ width: "25px", height: "25px", marginRight: "10px" }}
+              />
+              Service Request
+            </CustNavLink>
+          </SideBarItem>
+
           <SideBarItem>
             <CustNavLink where={"/settings"}>
               <SettingsIcon

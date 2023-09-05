@@ -17,6 +17,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Meetings from "./components/Meetings/Meetings";
 import Chapters from "./components/Chapters/Chapters";
 import NotificationPage from "./components/NotificationPage";
+import ServiceRequest from "./components/ServiceRequest/ServiceRequest";
+import MemberServiceRequestSubmission from "./components/ServiceRequest/MemberServiceRequestSubmission";
 
 function App() {
   return (
@@ -39,6 +41,9 @@ function App() {
                   <Route path="/meetings" element={<Meetings />}/>
                   <Route path="/chapters" element={<Chapters />} />
                   <Route path="/notification" element={<NotificationPage/>} />
+                  <Route path="/service-request" element={<ServiceRequest/>} />
+                  <Route path="/service-request/member-submission/:id" element={<MemberServiceRequestSubmission />} />
+                  
 
               </Route>
           <Route path="*" element={<NotFound />}/>

@@ -198,6 +198,7 @@ const AddPublications = ({ close }) => {
       "publication_paragraph",
       JSON.stringify(publication_paragraph)
     );
+    formData.append('body',' .')
     createMutate(formData);
   };
   return (
@@ -304,10 +305,10 @@ const AddPublications = ({ close }) => {
               </FormLabel>
             )}
 
-            <FormLabel>
+            {/* <FormLabel>
               Body:
               <FormTextArea {...register("body", { required: true })} />
-            </FormLabel>
+            </FormLabel> */}
 
             {fields.map((field, index) => {
               return (
@@ -352,7 +353,7 @@ const AddPublications = ({ close }) => {
             <SubConBtnHold>
               <SubConBtn
                 type={"submit"}
-                value="Add"
+                value={createLoading?'Creating':"Add"}
                 disabled={createLoading}
                 typex="filled"
               />

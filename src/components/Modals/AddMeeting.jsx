@@ -42,7 +42,7 @@ export const FormDataComp = styled.input`
     color: ${rel8Purple};
   }
 `;
-const FormSelection = styled.select`
+export const FormSelection = styled.select`
   padding: 5px 0px;
   color: ${rel8Purple};
   outline: none;
@@ -51,7 +51,7 @@ const FormSelection = styled.select`
   margin: 10px 0px;
   overflow: auto;
 `;
-const FormOption = styled.option``;
+export const FormOption = styled.option``;
 export const FormLabel = styled.label`
   display: flex;
   flex-direction: column;
@@ -89,7 +89,7 @@ const SubConBtn = styled.input`
     props.typex === "filled" ? `${rel8White}` : `${rel8Purple}`};
   cursor: pointer;
 `;
-const FormTextArea = styled.textarea`
+export const FormTextArea = styled.textarea`
   padding: 5px 0px;
   background-color: transparent;
   border: none;
@@ -171,7 +171,7 @@ const AddMeeting = ({ close }) => {
         />
       ) : !isError || !excoError ? (
         <SubCon>
-          <SubConHeader>Add Event</SubConHeader>
+          <SubConHeader>Add Meeting</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormLabel>
               Name:
@@ -204,7 +204,7 @@ const AddMeeting = ({ close }) => {
               Exco:
               <FormSelection
                 defaultValue={""}
-                {...register("exco", { required: true })}
+                {...register("exco", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option
@@ -221,7 +221,7 @@ const AddMeeting = ({ close }) => {
               Chapter:
               <FormSelection
                 defaultValue={""}
-                {...register("exco", { required: true })}
+                {...register("exco", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option

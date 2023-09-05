@@ -24,18 +24,18 @@ import {
   PublicationViewMore,
 } from "./ViewMoreInfo";
 
-const Table = styled.table`
+export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
 `;
-const TableBody = styled.tbody``;
-const TableRow = styled.tr``;
-const TableHead = styled.th`
+export const TableBody = styled.tbody``;
+export const TableRow = styled.tr``;
+export const TableHead = styled.th`
   text-align: center;
   padding-bottom: 20px;
   border-right: 2px solid ${rel8LightPink};
 `;
-const TableData = styled.td`
+export const TableData = styled.td`
   padding: 10px;
   font-size: 14px;
   background-color: ${rel8White};
@@ -47,14 +47,14 @@ const TableData = styled.td`
     padding: "2px",
   })}
 `;
-const ElectionThemeHeader = styled.p`
+export const ElectionThemeHeader = styled.p`
   font-size: 20px;
   color: ${rel8Purple};
   margin: 30px 20px;
   text-decoration: underline;
 `;
 
-const ActionBtns = styled.button`
+export const ActionBtns = styled.button`
   padding: 10px;
   background-color: ${rel8Purple};
   border-radius: 10px;

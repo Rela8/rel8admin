@@ -306,9 +306,11 @@ export const registerUserToChapter = async (data) => {
 }
 
 //MEETINGS
-export const createMeeting = async (data) => {
+export const createMeeting = async (payload) => {
+    const formData = new FormData();
+    Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
     try{
-        const res = await privateRequest.post("/tenant/meeting/admin_manage_meeting/",data)
+        const res = await privateRequest.post("/tenant/meeting/admin_manage_meeting/",formData)
         return res.data
     }catch(e){
         throw new AxiosError(e)
@@ -441,3 +443,25 @@ export const sendPushChapterNoficationApi = async (data)=>{
     return resp.data
   }
   
+
+
+//   Service Request
+export const createServiceRequestApi = async (data)=>{
+    const resp = await privateRequest.post('/tenant/services_request/rel8-custom-services/',data)
+    return resp.data
+  }
+export const getServicesRequestApi = async ()=>{
+    const resp = await privateRequest.get('/tenant/services_request/rel8-custom-services/',)
+    return resp.data
+  }
+
+  export const deleteServicesRequestApi = async (id)=>{
+    const resp = await privateRequest.delete(`/tenant/services_request/rel8-custom-services/${id}/`,)
+    return resp.data
+  }
+
+
+  export const getMemeberServicesSubmmissionApi = async (id)=>{
+    const resp = await privateRequest.get(`/tenant/services_request/rel8-custom-services/member_submissions/?service_id=${id}`,)
+    return resp.data.data
+  }

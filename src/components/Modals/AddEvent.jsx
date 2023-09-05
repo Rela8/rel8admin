@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -87,7 +87,7 @@ const SubConBtn = styled.input`
 `;
 
 const AddEvent = ({ close }) => {
-  const { register, handleSubmit, watch } = useForm({
+  const { register, handleSubmit, watch,setValue } = useForm({
     defaultValues: {
       amount: 0.0,
       scheduletype: "",
@@ -134,14 +134,29 @@ const AddEvent = ({ close }) => {
   const onSubmit = (data) => {
     const image = data.image[0];
     const { image: img, is_for_excos, schedule, ...newdata } = data;
-    console.log(newdata);
+    // console.log(newdata);
     const payload = { image, ...newdata };
     const formData = new FormData();
-    Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
-    formData.append("schedule", JSON.stringify(schedule));
-
+    Object.keys(payload)?.forEach((key) => {
+      // if(payload[key]){}
+      // if(key)
+      if(key==='exco_id'){
+        if(payload[key]){
+          formData.append(key, payload[key])
+        }
+      }else{
+        formData.append(key, payload[key])
+      }
+      // console.log( {'data':payload[key],key})
+    });
+    formData.append("schedule", JSON.stringify(["0"]));
+    formData.append('scheduletype','day_of_week')
     mutate(formData);
   };
+
+  useEffect(()=>{
+    setValue('re_occuring',false)
+  },[])
   return (
     <BackDrop>
       <style>
@@ -185,7 +200,7 @@ const AddEvent = ({ close }) => {
               Excos:
               <FormSelection
                 defaultValue={""}
-                {...register("exco_id", { required: true })}
+                {...register("exco_id", { required: false })}
               >
                 <FormOption disabled value="">
                   select an option
@@ -226,8 +241,7 @@ const AddEvent = ({ close }) => {
                 <FormOption value={false}>No</FormOption>
               </FormSelection>
             </FormLabel>
-
-            <FormLabel>
+            {/* <FormLabel>
               Is Reoccuring:
               <FormSelection
                 defaultValue={""}
@@ -240,6 +254,7 @@ const AddEvent = ({ close }) => {
                 <FormOption value={false}>No</FormOption>
               </FormSelection>
             </FormLabel>
+ */}
 
             <FormLabel>
               Is Paid Event:
@@ -304,7 +319,7 @@ const AddEvent = ({ close }) => {
               />
             </FormLabel>
 
-            <FormLabel>
+            {/* <FormLabel>
               Schedule Type:
               <FormSelection
                 defaultValue={""}
@@ -316,7 +331,7 @@ const AddEvent = ({ close }) => {
                 <FormOption value="day_of_week">Day Of Week</FormOption>
                 <FormOption value="month_of_year">Month of Year</FormOption>
               </FormSelection>
-            </FormLabel>
+            </FormLabel> */}
 
             {watch("scheduletype") === "month_of_year" && (
               <>
