@@ -368,7 +368,7 @@ const CreateServiceRequestForm = ({isEdit,service}:CreateServiceRequestFormProp)
             ))}
                     <SubConBtn style={{'display':'inline-block'}} onClick={e=>{
                         e.preventDefault()
-                        fileAppend('Upload Birth Cert*')
+                        fileAppend('Upload Birth Cert')
                     }}>
                         Add File Fields 
                     </SubConBtn>

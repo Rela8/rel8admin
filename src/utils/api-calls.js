@@ -465,3 +465,9 @@ export const getServicesRequestApi = async ()=>{
     const resp = await privateRequest.get(`/tenant/services_request/rel8-custom-services/member_submissions/?service_id=${id}`,)
     return resp.data.data
   }
+
+
+export const handleServiceRequestApi = async ({member_request_id,status})=>{
+const resp = await privateRequest.post(`/tenant/services_request/rel8-custom-services/handle_request/?member_request_id=${member_request_id}`,{status})
+return resp.data.data
+}

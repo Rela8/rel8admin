@@ -7,10 +7,13 @@ import Loading from '../Loading/Loading'
 import { EventsHeader } from '../Events/Events.styles'
 import Table from '../Table'
 import { SubConBtn } from '../Button'
-import { useQuery } from 'react-query'
-import { getMemeberServicesSubmmissionApi } from '../../utils/api-calls'
+import { useMutation, useQuery } from 'react-query'
+import { getMemeberServicesSubmmissionApi, handleServiceRequestApi } from '../../utils/api-calls'
 import { useParams } from 'react-router-dom'
 import CustomModal from '../Modals/CustomModal'
+import { SelectWithInput } from '../InputWithLabel'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 const MemberServiceRequestSubmission = () => {
     const { id } = useParams()
@@ -83,8 +86,35 @@ export default MemberServiceRequestSubmission
 
 
 const MemberServiceSubmission = ({data}:any)=>{
+    const {register,handleSubmit} = useForm();
+    const {isLoading,mutate}  = useMutation(handleServiceRequestApi,{
+        'onSuccess':(data)=>{
+            toast.success("Status Updated Successfully", {
+                // progressClassName: "toastProgress",
+                icon: false,
+            });
+            window.location.reload()
+        }
+    })
+    const onSubmit =({status}:any)=>{
+        if (status ===''){
+            toast.success("Please select a valid option", {
+                // progressClassName: "toastProgress",
+                icon: false,
+            });
+            return
+
+        }
+        mutate({
+            'member_request_id':data.id,
+            status,
+        })
+        // console.log(value)
+
+    }
     return (
         <div>
+            <Loading loading={isLoading} />
             <h2>Fields Submission</h2>
             <br />
             <div style={{'display':'grid','gridTemplateColumns':'1fr 1fr','gap':'10px'}}>
@@ -104,6 +134,28 @@ const MemberServiceSubmission = ({data}:any)=>{
                     </div>
                 ))}
             </div> 
+            <br />
+            <p><strong>Approval Status</strong>:{' '}{data.status}</p>
+            {/* approved='approved'
+        pending='pending' */}
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <br />
+                <br />
+            <SelectWithInput 
+            options={[
+                {'name':'Select Status','value':''},
+                {'name':'Approve','value':'approved'},
+                {'name':'Pending','value':'pending'},
+            ]}
+            label='Update Approval'
+            name='status'
+            register={register}
+            />
+            {/* @ts-ignore */}
+            <SubConBtn  typex='filled'>
+                Submit
+            </SubConBtn>
+            </form>
         </div>
     )
 }
