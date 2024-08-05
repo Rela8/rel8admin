@@ -26,9 +26,11 @@ import {
   getAllMembers,
   getAllPositionsForElection,
   getContestantForPosition,
+  getEventsExcosMembers,
+  getEventsPublicMembers,
   getMemOfCouncil,
   updateCommittee,
-  updateEvent,
+  updateEventStatus,
 } from "../../utils/api-calls";
 import Loading from "../Loading/Loading";
 
@@ -664,7 +666,7 @@ export const EventsViewMore = ({ data, close }) => {
   );
 
   const { isLoading: updateLoading, mutate: updateMutate } = useMutation(
-    (eventData) => updateEvent(eventData),
+    (eventData) => updateEventStatus(eventData),
     {
       onMutate: () => {
         toast.info("Event Update in progress", {
@@ -693,6 +695,18 @@ export const EventsViewMore = ({ data, close }) => {
   const deleteEventHandler = (id) => {
     mutate(id);
   };
+
+  const { data: eventPublicMembers } = useQuery('event-members', () => getEventsPublicMembers(data?.id), {
+    refetchOnWindowFocus: false,
+    select: (data) => data.data,
+  })
+
+  const { data: eventExcoMembers } = useQuery('eventmembers', () => getEventsExcosMembers(data?.id), {
+    refetchOnWindowFocus: false,
+    select: (data) => data.data,
+  })
+  console.log(eventExcoMembers)
+
   return (
     <BackDrop>
       <style>
@@ -826,6 +840,39 @@ export const EventsViewMore = ({ data, close }) => {
               <TitleCon>Has Paid: </TitleCon>
               {data.event_access.has_paid ? "yes" : "no"}
             </SubConHeader2>
+            {/* list of excos members */}
+            <SubConHeader2>
+              {" "}
+              <TitleCon>Excos Members ({eventExcoMembers?.length || 0}) </TitleCon>
+              <div style={{ display: "flex", flexDirection: "column", height: "60px", overflowY: "scroll", border: "1px solid #ccc", padding: "8px" }}>
+                {eventExcoMembers?.length > 0 ? (
+                  eventExcoMembers.map(member => (
+                    <div style={{fontSize: "13px"}} key={member.id}>
+                      <p>{member.id}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No members found.</p>
+                )}
+              </div>
+            </SubConHeader2>
+
+            <SubConHeader2>
+              <TitleCon>Public Members ({eventPublicMembers?.length || 0})</TitleCon>
+              <div style={{ display: "flex", flexDirection: "column", height: "60px", overflowY: "scroll", border: "1px solid #ccc", padding: "8px" }}>
+                {eventPublicMembers?.length > 0 ? (
+                  eventPublicMembers.map((member, index) => (
+                    <div style={{fontSize: "13px"}} key={member.id}>
+                      <p>{member.email}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No members found.</p>
+                )}
+              </div>
+            </SubConHeader2>
+
+          {/* end of list */}
           </>
         ) : (
           <small>Can't fetch additional Event Info.</small>
@@ -936,9 +983,18 @@ export const NewsViewMore = ({ data, close }) => {
               <TitleCon>Body</TitleCon>
             </SubConHeader>
             <SubConHeader2 style={{ wordWrap: "break-word" }}>
-              {data.body}
+              {data?.body?
+              
+              <div 
+              dangerouslySetInnerHTML={{
+                __html: `${data.body}`,
+              }}
+              />
+              :''
+              
+            }
             </SubConHeader2>
-            <SubConHeader>
+            {/* <SubConHeader>
               <TitleCon>Paragraphs</TitleCon>
             </SubConHeader>
             {data.paragraphs.map((item) => {
@@ -952,7 +1008,7 @@ export const NewsViewMore = ({ data, close }) => {
                   </SubConHeader2>
                 </>
               );
-            })}
+            })} */}
           </>
         ) : (
           <small>Can't fetch additional News Info.</small>
@@ -1052,10 +1108,21 @@ export const PublicationViewMore = ({ data, close }) => {
             <SubConHeader>
               <TitleCon>Body</TitleCon>
             </SubConHeader>
+
+
             <SubConHeader2 style={{ wordWrap: "break-word" }}>
-              {data.body}
+              {data?.body?
+              
+              <div 
+              dangerouslySetInnerHTML={{
+                __html: `${data.body}`,
+              }}
+              />
+              :''
+              
+            }
             </SubConHeader2>
-            <SubConHeader>
+            {/* <SubConHeader>
               <TitleCon>Paragraphs</TitleCon>
             </SubConHeader>
             {data.paragraphs.map((item) => {
@@ -1069,7 +1136,7 @@ export const PublicationViewMore = ({ data, close }) => {
                   </SubConHeader2>
                 </>
               );
-            })}
+            })} */}
           </>
         ) : (
           <small>Can't fetch additional Publication Info.</small>

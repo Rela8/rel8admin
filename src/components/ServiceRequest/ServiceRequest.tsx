@@ -159,11 +159,13 @@ const CreateServiceRequestForm = ({isEdit,service}:CreateServiceRequestFormProp)
     }:{});
 
     const { fields:textfields, append:textAppend, remove:textRemove } = useFieldArray({
+        // @ts-ignore
         name: "fields_subbission.fields",
         control,
       });
 
       const { fields:fileFields, append:fileAppend, remove:fileRemove } = useFieldArray({
+        // @ts-ignore
         name: "file_subbission.fields",
         control,
       });
@@ -197,6 +199,7 @@ const CreateServiceRequestForm = ({isEdit,service}:CreateServiceRequestFormProp)
 
         setValue('amount','0.00')
         setValue('break_down_of_payment',{
+        // @ts-ignore
             break_down_of_payment:{
                 payment:[]
             }})
@@ -261,6 +264,7 @@ const CreateServiceRequestForm = ({isEdit,service}:CreateServiceRequestFormProp)
             ]}
             />
             {
+        // @ts-ignore
                 watch('is_paid') === 'true'?
                 <>
                 
@@ -338,6 +342,7 @@ const CreateServiceRequestForm = ({isEdit,service}:CreateServiceRequestFormProp)
                     style={{'display':'inline-block'}}
                     onClick={e=>{
                         e.preventDefault()
+        // @ts-ignore
                         textAppend('Full Name')
                     }}>
                         Add Text Field Name 
@@ -368,6 +373,7 @@ const CreateServiceRequestForm = ({isEdit,service}:CreateServiceRequestFormProp)
             ))}
                     <SubConBtn style={{'display':'inline-block'}} onClick={e=>{
                         e.preventDefault()
+        // @ts-ignore
                         fileAppend('Upload Birth Cert')
                     }}>
                         Add File Fields 

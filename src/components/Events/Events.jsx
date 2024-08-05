@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { SearchIcon } from "../../assets/SideBar/svgs";
 import { getAllEvents } from "../../utils/api-calls";
 import { EventsTable } from "../ActionComponents/ActionComponents1";
@@ -24,6 +24,9 @@ const Events = () => {
   const [searchValue, setSearchValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const [events, setEvents] = useState([]);
+
+  const queryClient = useQueryClient();
 
   const displayModal = () => {
     setModal(!showModal);
@@ -32,18 +35,32 @@ const Events = () => {
     setAddEvent(!addEvent);
   };
 
-  const { isLoading, isFetching, isError, data } = useQuery(
-    "all-events",
-    getAllEvents,
-    {
-      refetchOnWindowFocus: false,
-      select: (data) => data.data,
-    }
-  );
+  const { isLoading, isFetching, isError } = useQuery("all-events", getAllEvents, {
+    refetchOnWindowFocus: false,
+    select: (data) => data.data,
+    onSuccess: (data) => {
+      setEvents(data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)));
+    },
+  });
+
+  const handleAddOrUpdate = (event) => {
+    setEvents((prevEvents) => {
+      const existingEventIndex = prevEvents.findIndex((e) => e.id === event.id);
+      if (existingEventIndex > -1) {
+        // Update the existing event
+        const updatedEvents = [...prevEvents];
+        updatedEvents[existingEventIndex] = event;
+        return [event, ...updatedEvents.filter((_, i) => i !== existingEventIndex)];
+      } else {
+        // Add the new event
+        return [event, ...prevEvents];
+      }
+    });
+  };
 
   const searchHandler = () => {
     const searchPattern = new RegExp(searchValue, "i");
-    const result = data?.filter((item) => item.name.search(searchPattern) >= 0);
+    const result = events?.filter((item) => item.name.search(searchPattern) >= 0);
     return result;
   };
 
@@ -56,7 +73,7 @@ const Events = () => {
 
   return (
     <>
-      {addEvent && <AddEvent close={displayAddEvent} />}
+      {addEvent && <AddEvent close={displayAddEvent} onSubmit={handleAddOrUpdate} />}
       <EventsContainer>
         <EventsHeader>Events</EventsHeader>
 
@@ -72,7 +89,7 @@ const Events = () => {
             </MembersSearchBtn>
           </MembersSearchCompCon>
 
-          <AddNewBtn onClick={displayAddEvent}>Add New</AddNewBtn>
+          <AddNewBtn onClick={displayAddEvent} >Add New</AddNewBtn>
         </MembersSearch>
 
         <EventsList>
@@ -83,6 +100,7 @@ const Events = () => {
               show={showModal}
               deleteFn={displayModal}
               data={paginatedData}
+              onUpdate={handleAddOrUpdate}
             />
           ) : (
             <small>can't fetch events</small>
@@ -90,7 +108,7 @@ const Events = () => {
         </EventsList>
 
         <Pagination
-          totalPosts={data?.length}
+          totalPosts={events?.length}
           postsPerPage={postsPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}

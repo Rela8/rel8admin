@@ -108,6 +108,7 @@ const AddEvent = ({ close }) => {
         .reverse();
     },
   });
+  console.log(excoListData)
 
   const queryClient = useQueryClient();
 
@@ -174,12 +175,19 @@ const AddEvent = ({ close }) => {
           <SubConHeader>Add Event</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormLabel>
-              Name:
+              Event Name:
               <FormDataComp
                 type={"text"}
                 {...register("name", { required: true })}
               />
             </FormLabel>
+            {/* <FormLabel>
+              Organiser Name:
+              <FormDataComp
+                type={"text"}
+                {...register("organiser_name", { required: true })}
+              />
+            </FormLabel> */}
 
             <FormLabel>
               For Excos:
@@ -207,7 +215,8 @@ const AddEvent = ({ close }) => {
                 </FormOption>
                 {excoListData.map((item) => (
                   <FormOption key={item.id} value={item.id}>
-                    {item.id} || {item.name}
+                    {/* {item.id} ||  */}
+                    {item.name}
                   </FormOption>
                 ))}
               </FormSelection>
@@ -286,6 +295,36 @@ const AddEvent = ({ close }) => {
                 />
               </FormLabel>
             )}
+
+            <FormLabel>
+            Event Post Status::
+              <FormSelection
+                defaultValue={""}
+                {...register("public", { required: true })}
+              >
+                <FormOption disabled value="">
+                  select an option
+                </FormOption>
+                <FormOption value={true}>Yes</FormOption>
+                <FormOption value={false}>No</FormOption>
+                <FormOption value="both">Both</FormOption>
+              </FormSelection>
+            </FormLabel>
+
+            <FormLabel>
+              Organiser Name:
+              <FormDataComp
+                type={"text"}
+                {...register("organiser_name", { required: true })}
+              />
+            </FormLabel>
+            <FormLabel>
+              Organiser's Contact:
+              <FormDataComp
+                type={"text"}
+                {...register("organiser_extra_info", { required: true })}
+              />
+            </FormLabel>
 
             <FormLabel>
               Address:

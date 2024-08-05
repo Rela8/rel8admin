@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import {
   getListOfExcos,
 } from "../../utils/api-calls";
 import Loading from "../Loading/Loading";
-
+import TextEditor from "../TextEditor";
 const BackDrop = styled.div`
   width: 100%;
   height: 100%;
@@ -119,6 +119,8 @@ const DeleteButton = styled.button`
 `;
 
 const AddNews = ({ close }) => {
+  const editorRef = useRef();
+
   const { register, handleSubmit, control, watch } = useForm({
     defaultValues: {
       news_paragraph: [{ heading: "", paragragh: "" }],
@@ -190,14 +192,16 @@ const AddNews = ({ close }) => {
   );
 
   const onSubmit = (data) => {
+    const bodyContent = editorRef.current.getContent();
     const image = data.image[0];
     const { news_paragraph, image: img, ...newdata } = data;
     const payload = { image, ...newdata };
     console.log(news_paragraph);
     const formData = new FormData();
     Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
-    formData.append("news_paragraph", JSON.stringify(news_paragraph));
-    console.log([formData.get("news_paragraph")]);
+    formData.append("news_paragraph", JSON.stringify([{ heading: "Use body key", paragragh: "use body key" }]));
+    formData.append('body',bodyContent)
+
     createMutate(formData);
   };
   return (
@@ -223,7 +227,9 @@ const AddNews = ({ close }) => {
           }
         />
       ) : !excoListIsError || !committeeError ? (
-        <SubCon>
+        <SubCon
+        style={{'width':'600px'}}
+        >
           <SubConHeader>Add News</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormLabel>
@@ -320,12 +326,12 @@ const AddNews = ({ close }) => {
               </FormSelection>
             </FormLabel>
 
-            <FormLabel>
+            {/* <FormLabel>
               Body:
               <FormTextArea {...register("body", { required: true })} />
-            </FormLabel>
+            </FormLabel> */}
 
-            {fields.map((field, index) => {
+            {/* {fields.map((field, index) => {
               return (
                 <section key={field.id}>
                   <FormLabel>
@@ -363,7 +369,12 @@ const AddNews = ({ close }) => {
               }
             >
               Add New Paragraph Section
-            </DeleteButton>
+            </DeleteButton> */}
+
+            <TextEditor
+              editorRef={editorRef}
+              initialValue={watch("body")}
+            />
 
             <SubConBtnHold>
               <SubConBtn

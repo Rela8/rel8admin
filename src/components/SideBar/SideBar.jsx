@@ -12,6 +12,7 @@ import {
   PublicIcon,
   SettingsIcon,
   UsersIcon,
+  FundProjectIcon
 } from "../../assets/SideBar/svgs";
 import {
   CloseSlider,
@@ -179,6 +180,15 @@ const SideBar = () => {
           </SideBarItem>
 
           <SideBarItem>
+            <CustNavLink where={"/fund_a_project"}>
+              <FundProjectIcon
+                style={{ width: "25px", height: "25px", marginRight: "10px" }}
+              />
+              Fund a Project
+            </CustNavLink>
+          </SideBarItem>
+
+          <SideBarItem>
             <CustNavLink where={"/chapters"}>
               <EventsIcon
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}
@@ -219,7 +229,7 @@ const SideBar = () => {
           </LogOutBtn>
         </SideBarItemCon>
       </SideBarContainer>
-
+      {/* SideBar2 */}
       <SideBarContainer2 open={sideIsOpen}>
         <SideBarLogoCon>
           <SideBarLogo alt="" src={LogoImage} />
@@ -305,6 +315,15 @@ const SideBar = () => {
                 style={{ width: "25px", height: "25px", marginRight: "10px" }}
               />
               Meetings
+            </CustNavLink>
+          </SideBarItem>
+
+          <SideBarItem>
+            <CustNavLink where={"/fund_a_project"}>
+              <FundProjectIcon
+                style={{ width: "25px", height: "25px", marginRight: "10px" }}
+              />
+              Fund a Project
             </CustNavLink>
           </SideBarItem>
 

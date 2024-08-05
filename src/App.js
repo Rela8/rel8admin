@@ -19,6 +19,8 @@ import Chapters from "./components/Chapters/Chapters";
 import NotificationPage from "./components/NotificationPage";
 import ServiceRequest from "./components/ServiceRequest/ServiceRequest";
 import MemberServiceRequestSubmission from "./components/ServiceRequest/MemberServiceRequestSubmission";
+import FundAProject from "./components/FundAProject/FundAProject";
+import FundAProjectInterestedMember from "./components/FundAProject/FundAProjectInterestedMember";
 
 function App() {
   return (
@@ -39,12 +41,12 @@ function App() {
                   <Route path="/elections" element={<Election />}/>
                   <Route path="/committee" element={<Committee />}/>
                   <Route path="/meetings" element={<Meetings />}/>
+                  <Route path="/fund_a_project" element={<FundAProject />} />
+                  <Route path="/fund_a_project/:id" element={<FundAProjectInterestedMember/>} />
                   <Route path="/chapters" element={<Chapters />} />
                   <Route path="/notification" element={<NotificationPage/>} />
                   <Route path="/service-request" element={<ServiceRequest/>} />
                   <Route path="/service-request/member-submission/:id" element={<MemberServiceRequestSubmission />} />
-                  
-
               </Route>
           <Route path="*" element={<NotFound />}/>
         </Routes>

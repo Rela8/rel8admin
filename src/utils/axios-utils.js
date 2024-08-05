@@ -4,13 +4,14 @@ export const adminDetails = JSON.parse( localStorage.getItem("admin-user"))?.sta
 
 const TOKEN = adminDetails?.token
 
-// const SHORT_NAME = JSON.parse(localStorage.getItem("shortName"))
-const SHORT_NAME = 'nimn'
-export const URLnAME = 'localhost:8000'
-export const BASE_URL= `http://localhost:8000/tenant/${SHORT_NAME}`
+let SHORT_NAME = localStorage.getItem("shortName")
 
-// export const URLnAME = 'rel8backend-production.up.railway.app'
-// const BASE_URL = `https://rel8backend-production.up.railway.app/tenant/${SHORT_NAME}/`
+if(SHORT_NAME){
+    SHORT_NAME=JSON.parse(SHORT_NAME)
+}
+
+export const URLnAME = 'rel8.watchdoglogisticsng.com'
+export const BASE_URL = `https://rel8.watchdoglogisticsng.com/tenant/${SHORT_NAME}/`
 
 export const privateRequest = axios.create({
     baseURL: BASE_URL,

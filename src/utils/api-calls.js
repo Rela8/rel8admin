@@ -1,11 +1,12 @@
 import axios, { AxiosError } from "axios"
-import { BASE_URL, privateRequest, URLnAME } from "./axios-utils"
+import {  privateRequest, URLnAME } from "./axios-utils"
 
 //LOGIN
 export const loginUser = async (user) => {
     try{
         const { shortName, ...payload } = user
-        const loginURL = `${BASE_URL}/tenant/auth/login/`
+        localStorage.setItem("shortName",JSON.stringify(shortName))
+        const loginURL = `https://${URLnAME}/tenant/${shortName}/tenant/auth/login/`
         const res = await axios.post(loginURL, payload)
         return res.data
     }catch(error){
@@ -96,6 +97,7 @@ export const getAllExcos = async () => {
 export const getListOfExcos = async () => {
     try{
         const res = await privateRequest.get('/tenant/user/ManageAssigningExos/')
+        console.log(res.data)
         return res.data
     }catch(e){
         throw new AxiosError(e)
@@ -147,7 +149,7 @@ export const createEvents = async (data) => {
         throw new AxiosError(e)
     }
 }
-export const updateEvent = async (data) => {
+export const updateEventStatus = async (data) => {
     try{
         const res = await privateRequest.post('/tenant/event/eventview/activate_event/',data) 
         return res.data
@@ -156,6 +158,45 @@ export const updateEvent = async (data) => {
     }
 }
 
+export const updateEvent = async (eventId, eventData) => {
+    try {
+        const formData = new FormData();
+        for (const key in eventData) {
+            if (eventData.hasOwnProperty(key)) {
+                formData.append(key, eventData[key]);
+            }
+        }
+        const res = await privateRequest.patch(`/tenant/event/eventview/${eventId}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return res.data.data;
+    } catch (e) {
+        throw new AxiosError(e);
+    }
+}
+
+//-------------
+//PUBLIC MEMBERS
+export const getEventsPublicMembers = async (id) => {
+    try{
+        const res = await privateRequest.get(`/tenant/event/eventview/public_attendees_list/?event_id=${id}`) 
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }
+}
+//EXCOS MEMBERS
+export const getEventsExcosMembers = async (id) => {
+    try{
+        const res = await privateRequest.get(`/tenant/event/eventview/view_member_attendees/?event_id=${id}`) 
+        return res.data
+    }catch(e){
+        throw new AxiosError(e)
+    }
+}
+//-------------
 
 //NEWS
 export const createNews = async (payload) => {
@@ -334,6 +375,41 @@ export const deleteMeeting = async (id) => {
         throw new AxiosError(e)
     }
 }
+
+//FUND A PROJECT
+export const createFundProjectApi = async (data) => {
+    try {
+      const res = await privateRequest.post(
+        "/tenant/extras/admin_manage_project/",
+        data
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (e) {
+      throw new AxiosError(e);
+    }
+  };
+  export const getFundAProjects = async () => {
+    try {
+      const res = await privateRequest.get(
+        "/tenant/extras/admin_manage_project/"
+      );
+      return res.data;
+    } catch (e) {
+      throw new AxiosError(e);
+    }
+  };
+
+  export const deleteFundProjectApi = async (id) => {
+    try {
+      const res = await privateRequest.delete(
+        "/tenant/extras/admin_manage_project/" + id + "/"
+      );
+      return res.data;
+    } catch (e) {
+      throw new AxiosError(e);
+    }
+  };
 
 //ELECTIONS
 export const createElection = async (data) => {

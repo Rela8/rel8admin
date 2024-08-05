@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { rel8Pink, rel8Purple, rel8White } from "../../globals";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -11,6 +11,8 @@ import {
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import Loading from "../Loading/Loading";
+import TextEditor from "../TextEditor";
+
 
 const BackDrop = styled.div`
   width: 100%;
@@ -118,6 +120,8 @@ const DeleteButton = styled.button`
 `;
 
 const AddPublications = ({ close }) => {
+  const editorRef = useRef();
+
   const { register, handleSubmit, control, watch } = useForm({
     defaultValues: {
       publication_paragraph: [{ heading: "", paragragh: "" }],
@@ -189,6 +193,7 @@ const AddPublications = ({ close }) => {
   );
 
   const onSubmit = (data) => {
+    const bodyContent = editorRef.current.getContent();
     const image = data.image[0];
     const { publication_paragraph, image: img, ...newdata } = data;
     const payload = { image, ...newdata };
@@ -196,9 +201,9 @@ const AddPublications = ({ close }) => {
     Object.keys(payload)?.forEach((key) => formData.append(key, payload[key]));
     formData.append(
       "publication_paragraph",
-      JSON.stringify(publication_paragraph)
+      JSON.stringify([{ heading: "Use body key", paragragh: "use body key" }])
     );
-    formData.append('body',' .')
+    formData.append('body',bodyContent)
     createMutate(formData);
   };
   return (
@@ -224,7 +229,7 @@ const AddPublications = ({ close }) => {
           }
         />
       ) : !excoListIsError || !committeeError ? (
-        <SubCon>
+        <SubCon style={{'width':'600px'}}>
           <SubConHeader>Add Publications</SubConHeader>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <FormLabel>
@@ -310,7 +315,7 @@ const AddPublications = ({ close }) => {
               <FormTextArea {...register("body", { required: true })} />
             </FormLabel> */}
 
-            {fields.map((field, index) => {
+            {/* {fields.map((field, index) => {
               return (
                 <section key={field.id}>
                   <FormLabel>
@@ -348,7 +353,11 @@ const AddPublications = ({ close }) => {
               }
             >
               Add New Paragraph Section
-            </DeleteButton>
+            </DeleteButton> */}
+            <TextEditor
+              editorRef={editorRef}
+              initialValue={watch("body")}
+            />
 
             <SubConBtnHold>
               <SubConBtn

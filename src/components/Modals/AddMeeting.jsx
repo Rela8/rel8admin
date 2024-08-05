@@ -12,7 +12,7 @@ import {
 } from "../../utils/api-calls";
 import Loading from "../Loading/Loading";
 
-const BackDrop = styled.div`
+export const BackDrop = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
